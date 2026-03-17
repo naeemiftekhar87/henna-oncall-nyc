@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+:root {
+  --font-playfair: var(--font-playfair);
+  --font-poppins: var(--font-poppins);
+}
+
+@theme inline {
+  --font-playfair: var(--font-playfair);
+  --font-poppins: var(--font-poppins);
+}
+
+@layer components {
+  .font-playfair {
+    @apply font-playfair;
+  }
+
+  .font-poppins {
+    @apply font-poppins;
+  }
+}

@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+}
+
+model Booking {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String
+  date      String
+  street    String
+  apt       String?
+  city      String
+  state     String
+  zip       String
+  service   String // "bridal", "feet", "party"
+  package   String // "blush", "bloom", "lush", "grace", "petal-feet", "blooming-feet", "regal-steps", "party"
+  message   String?
+  price     Float
+  status    String   @default("pending") // "pending", "confirmed", "completed", "cancelled"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
