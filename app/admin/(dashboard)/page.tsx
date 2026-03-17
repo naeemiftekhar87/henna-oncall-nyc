@@ -12,7 +12,7 @@ import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
-const PACKAGE_LABELS: Record<string, string> = {
+const SERVICE_LABELS: Record<string, string> = {
   blush: "Blush",
   bloom: "Bloom",
   lush: "Lush",
@@ -152,9 +152,6 @@ export default async function AdminDashboard() {
                     Service
                   </th>
                   <th className="text-left text-xs text-[#A0A0A0] uppercase tracking-wider px-5 py-3">
-                    Package
-                  </th>
-                  <th className="text-left text-xs text-[#A0A0A0] uppercase tracking-wider px-5 py-3">
                     Date
                   </th>
                   <th className="text-left text-xs text-[#A0A0A0] uppercase tracking-wider px-5 py-3">
@@ -169,17 +166,14 @@ export default async function AdminDashboard() {
                 {recent.map((booking) => (
                   <tr
                     key={booking.id}
-                    className="border-b border-white/5 hover:bg-white/[0.02] transition-colors"
+                    className="border-b border-white/5 hover:bg-white/2 transition-colors"
                   >
                     <td className="px-5 py-4">
                       <div className="text-white text-sm">{booking.name}</div>
                       <div className="text-[#666] text-xs">{booking.email}</div>
                     </td>
-                    <td className="px-5 py-4 text-sm text-[#A0A0A0] capitalize">
-                      {booking.service}
-                    </td>
                     <td className="px-5 py-4 text-sm text-[#A0A0A0]">
-                      {PACKAGE_LABELS[booking.package] || booking.package}
+                      {SERVICE_LABELS[booking.service] || booking.service}
                     </td>
                     <td className="px-5 py-4 text-sm text-[#A0A0A0]">
                       {booking.date}

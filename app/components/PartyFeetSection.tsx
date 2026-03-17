@@ -193,7 +193,7 @@ export default function PartyFeetSection() {
                   href="#contact"
                   className="mt-8 inline-block bg-[#D4AF37] text-black font-medium px-8 py-3 rounded-xl hover:bg-[#E6C76B] transition-all duration-300"
                 >
-                  Request Party Henna Quote
+                  Book Party Henna
                 </a>
               </div>
             </div>

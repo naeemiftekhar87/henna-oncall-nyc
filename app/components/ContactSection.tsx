@@ -14,30 +14,19 @@ type BookingFormData = {
   state: string;
   zip: string;
   service: string;
-  package: string;
   message: string;
 };
 
-const PACKAGES: Record<string, { label: string; price: number }[]> = {
-  bridal: [
-    { label: "Blush - $195", price: 195 },
-    { label: "Bloom - $295", price: 295 },
-    { label: "Lush - $395", price: 395 },
-    { label: "Grace - $495", price: 495 },
-  ],
-  feet: [
-    { label: "Petal Feet - $120", price: 120 },
-    { label: "Blooming Feet - $180", price: 180 },
-    { label: "Regal Steps - $250", price: 250 },
-  ],
-  party: [{ label: "Party Henna Experience", price: 0 }],
-};
-
-const PACKAGE_VALUES: Record<string, string[]> = {
-  bridal: ["blush", "bloom", "lush", "grace"],
-  feet: ["petal-feet", "blooming-feet", "regal-steps"],
-  party: ["party"],
-};
+const SERVICES = [
+  { value: "blush", label: "Blush (Bridal) - $195", price: 195 },
+  { value: "bloom", label: "Bloom (Bridal) - $295", price: 295 },
+  { value: "lush", label: "Lush (Bridal) - $395", price: 395 },
+  { value: "grace", label: "Grace (Bridal) - $495", price: 495 },
+  { value: "petal-feet", label: "Petal Feet - $120", price: 120 },
+  { value: "blooming-feet", label: "Blooming Feet - $180", price: 180 },
+  { value: "regal-steps", label: "Regal Steps - $250", price: 250 },
+  { value: "party", label: "Party Henna Experience", price: 0 },
+];
 
 export default function ContactSection() {
   const [submitStatus, setSubmitStatus] = useState<
@@ -47,27 +36,19 @@ export default function ContactSection() {
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
   } = useForm<BookingFormData>({
     defaultValues: {
       service: "",
-      package: "",
     },
   });
-
-  const selectedService = watch("service");
 
   const onSubmit = async (data: BookingFormData) => {
     setSubmitStatus("loading");
 
-    const servicePackages = PACKAGES[data.service];
-    const packageIndex = PACKAGE_VALUES[data.service]?.indexOf(data.package);
-    const price =
-      packageIndex !== undefined && packageIndex >= 0
-        ? servicePackages[packageIndex].price
-        : 0;
+    const selected = SERVICES.find((s) => s.value === data.service);
+    const price = selected?.price ?? 0;
 
     try {
       const res = await fetch("/api/bookings", {
@@ -276,12 +257,14 @@ export default function ContactSection() {
                 className="w-full bg-transparent border-b border-white/10 text-base text-white py-3 focus:outline-none focus:border-[#D4AF37] transition-colors peer"
               >
                 <option value="">Select Service</option>
-                <option value="bridal">Bridal Henna</option>
-                <option value="feet">Feet Henna</option>
-                <option value="party">Party Henna</option>
+                {SERVICES.map((s) => (
+                  <option key={s.value} value={s.value}>
+                    {s.label}
+                  </option>
+                ))}
               </select>
               <label className="absolute left-0 -top-3.5 text-sm text-[#D4AF37]">
-                Service Type
+                Service
               </label>
               {errors.service && (
                 <span className="text-red-400 text-xs mt-1 block">
@@ -289,36 +272,6 @@ export default function ContactSection() {
                 </span>
               )}
             </div>
-
-            {/* Package Selection (conditional) */}
-            {selectedService && PACKAGES[selectedService] && (
-              <div className="relative group">
-                <select
-                  {...register("package", {
-                    required: "Please select a package",
-                  })}
-                  className="w-full bg-transparent border-b border-white/10 text-base text-white py-3 focus:outline-none focus:border-[#D4AF37] transition-colors peer"
-                >
-                  <option value="">Select Package</option>
-                  {PACKAGES[selectedService].map((pkg, i) => (
-                    <option
-                      key={PACKAGE_VALUES[selectedService][i]}
-                      value={PACKAGE_VALUES[selectedService][i]}
-                    >
-                      {pkg.label}
-                    </option>
-                  ))}
-                </select>
-                <label className="absolute left-0 -top-3.5 text-sm text-[#D4AF37]">
-                  Package
-                </label>
-                {errors.package && (
-                  <span className="text-red-400 text-xs mt-1 block">
-                    {errors.package.message}
-                  </span>
-                )}
-              </div>
-            )}
 
             {/* Message */}
             <div className="relative group">

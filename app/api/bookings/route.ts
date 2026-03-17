@@ -1,4 +1,5 @@
 import { prisma } from "@/app/lib/db";
+import { sendBookingNotification } from "@/app/lib/email";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -15,7 +16,6 @@ export async function POST(request: NextRequest) {
       state,
       zip,
       service,
-      package: pkg,
       message,
       price,
     } = body;
@@ -29,9 +29,7 @@ export async function POST(request: NextRequest) {
       !city ||
       !state ||
       !zip ||
-      !service ||
-      !pkg ||
-      !price
+      !service
     ) {
       return NextResponse.json(
         { error: "Missing required fields" },
@@ -51,12 +49,16 @@ export async function POST(request: NextRequest) {
         state,
         zip,
         service,
-        package: pkg,
         message: message || null,
-        price: parseFloat(price),
+        price: parseFloat(price) || 0,
         status: "pending",
       },
     });
+
+    // Send email notification (non-blocking)
+    sendBookingNotification(booking).catch((err) =>
+      console.error("Email notification failed:", err),
+    );
 
     return NextResponse.json({ success: true, booking }, { status: 201 });
   } catch (error) {

@@ -3,7 +3,7 @@ import ContactSection from "./components/ContactSection";
 import GallerySection from "./components/GallerySection";
 import HeroSection from "./components/HeroSection";
 import PartyFeetSection from "./components/PartyFeetSection";
-import ReviewsSection from "./components/ReviewsSection";
+import ReviewsSection from "./components/ReviewsSectionServer";
 import RoadmapSection from "./components/RoadmapSection";
 import TopBar from "./components/TopBar";
 

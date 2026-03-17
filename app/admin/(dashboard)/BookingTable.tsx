@@ -15,14 +15,13 @@ type Booking = {
   state: string;
   zip: string;
   service: string;
-  package: string;
   message: string | null;
   price: number;
   status: string;
   createdAt: string;
 };
 
-const PACKAGE_LABELS: Record<string, string> = {
+const SERVICE_LABELS: Record<string, string> = {
   blush: "Blush",
   bloom: "Bloom",
   lush: "Lush",
@@ -114,7 +113,7 @@ export default function BookingTable({
                 onClick={() =>
                   setExpandedId(expandedId === booking.id ? null : booking.id)
                 }
-                className="w-full flex items-center justify-between p-5 text-left hover:bg-white/[0.02] transition-colors"
+                className="w-full flex items-center justify-between p-5 text-left hover:bg-white/2 transition-colors"
               >
                 <div className="flex items-center gap-6 flex-wrap">
                   <div>
@@ -124,7 +123,7 @@ export default function BookingTable({
                     <p className="text-[#666] text-xs">{booking.email}</p>
                   </div>
                   <div className="text-[#A0A0A0] text-sm">
-                    {PACKAGE_LABELS[booking.package] || booking.package}
+                    {SERVICE_LABELS[booking.service] || booking.service}
                   </div>
                   <div className="text-[#A0A0A0] text-sm">{booking.date}</div>
                   <div className="text-white text-sm font-medium">
