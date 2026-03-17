@@ -11,23 +11,34 @@ import img7 from "@/app/assets/gallary/7.jpg";
 import img8 from "@/app/assets/gallary/8.jpg";
 import img9 from "@/app/assets/gallary/9.jpeg";
 import { Maximize } from "lucide-react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 
-export default function GallerySection() {
-  const galleryImages = [
-    img1,
-    img2,
-    img3,
-    img4,
-    img5,
-    img6,
-    img7,
-    img8,
-    img9,
-    img10,
-    img11,
-    img12,
-  ];
+const FALLBACK_IMAGES: StaticImageData[] = [
+  img1,
+  img2,
+  img3,
+  img4,
+  img5,
+  img6,
+  img7,
+  img8,
+  img9,
+  img10,
+  img11,
+  img12,
+];
+
+export default function GallerySection({
+  galleryUrls,
+}: {
+  galleryUrls?: string[];
+}) {
+  const galleryImages = FALLBACK_IMAGES.map((fallback, i) => {
+    const url = galleryUrls?.[i];
+    return url
+      ? { src: url, isExternal: true }
+      : { src: fallback, isExternal: false };
+  });
 
   return (
     <section
@@ -61,10 +72,11 @@ export default function GallerySection() {
               className="aspect-square relative group overflow-hidden bg-[#111111] rounded-2xl"
             >
               <Image
-                src={image}
+                src={image.src}
                 alt="Henna Design"
                 fill
                 className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
+                unoptimized={image.isExternal}
               />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                 <Maximize className="text-[#D4AF37] w-8 h-8" />

@@ -2,7 +2,7 @@ import logo from "@/app/assets/logo.jpg";
 import { Facebook, Instagram } from "lucide-react";
 import Image from "next/image";
 
-export default function Footer() {
+export default function Footer({ logoUrl }: { logoUrl?: string }) {
   return (
     <footer className="bg-[#0A0A0A] border-t border-white/5 pt-20 pb-8 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
@@ -10,9 +10,12 @@ export default function Footer() {
         <div>
           <a href="#" className="block mb-6">
             <Image
-              src={logo}
+              src={logoUrl || logo}
               alt="Henna On Call NYC Logo"
+              width={logoUrl ? 120 : undefined}
+              height={logoUrl ? 64 : undefined}
               className="h-16 w-auto object-contain"
+              unoptimized={!!logoUrl}
             />
           </a>
           <p className="text-sm text-[#A0A0A0] font-light leading-relaxed">

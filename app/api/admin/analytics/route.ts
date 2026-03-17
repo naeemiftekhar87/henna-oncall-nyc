@@ -2,6 +2,8 @@ import { getSession } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/db";
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 const SERVICE_LABELS: Record<string, string> = {
   blush: "Blush",
   bloom: "Bloom",

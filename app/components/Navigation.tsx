@@ -3,16 +3,19 @@ import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Navigation() {
+export default function Navigation({ logoUrl }: { logoUrl?: string }) {
   return (
     <nav className="sticky top-0 z-50 bg-[#0A0A0A]/80 backdrop-blur-xl border-b border-white/5">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src={logo}
+            src={logoUrl || logo}
             alt="Henna On Call NYC Logo"
+            width={logoUrl ? 120 : undefined}
+            height={logoUrl ? 60 : undefined}
             className="h-14 sm:h-15 w-auto object-contain"
             priority
+            unoptimized={!!logoUrl}
           />
         </Link>
         <div className="hidden lg:flex items-center gap-8 text-base text-[#A0A0A0] font-light">

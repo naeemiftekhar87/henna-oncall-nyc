@@ -2,6 +2,8 @@ import { getSession } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   const session = await getSession();
   if (!session) {

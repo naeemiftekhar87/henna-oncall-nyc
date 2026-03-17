@@ -37,6 +37,10 @@ export default function ServicesManagementPage() {
 
   const fetchServices = async () => {
     const res = await fetch("/api/admin/services");
+    if (!res.ok) {
+      setLoading(false);
+      return;
+    }
     const data = await res.json();
     setServices(data.services);
     setLoading(false);

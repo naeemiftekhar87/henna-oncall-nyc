@@ -108,6 +108,40 @@ async function main() {
     });
   }
   console.log("Services seeded");
+
+  // Seed default site config (images/content)
+  const siteDefaults: { key: string; value: string }[] = [
+    { key: "logo", value: "" },
+    { key: "hero_image", value: "" },
+    { key: "service_blush_image", value: "" },
+    { key: "service_bloom_image", value: "" },
+    { key: "service_lush_image", value: "" },
+    { key: "service_grace_image", value: "" },
+    { key: "service_petal_feet_image", value: "" },
+    { key: "service_blooming_feet_image", value: "" },
+    { key: "service_regal_steps_image", value: "" },
+    { key: "gallery_1", value: "" },
+    { key: "gallery_2", value: "" },
+    { key: "gallery_3", value: "" },
+    { key: "gallery_4", value: "" },
+    { key: "gallery_5", value: "" },
+    { key: "gallery_6", value: "" },
+    { key: "gallery_7", value: "" },
+    { key: "gallery_8", value: "" },
+    { key: "gallery_9", value: "" },
+    { key: "gallery_10", value: "" },
+    { key: "gallery_11", value: "" },
+    { key: "gallery_12", value: "" },
+  ];
+
+  for (const cfg of siteDefaults) {
+    await prisma.siteConfig.upsert({
+      where: { key: cfg.key },
+      update: {},
+      create: cfg,
+    });
+  }
+  console.log("Site config seeded");
 }
 
 main()

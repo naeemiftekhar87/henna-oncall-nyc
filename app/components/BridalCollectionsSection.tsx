@@ -2,9 +2,25 @@ import bridalBloom from "@/app/assets/service/Bridal BLOOM.jpeg";
 import bridalBlush from "@/app/assets/service/Bridal BLUSH.jpg";
 import bridalGrace from "@/app/assets/service/Bridal GRACE.jpeg";
 import bridalLush from "@/app/assets/service/Bridal LUSH.png";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 
-export default function BridalCollectionsSection() {
+type ServiceImages = {
+  blush?: string;
+  bloom?: string;
+  lush?: string;
+  grace?: string;
+};
+
+export default function BridalCollectionsSection({
+  serviceImages,
+}: {
+  serviceImages?: ServiceImages;
+}) {
+  const getImage = (key: keyof ServiceImages, fallback: StaticImageData) => {
+    const url = serviceImages?.[key];
+    return url || fallback;
+  };
+
   const collections = [
     {
       name: "Blush",
@@ -24,7 +40,8 @@ export default function BridalCollectionsSection() {
         "Aftercare reminder card",
       ],
       duration: "2–3 hours",
-      image: bridalBlush,
+      image: getImage("blush", bridalBlush),
+      isExternal: !!serviceImages?.blush,
       isPrimary: false,
     },
     {
@@ -41,7 +58,8 @@ export default function BridalCollectionsSection() {
         "Aftercare reminder card",
       ],
       duration: "3–4 hours",
-      image: bridalBloom,
+      image: getImage("bloom", bridalBloom),
+      isExternal: !!serviceImages?.bloom,
       isPrimary: false,
     },
     {
@@ -63,7 +81,8 @@ export default function BridalCollectionsSection() {
         "Custom element allowed",
       ],
       duration: "4–5 hours",
-      image: bridalLush,
+      image: getImage("lush", bridalLush),
+      isExternal: !!serviceImages?.lush,
       isPrimary: true,
       badge: "Popular",
     },
@@ -86,7 +105,8 @@ export default function BridalCollectionsSection() {
         "2 custom elements included",
       ],
       duration: "5–7 hours",
-      image: bridalGrace,
+      image: getImage("grace", bridalGrace),
+      isExternal: !!serviceImages?.grace,
       isPrimary: false,
     },
   ];
@@ -124,6 +144,7 @@ export default function BridalCollectionsSection() {
                   alt={collection.name}
                   fill
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  unoptimized={collection.isExternal}
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-[#111111] to-transparent opacity-80"></div>
                 {collection.badge && (

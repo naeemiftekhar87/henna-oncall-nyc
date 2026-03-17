@@ -3,6 +3,7 @@ import { Playfair_Display, Poppins } from "next/font/google";
 import Footer from "./components/Footer";
 import Navigation from "./components/Navigation";
 import "./globals.css";
+import { getSiteConfig } from "./lib/site-config";
 
 const playfairDisplay = Playfair_Display({
   variable: "--font-playfair",
@@ -39,11 +40,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const config = await getSiteConfig();
+  const logoUrl = config.logo || "";
+
   return (
     <html lang="en" className="scroll-smooth">
       <head>
@@ -54,9 +58,9 @@ export default function RootLayout({
         className={`${playfairDisplay.variable} ${poppins.variable} bg-[#0A0A0A] text-[#FFFFFF] font-poppins antialiased selection:bg-[#D4AF37] selection:text-black`}
       >
         <main>
-          <Navigation />
+          <Navigation logoUrl={logoUrl} />
           {children}
-          <Footer />
+          <Footer logoUrl={logoUrl} />
         </main>
       </body>
     </html>

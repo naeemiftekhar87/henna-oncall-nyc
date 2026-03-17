@@ -96,7 +96,10 @@ export default function AnalyticsPage() {
 
   useEffect(() => {
     fetch("/api/admin/analytics")
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) throw new Error("Failed to fetch");
+        return r.json();
+      })
       .then(setData)
       .finally(() => setLoading(false));
   }, []);

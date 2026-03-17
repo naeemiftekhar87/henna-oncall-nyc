@@ -1,7 +1,29 @@
 import { Crown } from "lucide-react";
 import Image from "next/image";
 
-export default function PartyFeetSection() {
+type ServiceImages = {
+  "petal-feet"?: string;
+  "blooming-feet"?: string;
+  "regal-steps"?: string;
+};
+
+const FALLBACK_IMAGES = {
+  "petal-feet":
+    "https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?auto=format&fit=crop&w=600&q=80",
+  "blooming-feet":
+    "https://images.unsplash.com/photo-1595856424584-69b76c8c93de?auto=format&fit=crop&w=600&q=80",
+  "regal-steps":
+    "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=600&q=80",
+};
+
+export default function PartyFeetSection({
+  serviceImages,
+}: {
+  serviceImages?: ServiceImages;
+}) {
+  const getImage = (key: keyof typeof FALLBACK_IMAGES) =>
+    serviceImages?.[key] || FALLBACK_IMAGES[key];
+
   const feetCollections = [
     {
       name: "Petal Feet",
@@ -9,9 +31,7 @@ export default function PartyFeetSection() {
       tagline: "Minimal • Delicate",
       coverage: "Ankle-length",
       duration: "Approx 1 hour",
-      image:
-        "https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?auto=format&fit=crop&w=600&q=80",
-      isExternal: true,
+      image: getImage("petal-feet"),
     },
     {
       name: "Blooming Feet",
@@ -19,9 +39,7 @@ export default function PartyFeetSection() {
       tagline: "Detailed • Romantic",
       coverage: '2" above ankle',
       duration: "Approx 1.5 hours",
-      image:
-        "https://images.unsplash.com/photo-1595856424584-69b76c8c93de?auto=format&fit=crop&w=600&q=80",
-      isExternal: true,
+      image: getImage("blooming-feet"),
     },
   ];
 
@@ -55,7 +73,7 @@ export default function PartyFeetSection() {
                       alt={collection.name}
                       fill
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      unoptimized={collection.isExternal}
+                      unoptimized
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-[#111111] to-transparent opacity-80"></div>
                   </div>
@@ -92,7 +110,7 @@ export default function PartyFeetSection() {
               <div className="bg-[#111111] border border-[#D4AF37]/30 rounded-2xl overflow-hidden hover:border-[#D4AF37]/60 transition-all duration-300 flex flex-col group sm:col-span-2">
                 <div className="h-48 w-full relative bg-[#1A1A1A]">
                   <Image
-                    src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=600&q=80"
+                    src={getImage("regal-steps")}
                     alt="Regal Steps Feet Henna"
                     fill
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"

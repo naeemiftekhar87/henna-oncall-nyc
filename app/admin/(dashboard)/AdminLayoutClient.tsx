@@ -6,6 +6,7 @@ import {
   Flower2,
   Footprints,
   Gem,
+  ImageIcon,
   LayoutDashboard,
   LogOut,
   Menu,
@@ -39,6 +40,12 @@ const navItems = [
     label: "Edit Services",
     icon: Settings2,
     key: "services-manage",
+  },
+  {
+    href: "/admin/content",
+    label: "Content & Images",
+    icon: ImageIcon,
+    key: "content",
   },
 ];
 

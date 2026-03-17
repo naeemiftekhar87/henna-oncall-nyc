@@ -1,7 +1,11 @@
 import heroBanner from "@/app/assets/Hero Banner.jpeg";
 import Image from "next/image";
 
-export default function HeroSection() {
+export default function HeroSection({
+  heroImageUrl,
+}: {
+  heroImageUrl?: string;
+}) {
   return (
     <section
       id="home"
@@ -9,11 +13,12 @@ export default function HeroSection() {
     >
       <div className="absolute inset-0 z-0">
         <Image
-          src={heroBanner}
+          src={heroImageUrl || heroBanner}
           alt="Hero Banner"
           fill
           className="w-full h-full object-cover opacity-70"
           priority
+          unoptimized={!!heroImageUrl}
         />
         <div className="absolute inset-0 bg-linear-to-b from-[#0A0A0A]/60 via-[#0A0A0A]/40 to-[#0A0A0A]"></div>
       </div>
