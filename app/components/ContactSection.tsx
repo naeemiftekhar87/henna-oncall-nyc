@@ -1,5 +1,6 @@
 "use client";
 
+import { US_CITIES } from "@/app/lib/us-cities";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -33,10 +34,13 @@ export default function ContactSection() {
     "idle" | "loading" | "success" | "error"
   >("idle");
 
+  const today = new Date().toISOString().split("T")[0];
+
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<BookingFormData>({
     defaultValues: {
@@ -76,15 +80,15 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="py-32 px-6 bg-[#050505] border-t border-white/5"
+      className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 bg-[#050505] border-t border-white/5"
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
         {/* Contact Form */}
-        <div className="bg-[#111111] border border-white/5 rounded-3xl p-8 sm:p-12 shadow-2xl shadow-black/40">
+        <div className="bg-[#111111] border border-white/5 rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-12 shadow-2xl shadow-black/40">
           <span className="text-[#D4AF37] text-sm uppercase tracking-[0.2em] mb-4 block font-light">
             Book Now
           </span>
-          <h2 className="font-playfair text-4xl tracking-tight font-normal text-[#FFFFFF] mb-10">
+          <h2 className="font-playfair text-2xl sm:text-3xl md:text-4xl tracking-tight font-normal text-[#FFFFFF] mb-6 sm:mb-10">
             Book Your Henna Session
           </h2>
 
@@ -160,6 +164,7 @@ export default function ContactSection() {
                 <input
                   type="date"
                   {...register("date", { required: "Date is required" })}
+                  min={today}
                   className="w-full bg-transparent border-b border-white/10 text-base text-white py-3 focus:outline-none focus:border-[#D4AF37] transition-colors peer"
                 />
                 <label className="absolute left-0 -top-3.5 text-sm text-[#D4AF37]">
@@ -201,13 +206,36 @@ export default function ContactSection() {
                 <label className={labelClass}>Apt / Suite (Optional)</label>
               </div>
               <div className="relative group">
-                <input
-                  type="text"
-                  {...register("city", { required: "City is required" })}
-                  className={inputClass}
-                  placeholder="City"
-                />
-                <label className={labelClass}>City</label>
+                <select
+                  {...register("city", {
+                    required: "City is required",
+                    onChange: (e) => {
+                      const selected = US_CITIES.find(
+                        (c) => `${c.city}, ${c.state}` === e.target.value,
+                      );
+                      if (selected) {
+                        setValue("state", selected.state, {
+                          shouldValidate: true,
+                        });
+                      }
+                    },
+                  })}
+                  className="w-full bg-transparent border-b border-white/10 text-base text-white py-3 focus:outline-none focus:border-[#D4AF37] transition-colors peer"
+                >
+                  <option value="">Select City</option>
+                  {US_CITIES.map((c, i) => (
+                    <option
+                      className="text-black"
+                      key={`${c.city}-${c.state}-${i}`}
+                      value={`${c.city}, ${c.state}`}
+                    >
+                      {c.city}, {c.state}
+                    </option>
+                  ))}
+                </select>
+                <label className="absolute left-0 -top-3.5 text-sm text-[#D4AF37]">
+                  City
+                </label>
                 {errors.city && (
                   <span className="text-red-400 text-xs mt-1 block">
                     {errors.city.message}
@@ -256,9 +284,11 @@ export default function ContactSection() {
                 })}
                 className="w-full bg-transparent border-b border-white/10 text-base text-white py-3 focus:outline-none focus:border-[#D4AF37] transition-colors peer"
               >
-                <option value="">Select Service</option>
+                <option className="text-black" value="">
+                  Select Service
+                </option>
                 {SERVICES.map((s) => (
-                  <option key={s.value} value={s.value}>
+                  <option className="text-black" key={s.value} value={s.value}>
                     {s.label}
                   </option>
                 ))}

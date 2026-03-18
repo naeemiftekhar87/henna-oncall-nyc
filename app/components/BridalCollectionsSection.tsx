@@ -112,9 +112,12 @@ export default function BridalCollectionsSection({
   ];
 
   return (
-    <section id="bridal" className="py-32 px-6 relative">
+    <section
+      id="bridal"
+      className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 relative"
+    >
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-20">
+        <div className="text-center mb-10 sm:mb-16 md:mb-20">
           <span className="text-[#D4AF37] text-sm uppercase tracking-[0.2em] mb-4 block font-light">
             Curated Offerings
           </span>

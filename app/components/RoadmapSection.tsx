@@ -41,10 +41,10 @@ export default function RoadmapSection() {
   return (
     <section
       id="roadmap"
-      className="py-32 px-6 bg-[#050505] border-y border-white/5"
+      className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 bg-[#050505] border-y border-white/5"
     >
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-24">
+        <div className="text-center mb-12 sm:mb-16 md:mb-24">
           <span className="text-[#D4AF37] text-sm uppercase tracking-[0.2em] mb-4 block font-light">
             The Experience
           </span>
@@ -58,17 +58,19 @@ export default function RoadmapSection() {
           </p>
         </div>
 
-        <div className="space-y-16 relative before:absolute before:inset-0 before:ml-6 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-px before:bg-linear-to-b before:from-transparent before:via-[#D4AF37]/30 before:to-transparent">
+        <div className="space-y-10 sm:space-y-16 relative before:absolute before:inset-0 before:ml-6 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-px before:bg-linear-to-b before:from-transparent before:via-[#D4AF37]/30 before:to-transparent">
           {steps.map((step) => (
             <div
               key={step.number}
               className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group"
             >
-              <div className="flex items-center justify-center w-12 h-12 rounded-full border border-[#D4AF37]/50 bg-[#0A0A0A] text-[#D4AF37] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 shadow-[0_0_15px_rgba(212,175,55,0.15)]">
-                <span className="text-sm font-light">{step.number}</span>
+              <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-[#D4AF37]/50 bg-[#0A0A0A] text-[#D4AF37] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 shadow-[0_0_15px_rgba(212,175,55,0.15)]">
+                <span className="text-xs sm:text-sm font-light">
+                  {step.number}
+                </span>
               </div>
-              <div className="w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] p-8 bg-[#111111] border border-white/5 rounded-3xl hover:border-white/10 hover:bg-[#141414] transition-all duration-300">
-                <h3 className="font-playfair text-2xl tracking-tight mb-4 text-[#FFFFFF]">
+              <div className="w-[calc(100%-4rem)] sm:w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] p-5 sm:p-8 bg-[#111111] border border-white/5 rounded-2xl sm:rounded-3xl hover:border-white/10 hover:bg-[#141414] transition-all duration-300">
+                <h3 className="font-playfair text-xl sm:text-2xl tracking-tight mb-3 sm:mb-4 text-[#FFFFFF]">
                   {step.title}
                 </h3>
                 <p className="text-sm text-[#A0A0A0] mb-4 font-light leading-relaxed">

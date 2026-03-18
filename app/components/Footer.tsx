@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function Footer({ logoUrl }: { logoUrl?: string }) {
   return (
-    <footer className="bg-[#0A0A0A] border-t border-white/5 pt-20 pb-8 px-6">
+    <footer className="bg-[#0A0A0A] border-t border-white/5 pt-12 sm:pt-16 md:pt-20 pb-8 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
         {/* Brand */}
         <div>

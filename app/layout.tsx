@@ -55,6 +55,7 @@ export default async function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body
+        suppressHydrationWarning
         className={`${playfairDisplay.variable} ${poppins.variable} bg-[#0A0A0A] text-[#FFFFFF] font-poppins antialiased selection:bg-[#D4AF37] selection:text-black`}
       >
         <main>

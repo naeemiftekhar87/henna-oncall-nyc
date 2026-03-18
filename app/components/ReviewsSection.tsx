@@ -20,7 +20,7 @@ export default function ReviewsSection() {
   ];
 
   return (
-    <section className="py-32 px-6 relative">
+    <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 relative">
       <div className="max-w-7xl mx-auto text-center">
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#D4AF37]/10 mb-6">
           <Star className="text-[#D4AF37] w-8 h-8" fill="currentColor" />

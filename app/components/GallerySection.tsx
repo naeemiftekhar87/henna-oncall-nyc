@@ -43,7 +43,7 @@ export default function GallerySection({
   return (
     <section
       id="gallery-reviews"
-      className="py-32 px-6 bg-[#050505] border-y border-white/5"
+      className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 bg-[#050505] border-y border-white/5"
     >
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row justify-between items-end mb-16 gap-8">
@@ -65,7 +65,7 @@ export default function GallerySection({
           </a>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
           {galleryImages.map((image, idx) => (
             <div
               key={idx}

@@ -9,7 +9,7 @@ export default function HeroSection({
   return (
     <section
       id="home"
-      className="relative min-h-[85vh] flex items-center justify-center text-center px-6 overflow-hidden"
+      className="relative min-h-[70vh] sm:min-h-[85vh] flex items-center justify-center text-center px-4 sm:px-6 overflow-hidden"
     >
       <div className="absolute inset-0 z-0">
         <Image
@@ -23,13 +23,13 @@ export default function HeroSection({
         <div className="absolute inset-0 bg-linear-to-b from-[#0A0A0A]/60 via-[#0A0A0A]/40 to-[#0A0A0A]"></div>
       </div>
       <div className="max-w-4xl mx-auto z-10 flex flex-col items-center">
-        <span className="text-[#D4AF37] text-sm uppercase tracking-[0.2em] mb-8 border border-[#D4AF37]/30 bg-[#D4AF37]/5 backdrop-blur-sm px-6 py-2 rounded-full font-light">
+        <span className="text-[#D4AF37] text-xs sm:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] mb-6 sm:mb-8 border border-[#D4AF37]/30 bg-[#D4AF37]/5 backdrop-blur-sm px-4 sm:px-6 py-2 rounded-full font-light">
           Henna On Call NYC
         </span>
-        <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl tracking-tight font-normal mb-8 leading-tight text-white drop-shadow-lg">
+        <h1 className="font-playfair text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight font-normal mb-6 sm:mb-8 leading-tight text-white drop-shadow-lg">
           Where Generations of Henna Artistry Meet Modern Bridal Luxury
         </h1>
-        <p className="text-[#D1D1D1] text-lg sm:text-xl max-w-2xl mb-12 font-light leading-relaxed">
+        <p className="text-[#D1D1D1] text-base sm:text-lg md:text-xl max-w-2xl mb-8 sm:mb-12 font-light leading-relaxed">
           Helping modern brides feel radiant through personalized luxury henna,
           thoughtfully crafted for your love story.
         </p>

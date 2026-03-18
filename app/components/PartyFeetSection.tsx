@@ -46,7 +46,7 @@ export default function PartyFeetSection({
   return (
     <section
       id="party-feet"
-      className="py-32 px-6 bg-[#050505] border-y border-white/5"
+      className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 bg-[#050505] border-y border-white/5"
     >
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
@@ -167,7 +167,7 @@ export default function PartyFeetSection({
               events.
             </p>
 
-            <div className="border border-[#D4AF37]/30 rounded-3xl p-10 bg-linear-to-b from-[#111111] to-[#0A0A0A] relative overflow-hidden grow flex flex-col justify-center shadow-[0_0_30px_rgba(212,175,55,0.05)] hover:border-[#D4AF37]/60 transition-colors duration-500">
+            <div className="border border-[#D4AF37]/30 rounded-2xl sm:rounded-3xl p-6 sm:p-10 bg-linear-to-b from-[#111111] to-[#0A0A0A] relative overflow-hidden grow flex flex-col justify-center shadow-[0_0_30px_rgba(212,175,55,0.05)] hover:border-[#D4AF37]/60 transition-colors duration-500">
               <Crown className="absolute -bottom-10 -right-10 w-64 h-64 text-[#D4AF37] opacity-5" />
               <div className="relative z-10">
                 <h3 className="font-playfair text-3xl tracking-tight font-normal text-[#FFFFFF] mb-6">
