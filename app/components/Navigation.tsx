@@ -4,10 +4,13 @@ import logo from "@/app/assets/logo.jpg";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 
 export default function Navigation({ logoUrl }: { logoUrl?: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   // Prevent body scroll when menu is open
   useEffect(() => {
@@ -20,12 +23,31 @@ export default function Navigation({ logoUrl }: { logoUrl?: string }) {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
-    { href: "#roadmap", label: "Bridal Journey" },
-    { href: "#bridal", label: "Bridal Henna" },
-    { href: "#party-feet", label: "Party & Feet Henna" },
+    { href: "/#roadmap", label: "Bridal Journey" },
+    { href: "/#bridal", label: "Bridal Henna" },
+    { href: "/#party-feet", label: "Party & Feet Henna" },
     { href: "/guide", label: "Guide" },
-    { href: "#gallery-reviews", label: "Gallery & Reviews" },
+    { href: "/#gallery-reviews", label: "Gallery & Reviews" },
+    { href: "/faq", label: "FAQ" },
   ];
+
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      setMenuOpen(false);
+      // Handle hash links (e.g. /#roadmap)
+      if (href.includes("#")) {
+        const hash = href.split("#")[1];
+        if (pathname === "/") {
+          // Already on homepage, just scroll
+          e.preventDefault();
+          const el = document.getElementById(hash);
+          el?.scrollIntoView({ behavior: "smooth" });
+        }
+        // On other pages, let Next.js navigate to /#hash naturally
+      }
+    },
+    [pathname],
+  );
 
   return (
     <nav className="sticky top-0 z-50 bg-[#0A0A0A]/80 backdrop-blur-xl border-b border-white/5">
@@ -46,13 +68,15 @@ export default function Navigation({ logoUrl }: { logoUrl?: string }) {
             <Link
               key={link.href}
               href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
               className="hover:text-[#D4AF37] transition-colors"
             >
               {link.label}
             </Link>
           ))}
           <Link
-            href="#contact"
+            href="/#contact"
+            onClick={(e) => handleNavClick(e, "/#contact")}
             className="bg-[#D4AF37] text-black font-medium px-6 py-2.5 rounded-full hover:bg-[#E6C76B] hover:scale-105 transition-all duration-300 shadow-[0_0_15px_rgba(212,175,55,0.2)]"
           >
             Book Now
@@ -69,7 +93,7 @@ export default function Navigation({ logoUrl }: { logoUrl?: string }) {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 top-16.25 bg-[#0A0A0A]/98 backdrop-blur-xl z-40 transition-all duration-300 lg:hidden ${
+        className={`fixed inset-0 top-16.25 bg-[#0A0A0A] backdrop-blur-xl z-40 transition-all duration-300 lg:hidden ${
           menuOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
@@ -80,15 +104,15 @@ export default function Navigation({ logoUrl }: { logoUrl?: string }) {
             <Link
               key={link.href}
               href={link.href}
-              onClick={() => setMenuOpen(false)}
+              onClick={(e) => handleNavClick(e, link.href)}
               className="text-xl text-[#A0A0A0] hover:text-[#D4AF37] transition-colors font-light"
             >
               {link.label}
             </Link>
           ))}
           <Link
-            href="#contact"
-            onClick={() => setMenuOpen(false)}
+            href="/#contact"
+            onClick={(e) => handleNavClick(e, "/#contact")}
             className="mt-4 bg-[#D4AF37] text-black font-medium px-10 py-3.5 rounded-full hover:bg-[#E6C76B] transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)] text-lg"
           >
             Book Now

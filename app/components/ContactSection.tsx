@@ -327,62 +327,80 @@ export default function ContactSection() {
 
         {/* Booking Policies */}
         <div className="flex flex-col justify-center">
-          <h3 className="font-playfair text-3xl tracking-tight text-[#FFFFFF] mb-8 border-b border-white/5 pb-6">
-            Booking & Service Policies
+          <h3 className="font-['Playfair_Display'] text-3xl tracking-tight text-[#FFFFFF] mb-8 border-b border-white/5 pb-6">
+            Booking &amp; Service Policies
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10">
             <div>
               <h4 className="text-sm text-[#D4AF37] uppercase tracking-widest mb-2 font-medium">
-                Booking
+                Booking Deposit
               </h4>
               <p className="text-sm text-[#A0A0A0] font-light leading-relaxed">
-                A 50% deposit reserves your wedding date. Final payment due 2
-                weeks before appointment.
+                A 20% non-refundable deposit is required to secure your date.
+                Remaining balance due on the day of the appointment.
               </p>
             </div>
+
             <div>
               <h4 className="text-sm text-[#D4AF37] uppercase tracking-widest mb-2 font-medium">
-                Cancellation
+                Travel Policy
               </h4>
               <p className="text-sm text-[#A0A0A0] font-light leading-relaxed">
-                Cancellations made 30 days before event receive full refund.
-                After 30 days, deposit is non-refundable.
+                Henna On Call NYC is a mobile service. Travel fees may apply
+                depending on event location.
               </p>
             </div>
+
             <div>
               <h4 className="text-sm text-[#D4AF37] uppercase tracking-widest mb-2 font-medium">
-                Travel
+                Cancellation &amp; Rescheduling
               </h4>
               <p className="text-sm text-[#A0A0A0] font-light leading-relaxed">
-                Travel included within NY, NJ, CT, PA. Additional travel fees
-                apply outside service areas.
+                Notice required 48 hours in advance. Deposits are non-refundable
+                but may transfer to rescheduled bookings if notice is provided.
               </p>
             </div>
+
             <div>
               <h4 className="text-sm text-[#D4AF37] uppercase tracking-widest mb-2 font-medium">
-                Material
+                Allergy Responsibility
               </h4>
               <p className="text-sm text-[#A0A0A0] font-light leading-relaxed">
-                100% organic, hand-mixed henna included. Premium add-ons
-                available upon request.
+                Clients must confirm they have no henna allergies before
+                appointment.
               </p>
             </div>
+
             <div>
               <h4 className="text-sm text-[#D4AF37] uppercase tracking-widest mb-2 font-medium">
-                Duration
+                Photography
               </h4>
               <p className="text-sm text-[#A0A0A0] font-light leading-relaxed">
-                Session times vary by package. Full day availability for bridal
-                appointments.
+                Photos/videos may be taken for portfolio unless requested
+                otherwise.
               </p>
             </div>
+
             <div>
               <h4 className="text-sm text-[#D4AF37] uppercase tracking-widest mb-2 font-medium">
-                Payment
+                Late Arrival Policy
               </h4>
               <p className="text-sm text-[#A0A0A0] font-light leading-relaxed">
-                Payment accepted via Venmo, PayPal, and Credit Card. Invoice
-                sent upon booking.
+                Appointments start at scheduled time. Delays may reduce service
+                time if other bookings follow.
+              </p>
+            </div>
+
+            <div className="sm:col-span-2 border-t border-white/5 pt-8 mt-2">
+              <h4 className="text-sm text-[#D4AF37] uppercase tracking-widest mb-3 font-medium">
+                Event Setup Requirements
+              </h4>
+              <p className="text-sm text-[#A0A0A0] font-light mb-2 leading-relaxed">
+                Hosts should provide: Comfortable seating, Adequate lighting,
+                Small table for materials.
+              </p>
+              <p className="text-xs text-[#A0A0A0] italic font-light">
+                A calm environment helps ensure precise and beautiful designs.
               </p>
             </div>
           </div>

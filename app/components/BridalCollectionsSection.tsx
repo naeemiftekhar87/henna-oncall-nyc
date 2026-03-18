@@ -146,7 +146,7 @@ export default function BridalCollectionsSection({
                   src={collection.image}
                   alt={collection.name}
                   fill
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  className=" group-hover:scale-105 transition-transform duration-700"
                   unoptimized={collection.isExternal}
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-[#111111] to-transparent opacity-80"></div>

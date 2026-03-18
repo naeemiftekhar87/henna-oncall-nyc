@@ -1,4 +1,4 @@
-import { History, MapPin, Sparkles } from "lucide-react";
+import { History, Sparkles } from "lucide-react";
 const AboutPage = () => {
   return (
     <section className="py-32 px-6 relative">
@@ -83,31 +83,7 @@ const AboutPage = () => {
         </div>
       </div>
 
-      {/* Mission Section */}
-      <div className="max-w-7xl mx-auto mt-32 text-center">
-        <h3 className="font-playfair text-4xl tracking-tight font-normal mb-6 text-[#FFFFFF]">
-          Your Bridal Henna, Reimagined
-        </h3>
-        <p className="text-base text-[#A0A0A0] max-w-3xl mx-auto mb-16 font-light leading-relaxed">
-          At Henna On Call NYC, my mission is simple: To help modern brides feel
-          radiant with personalized luxury henna artistry. Rooted in generations
-          of henna tradition, my work blends cultural heritage with modern
-          bridal elegance, creating designs that feel timeless, meaningful, and
-          uniquely yours.
-        </p>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-12 bg-[#111111] rounded-3xl border border-white/5">
-          {["New York", "New Jersey", "Connecticut", "Pennsylvania"].map(
-            (location) => (
-              <div key={location} className="flex flex-col items-center gap-3">
-                <MapPin className="text-[#D4AF37] w-6 h-6" />
-                <span className="text-sm text-[#A0A0A0] font-light">
-                  {location}
-                </span>
-              </div>
-            ),
-          )}
-        </div>
-      </div>
+      {/* my story */}
     </section>
   );
 };
