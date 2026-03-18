@@ -3,7 +3,7 @@ const MyStoryPage = () => {
     <>
       <section className="relative pb-24 z-20">
         <div className="max-w-5xl mx-auto px-6 -mt-16 md:-mt-24">
-          <div className="glossy-panel p-8 md:p-14 rounded-3xl border-white/5 relative overflow-hidden shadow-2xl bg-[#0A0A0A]/90">
+          <div className="backdrop-blur-md border border-white/5 p-8 md:p-14 rounded-3xl relative overflow-hidden shadow-2xl bg-[#0A0A0A]/90">
             <div className="absolute top-0 right-0 w-125 h-125 bg-[#D4AF37] rounded-full blur-[150px] opacity-[0.03] pointer-events-none"></div>
 
             <h2 className="font-serif text-3xl md:text-4xl text-[#D4AF37] tracking-tight mb-10 font-normal text-center md:text-left">
@@ -71,7 +71,7 @@ const MyStoryPage = () => {
           </div>
 
           <div className="space-y-12 text-sm md:text-base text-[#C9C9C9] leading-relaxed font-light">
-            <div className="glossy-panel p-8 md:p-12 rounded-3xl border-white/5">
+            <div className="bg-[#111111]/80 backdrop-blur-md border border-white/5 p-8 md:p-12 rounded-3xl shadow-2xl shadow-black/40">
               <h3 className="font-serif text-3xl text-[#D4AF37] font-normal tracking-tight mb-6">
                 My Story
               </h3>
@@ -98,7 +98,7 @@ const MyStoryPage = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="glossy-panel p-8 md:p-10 rounded-3xl border-white/5">
+              <div className="bg-[#111111]/80 backdrop-blur-md border border-white/5 p-8 md:p-10 rounded-3xl shadow-2xl shadow-black/40">
                 <h3 className="font-serif text-2xl text-[#D4AF37] font-normal tracking-tight mb-6">
                   Continuing the Legacy
                 </h3>
@@ -114,7 +114,7 @@ const MyStoryPage = () => {
                 </p>
               </div>
 
-              <div className="glossy-panel p-8 md:p-10 rounded-3xl border-white/5 bg-[#D4AF37]/5">
+              <div className="bg-[#D4AF37]/5 backdrop-blur-md border border-white/5 p-8 md:p-10 rounded-3xl shadow-2xl shadow-black/40">
                 <h3 className="font-serif text-2xl text-[#D4AF37] font-normal tracking-tight mb-6">
                   My Mission
                 </h3>

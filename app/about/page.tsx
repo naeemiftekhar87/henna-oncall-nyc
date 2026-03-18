@@ -1,4 +1,4 @@
-import { History, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 const AboutPage = () => {
   return (
     <section className="py-32 px-6 relative">
@@ -42,25 +42,23 @@ const AboutPage = () => {
         </div>
 
         {/* My Story Card */}
-        <div className="bg-[#111111] border border-white/5 p-10 sm:p-14 rounded-3xl hover:border-white/10 hover:bg-[#141414] transition-all duration-500 shadow-2xl shadow-black/50 group">
-          <div className="w-14 h-14 rounded-2xl bg-[#D4AF37]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
-            <History className="text-[#D4AF37] w-7 h-7" />
-          </div>
-          <h2 className="font-playfair text-3xl sm:text-4xl tracking-tight font-normal mb-8 text-[#FFFFFF]">
-            My Story
-          </h2>
-          <div className="space-y-6 text-base text-[#A0A0A0] font-light leading-relaxed">
-            <p>
-              Henna has always been part of my story. The art of henna was
-              lovingly passed down through generations in my family. My
-              grandmother was known for her traditional henna artistry, and my
-              mother later became a well-known bridal henna artist admired for
-              the elegance and intricate detail of her designs.
+        <div className="space-y-12 text-sm md:text-base text-[#C9C9C9] leading-relaxed font-light">
+          <div className="bg-[#111111]/80 backdrop-blur-md border border-white/5 p-8 md:p-12 rounded-3xl shadow-2xl shadow-black/40">
+            <h3 className="font-serif text-3xl text-[#D4AF37] font-normal tracking-tight mb-6">
+              My Story
+            </h3>
+            <p className="mb-6">Henna has always been part of my story.</p>
+            <p className="mb-6">
+              The art of henna was lovingly passed down through generations in
+              my family. My grandmother was known for her traditional henna
+              artistry, and my mother later became a respected bridal henna
+              artist admired for the elegance and intricate detail of her
+              designs.
             </p>
-            <p>
+            <p className="mb-6">
               Growing up, I watched my mother create beautiful henna for brides
               and celebrations. I was fascinated by the way each design told a
-              story, carefully drawn patterns that symbolized joy, love, and new
+              story — carefully drawn patterns that symbolize joy, love, and new
               beginnings.
             </p>
             <p>
@@ -69,21 +67,51 @@ const AboutPage = () => {
               learning experience gradually grew into a passion that shaped my
               life.
             </p>
-            <p>
-              Today, I continue that family legacy through Henna On Call NYC,
-              blending generations of traditional artistry with a modern bridal
-              experience designed for today&apos;s brides.
-            </p>
-            <p>
-              Each design I create carries the inspiration of those generations
-              before me while celebrating the unique story of every bride I work
-              with.
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-[#111111]/80 backdrop-blur-md border border-white/5 p-8 md:p-10 rounded-3xl shadow-2xl shadow-black/40">
+              <h3 className="font-serif text-2xl text-[#D4AF37] font-normal tracking-tight mb-6">
+                Continuing the Legacy
+              </h3>
+              <p className="mb-4">
+                Today I continue that family legacy through Henna On Call NYC,
+                blending generations of traditional artistry with a modern
+                bridal experience designed for today’s brides.
+              </p>
+              <p>
+                Each design I create carries the inspiration of those
+                generations before me while celebrating the unique story of
+                every bride I work with.
+              </p>
+            </div>
+
+            <div className="bg-[#D4AF37]/5 backdrop-blur-md border border-white/5 p-8 md:p-10 rounded-3xl shadow-2xl shadow-black/40">
+              <h3 className="font-serif text-2xl text-[#D4AF37] font-normal tracking-tight mb-6">
+                My Mission
+              </h3>
+              <p className="mb-4">My mission is simple.</p>
+              <p className="mb-4 text-white font-normal text-lg leading-snug tracking-tight">
+                To help modern brides feel radiant through personalized luxury
+                henna artistry.
+              </p>
+              <p>
+                Bridal henna is not just about creating beautiful designs. It is
+                about creating a meaningful experience during one of the most
+                special moments of your life.
+              </p>
+            </div>
+          </div>
+
+          <div className="text-center pt-8 border-t border-white/5">
+            <p className="text-lg italic text-[#D4AF37] font-normal max-w-3xl mx-auto tracking-tight">
+              Through Henna On Call NYC, I am honored to create henna designs
+              that celebrate love, culture, and new beginnings while becoming a
+              cherished part of your wedding memories.
             </p>
           </div>
         </div>
       </div>
-
-      {/* my story */}
     </section>
   );
 };

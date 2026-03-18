@@ -1,6 +1,5 @@
 "use client";
 
-import { US_CITIES } from "@/app/lib/us-cities";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -40,7 +39,6 @@ export default function ContactSection() {
     register,
     handleSubmit,
     reset,
-    setValue,
     formState: { errors },
   } = useForm<BookingFormData>({
     defaultValues: {
@@ -206,36 +204,13 @@ export default function ContactSection() {
                 <label className={labelClass}>Apt / Suite (Optional)</label>
               </div>
               <div className="relative group">
-                <select
-                  {...register("city", {
-                    required: "City is required",
-                    onChange: (e) => {
-                      const selected = US_CITIES.find(
-                        (c) => `${c.city}, ${c.state}` === e.target.value,
-                      );
-                      if (selected) {
-                        setValue("state", selected.state, {
-                          shouldValidate: true,
-                        });
-                      }
-                    },
-                  })}
-                  className="w-full bg-transparent border-b border-white/10 text-base text-white py-3 focus:outline-none focus:border-[#D4AF37] transition-colors peer"
-                >
-                  <option value="">Select City</option>
-                  {US_CITIES.map((c, i) => (
-                    <option
-                      className="text-black"
-                      key={`${c.city}-${c.state}-${i}`}
-                      value={`${c.city}, ${c.state}`}
-                    >
-                      {c.city}, {c.state}
-                    </option>
-                  ))}
-                </select>
-                <label className="absolute left-0 -top-3.5 text-sm text-[#D4AF37]">
-                  City
-                </label>
+                <input
+                  type="text"
+                  {...register("city", { required: "City is required" })}
+                  className={inputClass}
+                  placeholder="City"
+                />
+                <label className={labelClass}>City</label>
                 {errors.city && (
                   <span className="text-red-400 text-xs mt-1 block">
                     {errors.city.message}
@@ -247,13 +222,72 @@ export default function ContactSection() {
             {/* State and Zip */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
               <div className="relative group">
-                <input
-                  type="text"
+                <select
                   {...register("state", { required: "State is required" })}
-                  className={inputClass}
-                  placeholder="State"
-                />
-                <label className={labelClass}>State</label>
+                  className="w-full bg-transparent border-b border-white/10 text-base text-white py-3 focus:outline-none focus:border-[#D4AF37] transition-colors peer"
+                >
+                  <option value="">Select State</option>
+                  {[
+                    "AL",
+                    "AK",
+                    "AZ",
+                    "AR",
+                    "CA",
+                    "CO",
+                    "CT",
+                    "DE",
+                    "FL",
+                    "GA",
+                    "HI",
+                    "ID",
+                    "IL",
+                    "IN",
+                    "IA",
+                    "KS",
+                    "KY",
+                    "LA",
+                    "ME",
+                    "MD",
+                    "MA",
+                    "MI",
+                    "MN",
+                    "MS",
+                    "MO",
+                    "MT",
+                    "NE",
+                    "NV",
+                    "NH",
+                    "NJ",
+                    "NM",
+                    "NY",
+                    "NC",
+                    "ND",
+                    "OH",
+                    "OK",
+                    "OR",
+                    "PA",
+                    "RI",
+                    "SC",
+                    "SD",
+                    "TN",
+                    "TX",
+                    "UT",
+                    "VT",
+                    "VA",
+                    "WA",
+                    "WV",
+                    "WI",
+                    "WY",
+                    "DC",
+                  ].map((st) => (
+                    <option className="text-black" key={st} value={st}>
+                      {st}
+                    </option>
+                  ))}
+                </select>
+                <label className="absolute left-0 -top-3.5 text-sm text-[#D4AF37]">
+                  State
+                </label>
                 {errors.state && (
                   <span className="text-red-400 text-xs mt-1 block">
                     {errors.state.message}
