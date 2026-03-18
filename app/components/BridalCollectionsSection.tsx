@@ -2,6 +2,7 @@ import bridalBloom from "@/app/assets/service/Bridal BLOOM.jpeg";
 import bridalBlush from "@/app/assets/service/Bridal BLUSH.jpg";
 import bridalGrace from "@/app/assets/service/Bridal GRACE.jpeg";
 import bridalLush from "@/app/assets/service/Bridal LUSH.png";
+import { CheckCircle, Clock, Shirt } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
 
 type ServiceImages = {
@@ -131,85 +132,82 @@ export default function BridalCollectionsSection({
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="space-y-10">
           {collections.map((collection) => (
             <div
               key={collection.name}
-              className={`bg-[#111111] border rounded-3xl overflow-hidden hover:border-white/20 transition-all duration-500 flex flex-col group shadow-lg ${
-                collection.isPrimary
-                  ? "border-[#D4AF37]/30 shadow-[0_10px_40px_-10px_rgba(212,175,55,0.1)]"
-                  : "border-white/5 shadow-black/40"
+              className={`bg-[#111111]/80 backdrop-blur-md border rounded-3xl overflow-hidden hover:border-[#D4AF37]/20 transition-colors flex flex-col lg:flex-row group shadow-2xl shadow-black/40 ${
+                collection.isPrimary ? "border-[#D4AF37]/30" : "border-white/5"
               }`}
             >
-              <div className="aspect-4/3 w-full relative overflow-hidden bg-[#1A1A1A]">
+              <div className="w-full lg:w-2/5 h-80 lg:h-auto shrink-0 bg-[#111] relative overflow-hidden">
                 <Image
                   src={collection.image}
                   alt={collection.name}
                   fill
-                  className=" group-hover:scale-105 transition-transform duration-700"
+                  className="object-cover group-hover:scale-105 transition-transform duration-1000 opacity-90"
                   unoptimized={collection.isExternal}
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-[#111111] to-transparent opacity-80"></div>
                 {collection.badge && (
                   <div className="absolute top-4 right-4 bg-[#D4AF37] text-black text-xs px-3 py-1 rounded-full font-medium tracking-wide">
                     {collection.badge}
                   </div>
                 )}
               </div>
-              <div className="p-8 flex flex-col grow relative z-10 -mt-8">
-                <div className="mb-6">
-                  <h3 className="font-playfair text-3xl tracking-tight text-[#FFFFFF] mb-2">
-                    {collection.name}
-                  </h3>
-                  <p className="text-sm text-[#D4AF37] uppercase tracking-widest mb-3 font-medium">
-                    Starting at {collection.price}
-                  </p>
-                  <p className="text-sm text-[#A0A0A0] italic font-light">
-                    {collection.tagline}
-                  </p>
+              <div className="w-full lg:w-3/5 p-8 lg:p-12 flex flex-col justify-center relative z-10 text-sm font-light text-[#C9C9C9] leading-relaxed">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-6 mb-6">
+                  <div>
+                    <h3 className="font-playfair text-4xl text-[#D4AF37] mb-2 tracking-tight font-normal uppercase">
+                      {collection.name}
+                    </h3>
+                    <p className="text-xl text-[#FFFFFF] mb-3 font-normal tracking-tight">
+                      Starting at {collection.price}
+                    </p>
+                    <p className="text-xs text-[#D4AF37] uppercase tracking-wider">
+                      {collection.tagline}
+                    </p>
+                  </div>
+                  <a
+                    href="#contact"
+                    className="inline-flex px-6 py-2.5 text-xs font-normal text-black bg-[#D4AF37] hover:bg-[#E6C76B] rounded-full transition-all md:w-auto w-fit tracking-tight"
+                  >
+                    Select {collection.name}
+                  </a>
                 </div>
-                <div className="grow space-y-6">
-                  <p className="text-sm text-[#A0A0A0] font-light leading-relaxed">
-                    {collection.description}
-                  </p>
-                  <div className="space-y-3">
-                    <span className="text-sm text-[#FFFFFF] font-normal block">
-                      Recommended For:
-                    </span>
-                    <ul className="text-sm text-[#A0A0A0] font-light space-y-2 list-none pl-0">
+
+                <p className="mb-8">{collection.description}</p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                  <div>
+                    <h4 className="text-white font-normal mb-4 tracking-tight uppercase text-xs">
+                      What&apos;s Included
+                    </h4>
+                    <ul className="space-y-3 text-xs">
+                      {collection.includes.map((item) => (
+                        <li key={item} className="flex items-start gap-3">
+                          <CheckCircle className="text-[#D4AF37] mt-0.5 shrink-0 w-4 h-4" />
+                          {item}
+                        </li>
+                      ))}
+                      <li className="flex items-start gap-3">
+                        <Clock className="text-[#D4AF37] mt-0.5 shrink-0 w-4 h-4" />
+                        Session Duration: {collection.duration}
+                      </li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="text-white font-normal mb-4 tracking-tight uppercase text-xs">
+                      Guide: Perfect For Brides Wearing
+                    </h4>
+                    <ul className="space-y-3 text-xs mb-4">
                       {collection.recommendedFor.map((item) => (
-                        <li key={item} className="flex items-center gap-3">
-                          <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full"></div>
+                        <li key={item} className="flex items-start gap-3">
+                          <Shirt className="text-[#D4AF37] mt-0.5 shrink-0 w-4 h-4" />
                           {item}
                         </li>
                       ))}
                     </ul>
                   </div>
-                  <div className="space-y-3">
-                    <span className="text-sm text-[#FFFFFF] font-normal block">
-                      What&apos;s Included:
-                    </span>
-                    <ul className="text-sm text-[#A0A0A0] font-light space-y-2 list-none pl-0">
-                      {collection.includes.map((item) => (
-                        <li key={item}>• {item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-                <div className="mt-8 pt-6 border-t border-white/5">
-                  <div className="flex justify-between items-center text-sm text-[#A0A0A0] font-light mb-4">
-                    <span>Duration: {collection.duration}</span>
-                  </div>
-                  <a
-                    href="#contact"
-                    className={`w-full block text-center text-sm font-medium py-3 rounded-xl transition-all duration-300 ${
-                      collection.isPrimary
-                        ? "bg-[#D4AF37] border border-[#D4AF37] text-black hover:bg-[#E6C76B] shadow-[0_0_15px_rgba(212,175,55,0.2)]"
-                        : "bg-white/5 border border-white/10 text-[#FFFFFF] hover:bg-[#D4AF37] hover:text-black hover:border-[#D4AF37]"
-                    }`}
-                  >
-                    Book {collection.name}
-                  </a>
                 </div>
               </div>
             </div>
