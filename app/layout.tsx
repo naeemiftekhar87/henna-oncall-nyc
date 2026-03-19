@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Poppins } from "next/font/google";
-import Footer from "./components/Footer";
-import Navigation from "./components/Navigation";
+import LayoutShell from "./components/LayoutShell";
 import "./globals.css";
 import { getSiteConfig } from "./lib/site-config";
 
@@ -59,9 +58,7 @@ export default async function RootLayout({
         className={`${playfairDisplay.variable} ${poppins.variable} bg-[#0A0A0A] text-[#FFFFFF] font-poppins antialiased selection:bg-[#D4AF37] selection:text-black`}
       >
         <main>
-          <Navigation logoUrl={logoUrl} />
-          {children}
-          <Footer logoUrl={logoUrl} />
+          <LayoutShell logoUrl={logoUrl}>{children}</LayoutShell>
         </main>
       </body>
     </html>

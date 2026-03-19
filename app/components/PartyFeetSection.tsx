@@ -1,3 +1,7 @@
+import partyImg1 from "@/app/assets/gallary/3.jpg";
+import partyImg2 from "@/app/assets/gallary/5.jpg";
+import partyImg3 from "@/app/assets/gallary/6.jpg";
+import partyImg4 from "@/app/assets/gallary/7.jpg";
 import { Crown } from "lucide-react";
 import Image from "next/image";
 
@@ -167,9 +171,25 @@ export default function PartyFeetSection({
               events.
             </p>
 
-            <div className="border border-[#D4AF37]/30 rounded-2xl sm:rounded-3xl p-6 sm:p-10 bg-linear-to-b from-[#111111] to-[#0A0A0A] relative overflow-hidden grow flex flex-col justify-center shadow-[0_0_30px_rgba(212,175,55,0.05)] hover:border-[#D4AF37]/60 transition-colors duration-500">
+            <div className="border border-[#D4AF37]/30 rounded-2xl sm:rounded-3xl bg-linear-to-b from-[#111111] to-[#0A0A0A] relative overflow-hidden grow flex flex-col shadow-[0_0_30px_rgba(212,175,55,0.05)] hover:border-[#D4AF37]/60 transition-colors duration-500">
+              <div className="grid grid-cols-2 gap-0.5">
+                {[partyImg1, partyImg2, partyImg3, partyImg4].map((img, i) => (
+                  <div
+                    key={i}
+                    className="relative h-32 sm:h-40 overflow-hidden"
+                  >
+                    <Image
+                      src={img}
+                      alt={`Party henna ${i + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/30" />
+                  </div>
+                ))}
+              </div>
               <Crown className="absolute -bottom-10 -right-10 w-64 h-64 text-[#D4AF37] opacity-5" />
-              <div className="relative z-10">
+              <div className="relative z-10 p-6 sm:p-10">
                 <h3 className="font-playfair text-3xl tracking-tight font-normal text-[#FFFFFF] mb-6">
                   Group Events & Celebrations
                 </h3>

@@ -47,16 +47,22 @@ model Review {
 }
 
 model Service {
-  id        String   @id @default(cuid())
-  key       String   @unique // "blush", "bloom", etc.
-  name      String
-  price     Float
-  duration  String
-  category  String // "bridal", "feet", "party"
-  active    Boolean  @default(true)
-  sortOrder Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  key         String   @unique // "blush", "bloom", etc.
+  name        String
+  price       Float
+  duration    String
+  category    String // "bridal", "feet", "party"
+  description String?
+  tagline     String?
+  coverage    String?
+  includes    String? // JSON array of strings
+  guide       String? // JSON array of strings
+  imageUrl    String?
+  active      Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model SiteConfig {

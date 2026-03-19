@@ -23,7 +23,22 @@ export async function PATCH(request: NextRequest) {
   }
 
   try {
-    const { id, name, price, duration, active } = await request.json();
+    const {
+      id,
+      name,
+      price,
+      duration,
+      active,
+      category,
+      description,
+      imageUrl,
+      sortOrder,
+      key,
+      tagline,
+      coverage,
+      includes,
+      guide,
+    } = await request.json();
     if (!id) {
       return NextResponse.json(
         { error: "Service ID required" },
@@ -36,6 +51,15 @@ export async function PATCH(request: NextRequest) {
     if (price !== undefined) data.price = parseFloat(price);
     if (duration !== undefined) data.duration = duration;
     if (active !== undefined) data.active = active;
+    if (category !== undefined) data.category = category;
+    if (description !== undefined) data.description = description;
+    if (tagline !== undefined) data.tagline = tagline;
+    if (coverage !== undefined) data.coverage = coverage;
+    if (includes !== undefined) data.includes = includes;
+    if (guide !== undefined) data.guide = guide;
+    if (imageUrl !== undefined) data.imageUrl = imageUrl;
+    if (sortOrder !== undefined) data.sortOrder = parseInt(sortOrder, 10);
+    if (key !== undefined) data.key = key;
 
     const service = await prisma.service.update({
       where: { id },

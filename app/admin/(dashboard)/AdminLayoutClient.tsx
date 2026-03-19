@@ -6,6 +6,7 @@ import {
   Flower2,
   Footprints,
   Gem,
+  Home,
   ImageIcon,
   LayoutDashboard,
   LogOut,
@@ -197,7 +198,7 @@ export default function AdminLayoutClient({
             })}
           </nav>
 
-          <div className="p-4 border-t border-white/5">
+          <div className="p-4 border-t border-white/5 space-y-1">
             <button
               onClick={handleLogout}
               className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-[#A0A0A0] hover:text-red-400 hover:bg-red-500/5 transition-all w-full"
@@ -205,6 +206,13 @@ export default function AdminLayoutClient({
               <LogOut size={18} />
               Sign Out
             </button>
+            <Link
+              href="/"
+              className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-[#A0A0A0] hover:text-white hover:bg-white/5 transition-all w-full"
+            >
+              <Home size={18} />
+              Back to Home
+            </Link>
           </div>
         </aside>
 
