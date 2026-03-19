@@ -132,6 +132,10 @@ async function main() {
     { key: "gallery_10", value: "" },
     { key: "gallery_11", value: "" },
     { key: "gallery_12", value: "" },
+    { key: "party_1", value: "" },
+    { key: "party_2", value: "" },
+    { key: "party_3", value: "" },
+    { key: "party_4", value: "" },
   ];
 
   for (const cfg of siteDefaults) {

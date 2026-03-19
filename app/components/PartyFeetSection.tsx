@@ -11,6 +11,8 @@ type ServiceImages = {
   "regal-steps"?: string;
 };
 
+type PartyImages = string[];
+
 const FALLBACK_IMAGES = {
   "petal-feet":
     "https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?auto=format&fit=crop&w=600&q=80",
@@ -22,8 +24,10 @@ const FALLBACK_IMAGES = {
 
 export default function PartyFeetSection({
   serviceImages,
+  partyImages,
 }: {
   serviceImages?: ServiceImages;
+  partyImages?: PartyImages;
 }) {
   const getImage = (key: keyof typeof FALLBACK_IMAGES) =>
     serviceImages?.[key] || FALLBACK_IMAGES[key];
@@ -43,7 +47,7 @@ export default function PartyFeetSection({
       tagline: "Detailed • Romantic",
       coverage: '2" above ankle',
       duration: "Approx 1.5 hours",
-      image: getImage("blooming-feet"),
+      image: getImage("petal-feet"),
     },
   ];
 
@@ -173,20 +177,26 @@ export default function PartyFeetSection({
 
             <div className="border border-[#D4AF37]/30 rounded-2xl sm:rounded-3xl bg-linear-to-b from-[#111111] to-[#0A0A0A] relative overflow-hidden grow flex flex-col shadow-[0_0_30px_rgba(212,175,55,0.05)] hover:border-[#D4AF37]/60 transition-colors duration-500">
               <div className="grid grid-cols-2 gap-0.5">
-                {[partyImg1, partyImg2, partyImg3, partyImg4].map((img, i) => (
-                  <div
-                    key={i}
-                    className="relative h-32 sm:h-40 overflow-hidden"
-                  >
-                    <Image
-                      src={img}
-                      alt={`Party henna ${i + 1}`}
-                      fill
-                      className="object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/30" />
-                  </div>
-                ))}
+                {[partyImg1, partyImg2, partyImg3, partyImg4].map(
+                  (fallback, i) => {
+                    const url = partyImages?.[i];
+                    return (
+                      <div
+                        key={i}
+                        className="relative h-32 sm:h-40 overflow-hidden"
+                      >
+                        <Image
+                          src={url || fallback}
+                          alt={`Party henna ${i + 1}`}
+                          fill
+                          className="object-cover"
+                          unoptimized={!!url}
+                        />
+                        <div className="absolute inset-0 bg-black/30" />
+                      </div>
+                    );
+                  },
+                )}
               </div>
               <Crown className="absolute -bottom-10 -right-10 w-64 h-64 text-[#D4AF37] opacity-5" />
               <div className="relative z-10 p-6 sm:p-10">

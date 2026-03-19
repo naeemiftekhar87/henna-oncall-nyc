@@ -30,6 +30,10 @@ export default async function Home() {
           "blooming-feet": config.service_blooming_feet_image,
           "regal-steps": config.service_regal_steps_image,
         }}
+        partyImages={Array.from(
+          { length: 4 },
+          (_, i) => config[`party_${i + 1}`] || "",
+        )}
       />
       <GallerySection
         galleryUrls={Array.from(

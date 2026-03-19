@@ -44,9 +44,19 @@ const IMAGE_SLOTS: ImageSlot[] = [
   { key: "gallery_10", label: "Gallery 10", group: "Gallery" },
   { key: "gallery_11", label: "Gallery 11", group: "Gallery" },
   { key: "gallery_12", label: "Gallery 12", group: "Gallery" },
+  { key: "party_1", label: "Party 1", group: "Party Henna" },
+  { key: "party_2", label: "Party 2", group: "Party Henna" },
+  { key: "party_3", label: "Party 3", group: "Party Henna" },
+  { key: "party_4", label: "Party 4", group: "Party Henna" },
 ];
 
-const GROUPS = ["Brand", "Bridal Services", "Feet Services", "Gallery"];
+const GROUPS = [
+  "Brand",
+  "Bridal Services",
+  "Feet Services",
+  "Gallery",
+  "Party Henna",
+];
 
 export default function ContentManagementPage() {
   const [config, setConfig] = useState<Record<string, string>>({});
@@ -165,6 +175,7 @@ export default function ContentManagementPage() {
               {group === "Feet Services" &&
                 "Service card images for feet packages"}
               {group === "Gallery" && "Gallery grid images"}
+              {group === "Party Henna" && "Party henna section showcase images"}
             </p>
             <div
               className={`grid gap-4 ${
