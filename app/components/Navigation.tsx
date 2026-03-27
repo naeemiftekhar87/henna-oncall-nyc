@@ -4,13 +4,12 @@ import logo from "@/app/assets/logo.jpg";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 export default function Navigation({ logoUrl }: { logoUrl?: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
 
   // Prevent body scroll when menu is open
   useEffect(() => {
@@ -27,7 +26,7 @@ export default function Navigation({ logoUrl }: { logoUrl?: string }) {
     { href: "/#bridal", label: "Bridal Henna" },
     { href: "/#party-feet", label: "Party & Feet Henna" },
     { href: "/guide", label: "Guide" },
-    { href: "/#gallery-reviews", label: "Gallery & Reviews" },
+    { href: "/#gallery", label: "Gallery" },
     { href: "/faq", label: "FAQ" },
   ];
 
@@ -99,7 +98,7 @@ export default function Navigation({ logoUrl }: { logoUrl?: string }) {
             : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="flex flex-col items-center justify-center gap-6 pt-12 px-6">
+        <div className="flex flex-col items-center justify-center gap-6 pt-12 px-6 bg-[#111111]">
           {navLinks.map((link) => (
             <Link
               key={link.href}

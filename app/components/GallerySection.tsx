@@ -42,7 +42,7 @@ export default function GallerySection({
 
   return (
     <section
-      id="gallery-reviews"
+      id="gallery"
       className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 bg-[#050505] border-y border-white/5"
     >
       <div className="max-w-7xl mx-auto">

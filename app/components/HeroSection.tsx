@@ -16,7 +16,7 @@ export default function HeroSection({
           src={heroImageUrl || heroBanner}
           alt="Hero Banner"
           fill
-          className="w-full h-full object-cover opacity-70"
+          className="w-full h-full object-cover opacity-100"
           priority
           unoptimized={!!heroImageUrl}
         />

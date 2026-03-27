@@ -12,7 +12,6 @@ import {
   LayoutDashboard,
   LogOut,
   Menu,
-  MessageSquare,
   PartyPopper,
   Settings2,
   Sparkles,
@@ -30,12 +29,6 @@ const navItems = [
     label: "Analytics",
     icon: BarChart3,
     key: "analytics",
-  },
-  {
-    href: "/admin/reviews",
-    label: "Reviews",
-    icon: MessageSquare,
-    key: "reviews",
   },
   {
     href: "/admin/services-manage",

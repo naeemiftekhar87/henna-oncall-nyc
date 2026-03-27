@@ -34,18 +34,6 @@ model Booking {
   updatedAt DateTime @updatedAt
 }
 
-model Review {
-  id        String   @id @default(cuid())
-  name      String
-  email     String
-  rating    Int // 1-5
-  text      String
-  service   String?
-  approved  Boolean  @default(false)
-  source    String   @default("website") // "website" or "google"
-  createdAt DateTime @default(now())
-}
-
 model Service {
   id          String   @id @default(cuid())
   key         String   @unique // "blush", "bloom", etc.

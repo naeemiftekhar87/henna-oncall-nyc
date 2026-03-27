@@ -3,7 +3,7 @@ import ContactSection from "./components/ContactSection";
 import GallerySection from "./components/GallerySection";
 import HeroSection from "./components/HeroSection";
 import PartyFeetSection from "./components/PartyFeetSection";
-import ReviewsSection from "./components/ReviewsSectionServer";
+import Reviews from "./components/Reviews";
 import RoadmapSection from "./components/RoadmapSection";
 import TopBar from "./components/TopBar";
 import { getSiteConfig } from "./lib/site-config";
@@ -41,7 +41,7 @@ export default async function Home() {
           (_, i) => config[`gallery_${i + 1}`] || "",
         )}
       />
-      <ReviewsSection />
+      <Reviews />
       <ContactSection />
     </>
   );

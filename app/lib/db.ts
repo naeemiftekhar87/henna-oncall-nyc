@@ -10,10 +10,15 @@ const globalForPrisma = globalThis as unknown as {
 function createPrismaClient() {
   const pool =
     globalForPrisma.pool ||
-    new pg.Pool({ connectionString: process.env.DATABASE_URL! });
+    new pg.Pool({
+      connectionString: process.env.DATABASE_URL!,
+      ssl: { rejectUnauthorized: false },
+    });
   if (process.env.NODE_ENV !== "production") globalForPrisma.pool = pool;
 
-  const adapter = new PrismaPg({ pool });
+  const adapter = new PrismaPg(
+    pool as unknown as ConstructorParameters<typeof PrismaPg>[0],
+  );
   return new PrismaClient({ adapter });
 }
 
