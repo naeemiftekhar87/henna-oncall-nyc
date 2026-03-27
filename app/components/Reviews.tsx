@@ -1,7 +1,22 @@
 "use client";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 
 const Reviews = () => {
+  const elfsightRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (
+      !document.querySelector(
+        'script[src="https://elfsightcdn.com/platform.js"]',
+      )
+    ) {
+      const script = document.createElement("script");
+      script.src = "https://elfsightcdn.com/platform.js";
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
   return (
     <section className="py-32 px-6 relative">
       <div className="max-w-7xl mx-auto text-center">
@@ -27,10 +42,11 @@ const Reviews = () => {
           What Brides Say
         </h2>
 
-        <script src="https://elfsightcdn.com/platform.js" async></script>
         <div
+          ref={elfsightRef}
           className="elfsight-app-b0150154-707e-4029-8a6c-1ddcb6628f7d"
           data-elfsight-app-lazy
+          suppressHydrationWarning
         ></div>
 
         <Link

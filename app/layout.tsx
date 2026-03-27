@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Poppins } from "next/font/google";
+import { Toaster } from "sonner";
 import LayoutShell from "./components/LayoutShell";
 import "./globals.css";
 import { getSiteConfig } from "./lib/site-config";
@@ -57,6 +58,16 @@ export default async function RootLayout({
         suppressHydrationWarning
         className={`${playfairDisplay.variable} ${poppins.variable} bg-[#0A0A0A] text-[#FFFFFF] font-poppins antialiased selection:bg-[#D4AF37] selection:text-black`}
       >
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            style: {
+              background: "#111111",
+              border: "1px solid rgba(255,255,255,0.1)",
+              color: "#fff",
+            },
+          }}
+        />
         <main>
           <LayoutShell logoUrl={logoUrl}>{children}</LayoutShell>
         </main>

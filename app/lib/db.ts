@@ -8,13 +8,18 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 function createPrismaClient() {
-  const pool =
-    globalForPrisma.pool ||
-    new pg.Pool({
-      connectionString: process.env.DATABASE_URL!,
-      ssl: { rejectUnauthorized: false },
-    });
-  if (process.env.NODE_ENV !== "production") globalForPrisma.pool = pool;
+  // End any stale pool from a previous hot-reload
+  if (globalForPrisma.pool) {
+    globalForPrisma.pool.end().catch(() => {});
+  }
+
+  const pool = new pg.Pool({
+    connectionString: process.env.DATABASE_URL!,
+    ssl: { rejectUnauthorized: false },
+    max: 2,
+    idleTimeoutMillis: 30_000,
+  });
+  globalForPrisma.pool = pool;
 
   const adapter = new PrismaPg(
     pool as unknown as ConstructorParameters<typeof PrismaPg>[0],
@@ -24,4 +29,4 @@ function createPrismaClient() {
 
 export const prisma = globalForPrisma.prisma || createPrismaClient();
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+globalForPrisma.prisma = prisma;

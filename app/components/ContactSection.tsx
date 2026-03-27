@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 type BookingFormData = {
   name: string;
@@ -63,9 +64,15 @@ export default function ContactSection() {
 
       setSubmitStatus("success");
       reset();
+      toast.success("Booking submitted successfully!", {
+        description: "We'll be in touch soon to confirm your appointment.",
+      });
       setTimeout(() => setSubmitStatus("idle"), 5000);
     } catch {
       setSubmitStatus("error");
+      toast.error("Something went wrong", {
+        description: "Please try again or contact us directly.",
+      });
       setTimeout(() => setSubmitStatus("idle"), 5000);
     }
   };
