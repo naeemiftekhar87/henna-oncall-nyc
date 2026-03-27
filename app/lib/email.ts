@@ -43,7 +43,7 @@ export async function sendBookingNotification(booking: BookingData) {
   }
 
   const serviceName = SERVICE_LABELS[booking.service] || booking.service;
-  const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER;
+  const adminEmail = "Contact.jahedahmed@gmail.com";
 
   // Email to admin
   await transporter.sendMail({

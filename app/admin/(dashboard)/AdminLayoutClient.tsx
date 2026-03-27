@@ -11,6 +11,7 @@ import {
   KeyRound,
   LayoutDashboard,
   LogOut,
+  Mail,
   Menu,
   PartyPopper,
   Settings2,
@@ -204,6 +205,18 @@ export default function AdminLayoutClient({
             >
               <KeyRound size={18} />
               Change Password
+            </Link>
+            <Link
+              href="/admin/change-email"
+              onClick={() => setSidebarOpen(false)}
+              className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-all w-full ${
+                pathname === "/admin/change-email"
+                  ? "bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/20"
+                  : "text-[#A0A0A0] hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <Mail size={18} />
+              Change Email
             </Link>
             <button
               onClick={handleLogout}
