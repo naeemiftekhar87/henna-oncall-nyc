@@ -1,5 +1,6 @@
 import { getSession } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/db";
+import { sendCustomerConfirmation } from "@/app/lib/email";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -48,6 +49,12 @@ export async function PATCH(request: NextRequest) {
       where: { id },
       data: { status },
     });
+
+    if (status === "confirmed") {
+      sendCustomerConfirmation(booking).catch((err) =>
+        console.error("Customer confirmation email failed:", err),
+      );
+    }
 
     return NextResponse.json({ booking });
   } catch (error) {

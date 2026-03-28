@@ -1,5 +1,5 @@
 import { prisma } from "@/app/lib/db";
-import { sendBookingNotification } from "@/app/lib/email";
+import { sendAdminNotification } from "@/app/lib/email";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -58,8 +58,8 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Send email notification (non-blocking)
-    sendBookingNotification(booking).catch((err) =>
+    // Send admin notification (non-blocking)
+    sendAdminNotification(booking).catch((err) =>
       console.error("Email notification failed:", err),
     );
 
