@@ -28,6 +28,7 @@ type BookingData = {
   date: string;
   service: string;
   price: number;
+  partySize?: number | null;
   street: string;
   apt?: string | null;
   city: string;
@@ -60,6 +61,7 @@ export async function sendBookingNotification(booking: BookingData) {
           <tr><td style="padding: 8px 0; color: #A0A0A0;">Service</td><td style="padding: 8px 0; color: #D4AF37;">${serviceName}</td></tr>
           <tr><td style="padding: 8px 0; color: #A0A0A0;">Date</td><td style="padding: 8px 0; color: #fff;">${booking.date}</td></tr>
           <tr><td style="padding: 8px 0; color: #A0A0A0;">Price</td><td style="padding: 8px 0; color: #fff;">$${booking.price}</td></tr>
+          ${booking.partySize ? `<tr><td style="padding: 8px 0; color: #A0A0A0;">Party Size</td><td style="padding: 8px 0; color: #D4AF37;">${booking.partySize} persons</td></tr>` : ""}
           <tr><td style="padding: 8px 0; color: #A0A0A0;">Address</td><td style="padding: 8px 0; color: #fff;">${booking.street}${booking.apt ? `, ${booking.apt}` : ""}<br>${booking.city}, ${booking.state} ${booking.zip}</td></tr>
           ${booking.message ? `<tr><td style="padding: 8px 0; color: #A0A0A0;">Message</td><td style="padding: 8px 0; color: #fff;">${booking.message}</td></tr>` : ""}
         </table>

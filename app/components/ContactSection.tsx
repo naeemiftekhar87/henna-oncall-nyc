@@ -15,6 +15,7 @@ type BookingFormData = {
   state: string;
   zip: string;
   service: string;
+  partySize: string;
   message: string;
 };
 
@@ -40,24 +41,32 @@ export default function ContactSection() {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm<BookingFormData>({
     defaultValues: {
       service: "",
+      partySize: "",
     },
   });
+
+  const selectedService = watch("service");
 
   const onSubmit = async (data: BookingFormData) => {
     setSubmitStatus("loading");
 
     const selected = SERVICES.find((s) => s.value === data.service);
     const price = selected?.price ?? 0;
+    const partySize =
+      data.service === "party" && data.partySize
+        ? parseInt(data.partySize)
+        : null;
 
     try {
       const res = await fetch("/api/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, price }),
+        body: JSON.stringify({ ...data, price, partySize }),
       });
 
       if (!res.ok) throw new Error("Booking failed");
@@ -343,6 +352,31 @@ export default function ContactSection() {
                 </span>
               )}
             </div>
+
+            {/* Party Size - only shown when Party Henna is selected */}
+            {selectedService === "party" && (
+              <div className="relative group">
+                <input
+                  type="number"
+                  min="1"
+                  {...register("partySize", {
+                    required:
+                      selectedService === "party"
+                        ? "Number of persons is required"
+                        : false,
+                    min: { value: 1, message: "At least 1 person required" },
+                  })}
+                  className={inputClass}
+                  placeholder="Number of Persons"
+                />
+                <label className={labelClass}>Number of Persons</label>
+                {errors.partySize && (
+                  <span className="text-red-400 text-xs mt-1 block">
+                    {errors.partySize.message}
+                  </span>
+                )}
+              </div>
+            )}
 
             {/* Message */}
             <div className="relative group">

@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
       service,
       message,
       price,
+      partySize,
     } = body;
 
     if (
@@ -51,6 +52,8 @@ export async function POST(request: NextRequest) {
         service,
         message: message || null,
         price: parseFloat(price) || 0,
+        partySize:
+          service === "party" && partySize ? parseInt(partySize) : null,
         status: "pending",
       },
     });

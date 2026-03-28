@@ -17,6 +17,7 @@ type Booking = {
   service: string;
   message: string | null;
   price: number;
+  partySize: number | null;
   status: string;
   createdAt: string;
 };
@@ -124,6 +125,11 @@ export default function BookingTable({
                   </div>
                   <div className="text-[#A0A0A0] text-sm">
                     {SERVICE_LABELS[booking.service] || booking.service}
+                    {booking.partySize && (
+                      <span className="ml-1 text-[#D4AF37]">
+                        ({booking.partySize} persons)
+                      </span>
+                    )}
                   </div>
                   <div className="text-[#A0A0A0] text-sm">{booking.date}</div>
                   <div className="text-white text-sm font-medium">
@@ -181,6 +187,16 @@ export default function BookingTable({
                         {new Date(booking.createdAt).toLocaleDateString()}
                       </p>
                     </div>
+                    {booking.partySize && (
+                      <div>
+                        <p className="text-[#666] text-xs uppercase tracking-wider mb-1">
+                          Party Size
+                        </p>
+                        <p className="text-white text-sm">
+                          {booking.partySize} persons
+                        </p>
+                      </div>
+                    )}
                     {booking.message && (
                       <div className="sm:col-span-2 lg:col-span-3">
                         <p className="text-[#666] text-xs uppercase tracking-wider mb-1">
