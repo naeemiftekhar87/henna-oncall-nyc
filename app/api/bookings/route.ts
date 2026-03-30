@@ -1,5 +1,8 @@
 import { prisma } from "@/app/lib/db";
-import { sendAdminNotification } from "@/app/lib/email";
+import {
+  sendAdminNotification,
+  sendCustomerConfirmation,
+} from "@/app/lib/email";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -58,10 +61,15 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Send admin notification (non-blocking)
-    sendAdminNotification(booking).catch((err) =>
-      console.error("Email notification failed:", err),
-    );
+    // Send emails (must await — Vercel terminates after response)
+    try {
+      await Promise.all([
+        sendAdminNotification(booking),
+        sendCustomerConfirmation(booking),
+      ]);
+    } catch (err) {
+      console.error("Email notification failed:", err);
+    }
 
     return NextResponse.json({ success: true, booking }, { status: 201 });
   } catch (error) {
