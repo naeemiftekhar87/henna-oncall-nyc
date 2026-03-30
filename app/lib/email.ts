@@ -90,7 +90,7 @@ export async function sendCustomerConfirmation(booking: BookingData) {
           <tr><td style="padding: 8px 0; color: #A0A0A0;">Date</td><td style="padding: 8px 0; color: #fff;">${booking.date}</td></tr>
           <tr><td style="padding: 8px 0; color: #A0A0A0;">Price</td><td style="padding: 8px 0; color: #fff;">$${booking.price}</td></tr>
         </table>
-        <p style="margin-top: 24px; color: #A0A0A0; font-size: 14px;">Your appointment is confirmed. A 50% deposit reserves your date.</p>
+        <p style="margin-top: 24px; color: #A0A0A0; font-size: 14px;">Your appointment is confirmed. A 20% deposit reserves your date.</p>
         <p style="margin-top: 16px; color: #666; font-size: 12px;">Henna On Call NYC | Luxury Bridal Henna</p>
       </div>
     `,
