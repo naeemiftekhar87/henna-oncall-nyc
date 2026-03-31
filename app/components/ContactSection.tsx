@@ -14,9 +14,10 @@ type BookingFormData = {
   city: string;
   state: string;
   zip: string;
-  service: string;
+  services: string[];
   partySize: string;
-  numberOfHours: string;
+  durationHours: string;
+  durationMinutes: string;
   message: string;
 };
 
@@ -46,32 +47,43 @@ export default function ContactSection() {
     formState: { errors },
   } = useForm<BookingFormData>({
     defaultValues: {
-      service: "",
+      services: [],
       partySize: "",
-      numberOfHours: "",
+      durationHours: "0",
+      durationMinutes: "0",
     },
   });
 
-  const selectedService = watch("service");
+  const selectedServices = watch("services") || [];
 
   const onSubmit = async (data: BookingFormData) => {
     setSubmitStatus("loading");
 
-    const selected = SERVICES.find((s) => s.value === data.service);
-    const price = selected?.price ?? 0;
+    const price = data.services.reduce((sum, svc) => {
+      const found = SERVICES.find((s) => s.value === svc);
+      return sum + (found?.price ?? 0);
+    }, 0);
+    const service = data.services.join(",");
     const partySize =
-      data.service === "party" && data.partySize
+      data.services.includes("party") && data.partySize
         ? parseInt(data.partySize)
         : null;
-    const numberOfHours = data.numberOfHours
-      ? parseInt(data.numberOfHours)
-      : null;
+    const totalMinutes =
+      (parseInt(data.durationHours) || 0) * 60 +
+      (parseInt(data.durationMinutes) || 0);
+    const numberOfHours = totalMinutes > 0 ? totalMinutes : null;
 
     try {
       const res = await fetch("/api/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, price, partySize, numberOfHours }),
+        body: JSON.stringify({
+          ...data,
+          service,
+          price,
+          partySize,
+          numberOfHours,
+        }),
       });
 
       if (!res.ok) throw new Error("Booking failed");
@@ -332,62 +344,115 @@ export default function ContactSection() {
             </div>
 
             {/* Service Selection */}
-            <div className="relative group">
-              <select
-                {...register("service", {
-                  required: "Please select a service",
-                })}
-                className="w-full bg-transparent border-b border-white/10 text-base text-white py-3 focus:outline-none focus:border-[#D4AF37] transition-colors peer"
-              >
-                <option className="text-black" value="">
-                  Select Service
-                </option>
-                {SERVICES.map((s) => (
-                  <option className="text-black" key={s.value} value={s.value}>
-                    {s.label}
-                  </option>
-                ))}
-              </select>
-              <label className="absolute left-0 -top-3.5 text-sm text-[#D4AF37]">
-                Service
+            <div>
+              <label className="text-sm text-[#D4AF37] block mb-3">
+                Select Services
               </label>
-              {errors.service && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {SERVICES.map((s) => (
+                  <label
+                    key={s.value}
+                    className={`cursor-pointer flex items-center gap-3 p-3 rounded-xl border transition-all ${
+                      selectedServices?.includes(s.value)
+                        ? "border-[#D4AF37] bg-[#D4AF37]/10"
+                        : "border-white/10 hover:border-white/20"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      value={s.value}
+                      {...register("services", {
+                        validate: (v) =>
+                          (Array.isArray(v) && v.length > 0) ||
+                          "Select at least one service",
+                      })}
+                      className="sr-only"
+                    />
+                    <div
+                      className={`w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
+                        selectedServices?.includes(s.value)
+                          ? "border-[#D4AF37] bg-[#D4AF37]"
+                          : "border-white/20"
+                      }`}
+                    >
+                      {selectedServices?.includes(s.value) && (
+                        <svg
+                          className="w-3 h-3 text-black"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={3}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      )}
+                    </div>
+                    <span
+                      className={`text-sm ${
+                        selectedServices?.includes(s.value)
+                          ? "text-[#D4AF37]"
+                          : "text-[#A0A0A0]"
+                      }`}
+                    >
+                      {s.label}
+                    </span>
+                  </label>
+                ))}
+              </div>
+              {errors.services && (
                 <span className="text-red-400 text-xs mt-1 block">
-                  {errors.service.message}
+                  {errors.services.message}
                 </span>
               )}
             </div>
 
-            {/* Number of Hours - shown for all services */}
-            <div className="relative group">
-              <input
-                type="number"
-                min="1"
-                {...register("numberOfHours", {
-                  min: { value: 1, message: "At least 1 hour required" },
-                })}
-                className={inputClass}
-                placeholder="Number of Hours"
-              />
-              <label className={labelClass}>Number of Hours</label>
-              {errors.numberOfHours && (
-                <span className="text-red-400 text-xs mt-1 block">
-                  {errors.numberOfHours.message}
-                </span>
-              )}
+            {/* Duration */}
+            <div>
+              <label className="text-sm text-[#D4AF37] block mb-3">
+                Duration
+              </label>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="relative">
+                  <select
+                    {...register("durationHours")}
+                    className="w-full bg-transparent border-b border-white/10 text-base text-white py-3 focus:outline-none focus:border-[#D4AF37] transition-colors"
+                  >
+                    {Array.from({ length: 13 }, (_, i) => (
+                      <option className="text-black" key={i} value={String(i)}>
+                        {i} {i === 1 ? "hour" : "hours"}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="relative">
+                  <select
+                    {...register("durationMinutes")}
+                    className="w-full bg-transparent border-b border-white/10 text-base text-white py-3 focus:outline-none focus:border-[#D4AF37] transition-colors"
+                  >
+                    {[0, 15, 30, 45].map((m) => (
+                      <option className="text-black" key={m} value={String(m)}>
+                        {m} mins
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             </div>
 
             {/* Quantity - only shown when Party Henna is selected */}
-            {selectedService === "party" && (
+            {selectedServices?.includes("party") && (
               <div className="relative group">
                 <input
                   type="number"
                   min="1"
                   {...register("partySize", {
-                    required:
-                      selectedService === "party"
-                        ? "Quantity is required"
-                        : false,
+                    required: selectedServices?.includes("party")
+                      ? "Quantity is required"
+                      : false,
                     min: { value: 1, message: "At least 1 required" },
                   })}
                   className={inputClass}

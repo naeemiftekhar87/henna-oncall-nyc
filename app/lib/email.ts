@@ -38,13 +38,25 @@ type BookingData = {
   message?: string | null;
 };
 
+function formatDuration(totalMinutes: number): string {
+  const h = Math.floor(totalMinutes / 60);
+  const m = totalMinutes % 60;
+  const parts = [];
+  if (h > 0) parts.push(`${h} hr${h > 1 ? "s" : ""}`);
+  if (m > 0) parts.push(`${m} mins`);
+  return parts.join(" ") || `${totalMinutes} mins`;
+}
+
 export async function sendAdminNotification(booking: BookingData) {
   if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
     console.log("SMTP not configured, skipping email notification");
     return;
   }
 
-  const serviceName = SERVICE_LABELS[booking.service] || booking.service;
+  const serviceName = booking.service
+    .split(",")
+    .map((s: string) => SERVICE_LABELS[s.trim()] || s.trim())
+    .join(", ");
 
   await transporter.sendMail({
     from: `"Henna On Call NYC" <${process.env.SMTP_USER}>`,
@@ -61,7 +73,7 @@ export async function sendAdminNotification(booking: BookingData) {
           <tr><td style="padding: 8px 0; color: #A0A0A0;">Date</td><td style="padding: 8px 0; color: #fff;">${booking.date}</td></tr>
           <tr><td style="padding: 8px 0; color: #A0A0A0;">Price</td><td style="padding: 8px 0; color: #fff;">$${booking.price}</td></tr>
           ${booking.partySize ? `<tr><td style="padding: 8px 0; color: #A0A0A0;">Quantity</td><td style="padding: 8px 0; color: #D4AF37;">${booking.partySize}</td></tr>` : ""}
-          ${booking.numberOfHours ? `<tr><td style="padding: 8px 0; color: #A0A0A0;">Number of Hours</td><td style="padding: 8px 0; color: #D4AF37;">${booking.numberOfHours} hr${booking.numberOfHours > 1 ? "s" : ""}</td></tr>` : ""}
+          ${booking.numberOfHours ? `<tr><td style="padding: 8px 0; color: #A0A0A0;">Duration</td><td style="padding: 8px 0; color: #D4AF37;">${formatDuration(booking.numberOfHours)}</td></tr>` : ""}
           <tr><td style="padding: 8px 0; color: #A0A0A0;">Address</td><td style="padding: 8px 0; color: #fff;">${booking.street}${booking.apt ? `, ${booking.apt}` : ""}<br>${booking.city}, ${booking.state} ${booking.zip}</td></tr>
           ${booking.message ? `<tr><td style="padding: 8px 0; color: #A0A0A0;">Message</td><td style="padding: 8px 0; color: #fff;">${booking.message}</td></tr>` : ""}
         </table>
@@ -77,7 +89,10 @@ export async function sendCustomerConfirmation(booking: BookingData) {
     return;
   }
 
-  const serviceName = SERVICE_LABELS[booking.service] || booking.service;
+  const serviceName = booking.service
+    .split(",")
+    .map((s: string) => SERVICE_LABELS[s.trim()] || s.trim())
+    .join(", ");
 
   await transporter.sendMail({
     from: `"Henna On Call NYC" <${process.env.SMTP_USER}>`,

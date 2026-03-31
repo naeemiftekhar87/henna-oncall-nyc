@@ -41,6 +41,15 @@ const STATUS_STYLES: Record<string, string> = {
   cancelled: "bg-red-500/10 text-red-400 border-red-500/20",
 };
 
+function formatDuration(totalMinutes: number): string {
+  const h = Math.floor(totalMinutes / 60);
+  const m = totalMinutes % 60;
+  const parts = [];
+  if (h > 0) parts.push(`${h} hr${h > 1 ? "s" : ""}`);
+  if (m > 0) parts.push(`${m} mins`);
+  return parts.join(" ") || `${totalMinutes} mins`;
+}
+
 export default function BookingTable({
   initialBookings,
 }: {
@@ -125,7 +134,10 @@ export default function BookingTable({
                     <p className="text-[#666] text-xs">{booking.email}</p>
                   </div>
                   <div className="text-[#A0A0A0] text-sm">
-                    {SERVICE_LABELS[booking.service] || booking.service}
+                    {booking.service
+                      .split(",")
+                      .map((s) => SERVICE_LABELS[s.trim()] || s.trim())
+                      .join(", ")}
                     {booking.partySize && (
                       <span className="ml-1 text-[#D4AF37]">
                         ({booking.partySize} qty)
@@ -134,8 +146,7 @@ export default function BookingTable({
                   </div>
                   {booking.numberOfHours && (
                     <div className="text-[#A0A0A0] text-sm">
-                      {booking.numberOfHours} hr
-                      {booking.numberOfHours > 1 ? "s" : ""}
+                      {formatDuration(booking.numberOfHours)}
                     </div>
                   )}
                   <div className="text-[#A0A0A0] text-sm">{booking.date}</div>
@@ -207,11 +218,10 @@ export default function BookingTable({
                     {booking.numberOfHours && (
                       <div>
                         <p className="text-[#666] text-xs uppercase tracking-wider mb-1">
-                          Number of Hours
+                          Duration
                         </p>
                         <p className="text-white text-sm">
-                          {booking.numberOfHours} hr
-                          {booking.numberOfHours > 1 ? "s" : ""}
+                          {formatDuration(booking.numberOfHours)}
                         </p>
                       </div>
                     )}

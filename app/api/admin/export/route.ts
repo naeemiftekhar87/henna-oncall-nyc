@@ -22,6 +22,15 @@ function escapeCSV(value: string): string {
   return value;
 }
 
+function formatDuration(totalMinutes: number): string {
+  const h = Math.floor(totalMinutes / 60);
+  const m = totalMinutes % 60;
+  const parts = [];
+  if (h > 0) parts.push(`${h} hr${h > 1 ? "s" : ""}`);
+  if (m > 0) parts.push(`${m} mins`);
+  return parts.join(" ") || `${totalMinutes} mins`;
+}
+
 export async function GET() {
   const session = await getSession();
   if (!session) {
@@ -53,10 +62,15 @@ export async function GET() {
     escapeCSV(b.name),
     escapeCSV(b.email),
     escapeCSV(b.phone),
-    escapeCSV(SERVICE_LABELS[b.service] || b.service),
+    escapeCSV(
+      b.service
+        .split(",")
+        .map((s) => SERVICE_LABELS[s.trim()] || s.trim())
+        .join(", "),
+    ),
     escapeCSV(b.date),
     b.price.toString(),
-    b.numberOfHours?.toString() || "",
+    b.numberOfHours ? formatDuration(b.numberOfHours) : "",
     b.partySize?.toString() || "",
     escapeCSV(b.status),
     escapeCSV(
