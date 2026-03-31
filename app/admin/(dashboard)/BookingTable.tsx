@@ -134,7 +134,8 @@ export default function BookingTable({
                   </div>
                   {booking.numberOfHours && (
                     <div className="text-[#A0A0A0] text-sm">
-                      {booking.numberOfHours} hr{booking.numberOfHours > 1 ? "s" : ""}
+                      {booking.numberOfHours} hr
+                      {booking.numberOfHours > 1 ? "s" : ""}
                     </div>
                   )}
                   <div className="text-[#A0A0A0] text-sm">{booking.date}</div>
@@ -209,7 +210,8 @@ export default function BookingTable({
                           Number of Hours
                         </p>
                         <p className="text-white text-sm">
-                          {booking.numberOfHours} hr{booking.numberOfHours > 1 ? "s" : ""}
+                          {booking.numberOfHours} hr
+                          {booking.numberOfHours > 1 ? "s" : ""}
                         </p>
                       </div>
                     )}
