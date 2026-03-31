@@ -137,7 +137,6 @@ export default function BookingTable({
                       {booking.numberOfHours} hr{booking.numberOfHours > 1 ? "s" : ""}
                     </div>
                   )}
-                  </div>
                   <div className="text-[#A0A0A0] text-sm">{booking.date}</div>
                   <div className="text-white text-sm font-medium">
                     ${booking.price}
