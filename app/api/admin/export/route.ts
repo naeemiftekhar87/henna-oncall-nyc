@@ -40,6 +40,8 @@ export async function GET() {
     "Service",
     "Date",
     "Price",
+    "Number of Hours",
+    "Quantity",
     "Status",
     "Address",
     "Message",
@@ -54,6 +56,8 @@ export async function GET() {
     escapeCSV(SERVICE_LABELS[b.service] || b.service),
     escapeCSV(b.date),
     b.price.toString(),
+    b.numberOfHours?.toString() || "",
+    b.partySize?.toString() || "",
     escapeCSV(b.status),
     escapeCSV(
       [b.street, b.apt, b.city, b.state, b.zip].filter(Boolean).join(", "),

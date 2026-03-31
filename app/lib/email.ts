@@ -29,6 +29,7 @@ type BookingData = {
   service: string;
   price: number;
   partySize?: number | null;
+  numberOfHours?: number | null;
   street: string;
   apt?: string | null;
   city: string;
@@ -59,7 +60,8 @@ export async function sendAdminNotification(booking: BookingData) {
           <tr><td style="padding: 8px 0; color: #A0A0A0;">Service</td><td style="padding: 8px 0; color: #D4AF37;">${serviceName}</td></tr>
           <tr><td style="padding: 8px 0; color: #A0A0A0;">Date</td><td style="padding: 8px 0; color: #fff;">${booking.date}</td></tr>
           <tr><td style="padding: 8px 0; color: #A0A0A0;">Price</td><td style="padding: 8px 0; color: #fff;">$${booking.price}</td></tr>
-          ${booking.partySize ? `<tr><td style="padding: 8px 0; color: #A0A0A0;">Party Size</td><td style="padding: 8px 0; color: #D4AF37;">${booking.partySize} persons</td></tr>` : ""}
+          ${booking.partySize ? `<tr><td style="padding: 8px 0; color: #A0A0A0;">Quantity</td><td style="padding: 8px 0; color: #D4AF37;">${booking.partySize}</td></tr>` : ""}
+          ${booking.numberOfHours ? `<tr><td style="padding: 8px 0; color: #A0A0A0;">Number of Hours</td><td style="padding: 8px 0; color: #D4AF37;">${booking.numberOfHours} hr${booking.numberOfHours > 1 ? "s" : ""}</td></tr>` : ""}
           <tr><td style="padding: 8px 0; color: #A0A0A0;">Address</td><td style="padding: 8px 0; color: #fff;">${booking.street}${booking.apt ? `, ${booking.apt}` : ""}<br>${booking.city}, ${booking.state} ${booking.zip}</td></tr>
           ${booking.message ? `<tr><td style="padding: 8px 0; color: #A0A0A0;">Message</td><td style="padding: 8px 0; color: #fff;">${booking.message}</td></tr>` : ""}
         </table>

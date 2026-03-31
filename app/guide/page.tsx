@@ -1,6 +1,11 @@
 import { Hand, Sparkles } from "lucide-react";
+import Image from "next/image";
+import guideImageFallback from "../assets/guide/henna-guide.jpeg";
+import { getSiteConfig } from "../lib/site-config";
 
-const GuidePage = () => {
+export default async function GuidePage() {
+  const config = await getSiteConfig();
+  const guideImageUrl = config.guide_image || guideImageFallback.src;
   const prepSteps = [
     {
       title: "Manicure & Pedicure",
@@ -135,8 +140,20 @@ const GuidePage = () => {
           </div>
         </div>
       </div>
+
+      {/* Length Guide & Duration Image */}
+      <div className="max-w-3xl mx-auto mt-20">
+        <div className="relative w-full rounded-2xl overflow-hidden border border-white/5">
+          <Image
+            src={guideImageUrl}
+            alt="Length Guide & Duration — shows how far up your arms henna goes and estimated duration"
+            width={700}
+            height={900}
+            className="w-full h-auto"
+            unoptimized
+          />
+        </div>
+      </div>
     </section>
   );
-};
-
-export default GuidePage;
+}

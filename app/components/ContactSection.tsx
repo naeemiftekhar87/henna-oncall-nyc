@@ -16,6 +16,7 @@ type BookingFormData = {
   zip: string;
   service: string;
   partySize: string;
+  numberOfHours: string;
   message: string;
 };
 
@@ -47,6 +48,7 @@ export default function ContactSection() {
     defaultValues: {
       service: "",
       partySize: "",
+      numberOfHours: "",
     },
   });
 
@@ -61,12 +63,15 @@ export default function ContactSection() {
       data.service === "party" && data.partySize
         ? parseInt(data.partySize)
         : null;
+    const numberOfHours = data.numberOfHours
+      ? parseInt(data.numberOfHours)
+      : null;
 
     try {
       const res = await fetch("/api/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, price, partySize }),
+        body: JSON.stringify({ ...data, price, partySize, numberOfHours }),
       });
 
       if (!res.ok) throw new Error("Booking failed");
@@ -353,7 +358,26 @@ export default function ContactSection() {
               )}
             </div>
 
-            {/* Party Size - only shown when Party Henna is selected */}
+            {/* Number of Hours - shown for all services */}
+            <div className="relative group">
+              <input
+                type="number"
+                min="1"
+                {...register("numberOfHours", {
+                  min: { value: 1, message: "At least 1 hour required" },
+                })}
+                className={inputClass}
+                placeholder="Number of Hours"
+              />
+              <label className={labelClass}>Number of Hours</label>
+              {errors.numberOfHours && (
+                <span className="text-red-400 text-xs mt-1 block">
+                  {errors.numberOfHours.message}
+                </span>
+              )}
+            </div>
+
+            {/* Quantity - only shown when Party Henna is selected */}
             {selectedService === "party" && (
               <div className="relative group">
                 <input
@@ -362,14 +386,14 @@ export default function ContactSection() {
                   {...register("partySize", {
                     required:
                       selectedService === "party"
-                        ? "Number of persons is required"
+                        ? "Quantity is required"
                         : false,
-                    min: { value: 1, message: "At least 1 person required" },
+                    min: { value: 1, message: "At least 1 required" },
                   })}
                   className={inputClass}
-                  placeholder="Number of Persons"
+                  placeholder="Number of Quantity"
                 />
-                <label className={labelClass}>Number of Persons</label>
+                <label className={labelClass}>Number of Quantity</label>
                 {errors.partySize && (
                   <span className="text-red-400 text-xs mt-1 block">
                     {errors.partySize.message}

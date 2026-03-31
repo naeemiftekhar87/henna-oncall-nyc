@@ -10,8 +10,10 @@ import img6 from "@/app/assets/gallary/6.jpg";
 import img7 from "@/app/assets/gallary/7.jpg";
 import img8 from "@/app/assets/gallary/8.jpg";
 import img9 from "@/app/assets/gallary/9.jpeg";
+import instagramLogo from "@/app/assets/Instagram-logo.png";
 import { Maximize } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 
 const FALLBACK_IMAGES: StaticImageData[] = [
   img1,
@@ -55,14 +57,19 @@ export default function GallerySection({
               A glimpse into the intricate details of our luxury bridal henna.
             </p>
           </div>
-          <a
+          <Link
             href="https://www.instagram.com/hennaoncallny/related_profiles/"
             target="_blank"
             rel="noopener noreferrer"
-            className="border border-white/10 bg-white/5 backdrop-blur-md text-white text-sm font-normal px-6 py-3 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 flex items-center gap-3 whitespace-nowrap"
+            className="bg-[#D4AF37] backdrop-blur-md text-black text-sm font-medium px-6 py-3 rounded-xl flex items-center gap-2 whitespace-nowrap"
           >
-            📷 View More on Instagram
-          </a>
+            <Image
+              src={instagramLogo}
+              alt="Instagram Logo"
+              className="size-5"
+            />{" "}
+            View More on Instagram
+          </Link>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">

@@ -18,6 +18,7 @@ type Booking = {
   message: string | null;
   price: number;
   partySize: number | null;
+  numberOfHours: number | null;
   status: string;
   createdAt: string;
 };
@@ -127,9 +128,15 @@ export default function BookingTable({
                     {SERVICE_LABELS[booking.service] || booking.service}
                     {booking.partySize && (
                       <span className="ml-1 text-[#D4AF37]">
-                        ({booking.partySize} persons)
+                        ({booking.partySize} qty)
                       </span>
                     )}
+                  </div>
+                  {booking.numberOfHours && (
+                    <div className="text-[#A0A0A0] text-sm">
+                      {booking.numberOfHours} hr{booking.numberOfHours > 1 ? "s" : ""}
+                    </div>
+                  )}
                   </div>
                   <div className="text-[#A0A0A0] text-sm">{booking.date}</div>
                   <div className="text-white text-sm font-medium">
@@ -190,10 +197,20 @@ export default function BookingTable({
                     {booking.partySize && (
                       <div>
                         <p className="text-[#666] text-xs uppercase tracking-wider mb-1">
-                          Party Size
+                          Quantity
                         </p>
                         <p className="text-white text-sm">
-                          {booking.partySize} persons
+                          {booking.partySize}
+                        </p>
+                      </div>
+                    )}
+                    {booking.numberOfHours && (
+                      <div>
+                        <p className="text-[#666] text-xs uppercase tracking-wider mb-1">
+                          Number of Hours
+                        </p>
+                        <p className="text-white text-sm">
+                          {booking.numberOfHours} hr{booking.numberOfHours > 1 ? "s" : ""}
                         </p>
                       </div>
                     )}

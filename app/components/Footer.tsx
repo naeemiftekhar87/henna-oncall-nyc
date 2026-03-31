@@ -1,6 +1,8 @@
+import facebookLogo from "@/app/assets/Facebook_logo.png";
+import instagramLogo from "@/app/assets/Instagram-logo.png";
 import logo from "@/app/assets/logo.jpg";
-import { Facebook, Instagram } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer({ logoUrl }: { logoUrl?: string }) {
   return (
@@ -14,7 +16,7 @@ export default function Footer({ logoUrl }: { logoUrl?: string }) {
               alt="Henna On Call NYC Logo"
               width={logoUrl ? 120 : undefined}
               height={logoUrl ? 64 : undefined}
-              className="h-16 w-auto object-contain"
+              className="size-28 w-auto object-contain"
               unoptimized={!!logoUrl}
             />
           </a>
@@ -75,22 +77,28 @@ export default function Footer({ logoUrl }: { logoUrl?: string }) {
             Connect
           </h4>
           <div className="flex gap-4">
-            <a
+            <Link
               href="https://www.instagram.com/hennaoncallny/related_profiles/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#A0A0A0] hover:text-[#D4AF37] transition-colors"
             >
-              <Instagram className="w-5 h-5" />
-            </a>
-            <a
+              <Image
+                src={instagramLogo}
+                alt="Instagram Logo"
+                className="size-5"
+              />
+            </Link>
+            <Link
               href="https://www.facebook.com/hennaoncallnyc/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#A0A0A0] hover:text-[#D4AF37] transition-colors"
             >
-              <Facebook className="w-5 h-5" />
-            </a>
+              <Image
+                src={facebookLogo}
+                alt="Facebook Logo"
+                className="size-5"
+              />
+            </Link>
           </div>
         </div>
       </div>

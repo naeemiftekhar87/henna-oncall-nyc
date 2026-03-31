@@ -48,6 +48,11 @@ const IMAGE_SLOTS: ImageSlot[] = [
   { key: "party_2", label: "Party 2", group: "Party Henna" },
   { key: "party_3", label: "Party 3", group: "Party Henna" },
   { key: "party_4", label: "Party 4", group: "Party Henna" },
+  {
+    key: "guide_image",
+    label: "Length Guide & Duration",
+    group: "Guide",
+  },
 ];
 
 const GROUPS = [
@@ -56,6 +61,7 @@ const GROUPS = [
   "Feet Services",
   "Gallery",
   "Party Henna",
+  "Guide",
 ];
 
 export default function ContentManagementPage() {
@@ -176,6 +182,8 @@ export default function ContentManagementPage() {
                 "Service card images for feet packages"}
               {group === "Gallery" && "Gallery grid images"}
               {group === "Party Henna" && "Party henna section showcase images"}
+              {group === "Guide" &&
+                "Length guide and duration image shown on the guide page"}
             </p>
             <div
               className={`grid gap-4 ${
