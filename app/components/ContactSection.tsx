@@ -426,7 +426,7 @@ export default function ContactSection() {
             {hasParty && (
               <div>
                 <label className="text-sm text-[#D4AF37] block mb-3">
-                  Duration
+                  Party Henna Duration
                 </label>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="relative">
