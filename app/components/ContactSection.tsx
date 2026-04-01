@@ -29,7 +29,7 @@ const SERVICES = [
   { value: "petal-feet", label: "Petal Feet - $120", price: 120 },
   { value: "blooming-feet", label: "Blooming Feet - $180", price: 180 },
   { value: "regal-steps", label: "Regal Steps - $250", price: 250 },
-  { value: "party", label: "Party Henna Experience", price: 0 },
+  { value: "party", label: "Party Henna Experience - $110/hr", price: 110 },
 ];
 
 export default function ContactSection() {
@@ -55,22 +55,34 @@ export default function ContactSection() {
   });
 
   const selectedServices = watch("services") || [];
+  const hasParty = selectedServices.includes("party");
+  const hasNonParty = selectedServices.some((s: string) => s !== "party");
 
   const onSubmit = async (data: BookingFormData) => {
     setSubmitStatus("loading");
 
-    const price = data.services.reduce((sum, svc) => {
-      const found = SERVICES.find((s) => s.value === svc);
-      return sum + (found?.price ?? 0);
-    }, 0);
-    const service = data.services.join(",");
-    const partySize =
-      data.services.includes("party") && data.partySize
-        ? parseInt(data.partySize)
-        : null;
+    // Non-party services: flat price
+    const nonPartyPrice = data.services
+      .filter((svc) => svc !== "party")
+      .reduce((sum, svc) => {
+        const found = SERVICES.find((s) => s.value === svc);
+        return sum + (found?.price ?? 0);
+      }, 0);
+
+    // Party henna: $110/hr
     const totalMinutes =
       (parseInt(data.durationHours) || 0) * 60 +
       (parseInt(data.durationMinutes) || 0);
+    const partyPrice = data.services.includes("party")
+      ? (totalMinutes / 60) * 110
+      : 0;
+
+    const price = nonPartyPrice + partyPrice;
+    const service = data.services.join(",");
+    const partySize =
+      data.services.some((s) => s !== "party") && data.partySize
+        ? parseInt(data.partySize)
+        : null;
     const numberOfHours = totalMinutes > 0 ? totalMinutes : null;
 
     try {
@@ -410,49 +422,57 @@ export default function ContactSection() {
               )}
             </div>
 
-            {/* Duration */}
-            <div>
-              <label className="text-sm text-[#D4AF37] block mb-3">
-                Duration
-              </label>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="relative">
-                  <select
-                    {...register("durationHours")}
-                    className="w-full bg-transparent border-b border-white/10 text-base text-white py-3 focus:outline-none focus:border-[#D4AF37] transition-colors"
-                  >
-                    {Array.from({ length: 13 }, (_, i) => (
-                      <option className="text-black" key={i} value={String(i)}>
-                        {i} {i === 1 ? "hour" : "hours"}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="relative">
-                  <select
-                    {...register("durationMinutes")}
-                    className="w-full bg-transparent border-b border-white/10 text-base text-white py-3 focus:outline-none focus:border-[#D4AF37] transition-colors"
-                  >
-                    {[0, 15, 30, 45].map((m) => (
-                      <option className="text-black" key={m} value={String(m)}>
-                        {m} mins
-                      </option>
-                    ))}
-                  </select>
+            {/* Duration - only shown when Party Henna is selected */}
+            {hasParty && (
+              <div>
+                <label className="text-sm text-[#D4AF37] block mb-3">
+                  Duration
+                </label>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="relative">
+                    <select
+                      {...register("durationHours")}
+                      className="w-full bg-transparent border-b border-white/10 text-base text-white py-3 focus:outline-none focus:border-[#D4AF37] transition-colors"
+                    >
+                      {Array.from({ length: 13 }, (_, i) => (
+                        <option
+                          className="text-black"
+                          key={i}
+                          value={String(i)}
+                        >
+                          {i} {i === 1 ? "hour" : "hours"}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="relative">
+                    <select
+                      {...register("durationMinutes")}
+                      className="w-full bg-transparent border-b border-white/10 text-base text-white py-3 focus:outline-none focus:border-[#D4AF37] transition-colors"
+                    >
+                      {[0, 15, 30, 45].map((m) => (
+                        <option
+                          className="text-black"
+                          key={m}
+                          value={String(m)}
+                        >
+                          {m} mins
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
-            {/* Quantity - only shown when Party Henna is selected */}
-            {selectedServices?.includes("party") && (
+            {/* Quantity - only shown when non-party services are selected */}
+            {hasNonParty && (
               <div className="relative group">
                 <input
                   type="number"
                   min="1"
                   {...register("partySize", {
-                    required: selectedServices?.includes("party")
-                      ? "Quantity is required"
-                      : false,
+                    required: hasNonParty ? "Quantity is required" : false,
                     min: { value: 1, message: "At least 1 required" },
                   })}
                   className={inputClass}

@@ -56,10 +56,7 @@ export async function POST(request: NextRequest) {
         service,
         message: message || null,
         price: parseFloat(price) || 0,
-        partySize:
-          service.split(",").includes("party") && partySize
-            ? parseInt(partySize)
-            : null,
+        partySize: partySize ? parseInt(partySize) : null,
         numberOfHours: numberOfHours ? parseInt(numberOfHours) : null,
         status: "pending",
       },
