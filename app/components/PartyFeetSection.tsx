@@ -200,9 +200,14 @@ export default function PartyFeetSection({
               </div>
               <Crown className="absolute -bottom-10 -right-10 w-64 h-64 text-[#D4AF37] opacity-5" />
               <div className="relative z-10 p-6 sm:p-10">
-                <h3 className="font-playfair text-3xl tracking-tight font-normal text-[#FFFFFF] mb-6">
-                  Group Events & Celebrations
-                </h3>
+                <div className="flex justify-between items-start mb-6">
+                  <h3 className="font-playfair text-3xl tracking-tight font-normal text-[#FFFFFF]">
+                    Group Events & Celebrations
+                  </h3>
+                  <span className="text-[#D4AF37] text-sm font-medium whitespace-nowrap ml-4">
+                    From $110/hr
+                  </span>
+                </div>
                 <div className="space-y-6 text-base text-[#A0A0A0] font-light leading-relaxed mb-8">
                   <p>
                     Bring the joy of henna artistry to your celebration. I

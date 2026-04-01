@@ -15,7 +15,7 @@ type BookingFormData = {
   state: string;
   zip: string;
   services: string[];
-  partySize: string;
+  quantities: Record<string, string>;
   durationHours: string;
   durationMinutes: string;
   message: string;
@@ -29,7 +29,7 @@ const SERVICES = [
   { value: "petal-feet", label: "Petal Feet - $120", price: 120 },
   { value: "blooming-feet", label: "Blooming Feet - $180", price: 180 },
   { value: "regal-steps", label: "Regal Steps - $250", price: 250 },
-  { value: "party", label: "Party Henna Experience - $110/hr", price: 110 },
+  { value: "party", label: "Party Henna - $110/hr", price: 110 },
 ];
 
 export default function ContactSection() {
@@ -48,25 +48,32 @@ export default function ContactSection() {
   } = useForm<BookingFormData>({
     defaultValues: {
       services: [],
-      partySize: "",
+      quantities: {},
       durationHours: "0",
       durationMinutes: "0",
     },
   });
 
   const selectedServices = watch("services") || [];
+  const durationHoursVal = watch("durationHours") || "0";
+  const durationMinutesVal = watch("durationMinutes") || "0";
   const hasParty = selectedServices.includes("party");
-  const hasNonParty = selectedServices.some((s: string) => s !== "party");
+  const partyHennaPrice =
+    (((parseInt(durationHoursVal) || 0) * 60 +
+      (parseInt(durationMinutesVal) || 0)) /
+      60) *
+    110;
 
   const onSubmit = async (data: BookingFormData) => {
     setSubmitStatus("loading");
 
-    // Non-party services: flat price
+    // Non-party services: flat price × quantity
     const nonPartyPrice = data.services
       .filter((svc) => svc !== "party")
       .reduce((sum, svc) => {
         const found = SERVICES.find((s) => s.value === svc);
-        return sum + (found?.price ?? 0);
+        const qty = parseInt(data.quantities?.[svc]) || 1;
+        return sum + (found?.price ?? 0) * qty;
       }, 0);
 
     // Party henna: $110/hr
@@ -79,9 +86,13 @@ export default function ContactSection() {
 
     const price = nonPartyPrice + partyPrice;
     const service = data.services.join(",");
+    const nonPartyServices = data.services.filter((s) => s !== "party");
     const partySize =
-      data.services.some((s) => s !== "party") && data.partySize
-        ? parseInt(data.partySize)
+      nonPartyServices.length > 0
+        ? nonPartyServices.reduce(
+            (sum, svc) => sum + (parseInt(data.quantities?.[svc]) || 1),
+            0,
+          )
         : null;
     const numberOfHours = totalMinutes > 0 ? totalMinutes : null;
 
@@ -362,57 +373,79 @@ export default function ContactSection() {
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {SERVICES.map((s) => (
-                  <label
-                    key={s.value}
-                    className={`cursor-pointer flex items-center gap-3 p-3 rounded-xl border transition-all ${
-                      selectedServices?.includes(s.value)
-                        ? "border-[#D4AF37] bg-[#D4AF37]/10"
-                        : "border-white/10 hover:border-white/20"
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      value={s.value}
-                      {...register("services", {
-                        validate: (v) =>
-                          (Array.isArray(v) && v.length > 0) ||
-                          "Select at least one service",
-                      })}
-                      className="sr-only"
-                    />
-                    <div
-                      className={`w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
+                  <div key={s.value}>
+                    <label
+                      className={`cursor-pointer flex items-center gap-3 p-3 rounded-xl border transition-all ${
                         selectedServices?.includes(s.value)
-                          ? "border-[#D4AF37] bg-[#D4AF37]"
-                          : "border-white/20"
+                          ? "border-[#D4AF37] bg-[#D4AF37]/10"
+                          : "border-white/10 hover:border-white/20"
                       }`}
                     >
-                      {selectedServices?.includes(s.value) && (
-                        <svg
-                          className="w-3 h-3 text-black"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth={3}
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M5 13l4 4L19 7"
+                      <input
+                        type="checkbox"
+                        value={s.value}
+                        {...register("services", {
+                          validate: (v) =>
+                            (Array.isArray(v) && v.length > 0) ||
+                            "Select at least one service",
+                        })}
+                        className="sr-only"
+                      />
+                      <div
+                        className={`w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
+                          selectedServices?.includes(s.value)
+                            ? "border-[#D4AF37] bg-[#D4AF37]"
+                            : "border-white/20"
+                        }`}
+                      >
+                        {selectedServices?.includes(s.value) && (
+                          <svg
+                            className="w-3 h-3 text-black"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={3}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M5 13l4 4L19 7"
+                            />
+                          </svg>
+                        )}
+                      </div>
+                      <span
+                        className={`text-sm ${
+                          selectedServices?.includes(s.value)
+                            ? "text-[#D4AF37]"
+                            : "text-[#A0A0A0]"
+                        }`}
+                      >
+                        {s.label}
+                      </span>
+                    </label>
+                    {s.value !== "party" &&
+                      selectedServices?.includes(s.value) && (
+                        <div className="mt-2 ml-1 mb-1">
+                          <label className="text-xs text-[#A0A0A0] block mb-1">
+                            {s.label.split(" -")[0]} — Quantity
+                          </label>
+                          <input
+                            type="number"
+                            min="1"
+                            {...register(`quantities.${s.value}`, {
+                              required: "Quantity is required",
+                              min: {
+                                value: 1,
+                                message: "At least 1 required",
+                              },
+                            })}
+                            className="w-full bg-transparent border-b border-white/10 text-sm text-white py-2 focus:outline-none focus:border-[#D4AF37] transition-colors"
+                            placeholder="1"
                           />
-                        </svg>
+                        </div>
                       )}
-                    </div>
-                    <span
-                      className={`text-sm ${
-                        selectedServices?.includes(s.value)
-                          ? "text-[#D4AF37]"
-                          : "text-[#A0A0A0]"
-                      }`}
-                    >
-                      {s.label}
-                    </span>
-                  </label>
+                  </div>
                 ))}
               </div>
               {errors.services && (
@@ -462,27 +495,10 @@ export default function ContactSection() {
                     </select>
                   </div>
                 </div>
-              </div>
-            )}
-
-            {/* Quantity - only shown when non-party services are selected */}
-            {hasNonParty && (
-              <div className="relative group">
-                <input
-                  type="number"
-                  min="1"
-                  {...register("partySize", {
-                    required: hasNonParty ? "Quantity is required" : false,
-                    min: { value: 1, message: "At least 1 required" },
-                  })}
-                  className={inputClass}
-                  placeholder="Number of Quantity"
-                />
-                <label className={labelClass}>Number of Quantity</label>
-                {errors.partySize && (
-                  <span className="text-red-400 text-xs mt-1 block">
-                    {errors.partySize.message}
-                  </span>
+                {partyHennaPrice > 0 && (
+                  <p className="text-sm text-[#D4AF37] mt-3 font-medium">
+                    Estimated: ${partyHennaPrice.toFixed(0)}
+                  </p>
                 )}
               </div>
             )}
