@@ -1,5 +1,6 @@
 import { getSession } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/db";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -15,7 +16,12 @@ export async function GET() {
   for (const c of configs) {
     map[c.key] = c.value;
   }
-  return NextResponse.json({ config: map });
+  return NextResponse.json(
+    { config: map },
+    {
+      headers: { "Cache-Control": "no-store, no-cache, must-revalidate" },
+    },
+  );
 }
 
 export async function PUT(request: NextRequest) {
@@ -39,7 +45,19 @@ export async function PUT(request: NextRequest) {
       create: { key, value },
     });
 
-    return NextResponse.json({ config });
+    // Revalidate all pages that use site config (images, logo, etc.)
+    revalidatePath("/", "layout");
+    revalidatePath("/guide");
+    revalidatePath("/about");
+    revalidatePath("/faq");
+    revalidatePath("/my-story");
+
+    return NextResponse.json(
+      { config },
+      {
+        headers: { "Cache-Control": "no-store, no-cache, must-revalidate" },
+      },
+    );
   } catch (error) {
     console.error("Update site config error:", error);
     return NextResponse.json(

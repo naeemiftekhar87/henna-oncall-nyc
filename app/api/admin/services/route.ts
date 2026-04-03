@@ -1,5 +1,6 @@
 import { getSession } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/db";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -13,7 +14,12 @@ export async function GET() {
   const services = await prisma.service.findMany({
     orderBy: { sortOrder: "asc" },
   });
-  return NextResponse.json({ services });
+  return NextResponse.json(
+    { services },
+    {
+      headers: { "Cache-Control": "no-store, no-cache, must-revalidate" },
+    },
+  );
 }
 
 export async function PATCH(request: NextRequest) {
@@ -66,7 +72,19 @@ export async function PATCH(request: NextRequest) {
       data,
     });
 
-    return NextResponse.json({ service });
+    // Revalidate all pages that may display service data
+    revalidatePath("/");
+    revalidatePath("/guide");
+    revalidatePath("/about");
+    revalidatePath("/faq");
+    revalidatePath("/admin");
+
+    return NextResponse.json(
+      { service },
+      {
+        headers: { "Cache-Control": "no-store, no-cache, must-revalidate" },
+      },
+    );
   } catch (error) {
     console.error("Update service error:", error);
     return NextResponse.json(

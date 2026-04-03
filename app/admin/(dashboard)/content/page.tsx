@@ -75,7 +75,7 @@ export default function ContentManagementPage() {
   }, []);
 
   const fetchConfig = async () => {
-    const res = await fetch("/api/admin/site-config");
+    const res = await fetch("/api/admin/site-config", { cache: "no-store" });
     if (!res.ok) {
       setLoading(false);
       return;

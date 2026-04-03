@@ -52,47 +52,32 @@ function parseJsonArray(value: string | null): string[] {
   }
 }
 
-export default function ServicesManagementPage() {
-  const [services, setServices] = useState<Service[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [editForm, setEditForm] = useState({
-    name: "",
-    price: "",
-    duration: "",
-    category: "",
-    description: "",
-    tagline: "",
-    coverage: "",
-    includes: "",
-    guide: "",
-    imageUrl: "",
-    sortOrder: "",
-    key: "",
+function EditServiceForm({
+  service,
+  onSave,
+  onCancel,
+}: {
+  service: Service;
+  onSave: (updated: Service) => void;
+  onCancel: () => void;
+}) {
+  const [form, setForm] = useState({
+    name: service.name,
+    price: service.price.toString(),
+    duration: service.duration,
+    category: service.category,
+    description: service.description || "",
+    tagline: service.tagline || "",
+    coverage: service.coverage || "",
+    includes: parseJsonArray(service.includes).join("\n"),
+    guide: parseJsonArray(service.guide).join("\n"),
+    imageUrl: service.imageUrl || "",
+    sortOrder: service.sortOrder.toString(),
+    key: service.key,
   });
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    let ignore = false;
-    async function fetchServices() {
-      const res = await fetch("/api/admin/services");
-      if (ignore) return;
-      if (!res.ok) {
-        setLoading(false);
-        return;
-      }
-      const data = await res.json();
-      if (ignore) return;
-      setServices(data.services);
-      setLoading(false);
-    }
-    fetchServices();
-    return () => {
-      ignore = true;
-    };
-  }, []);
 
   const uploadToImageKit = useCallback(async (file: File) => {
     setUploading(true);
@@ -120,7 +105,7 @@ export default function ServicesManagementPage() {
 
       if (!uploadRes.ok) throw new Error("Upload failed");
       const uploadData = await uploadRes.json();
-      setEditForm((prev) => ({ ...prev, imageUrl: uploadData.url }));
+      setForm((prev) => ({ ...prev, imageUrl: uploadData.url }));
     } catch (error) {
       console.error("Upload error:", error);
       alert("Failed to upload image. Check ImageKit configuration.");
@@ -129,35 +114,13 @@ export default function ServicesManagementPage() {
     }
   }, []);
 
-  const startEditing = (service: Service) => {
-    setEditingId(service.id);
-    setEditForm({
-      name: service.name,
-      price: service.price.toString(),
-      duration: service.duration,
-      category: service.category,
-      description: service.description || "",
-      tagline: service.tagline || "",
-      coverage: service.coverage || "",
-      includes: parseJsonArray(service.includes).join("\n"),
-      guide: parseJsonArray(service.guide).join("\n"),
-      imageUrl: service.imageUrl || "",
-      sortOrder: service.sortOrder.toString(),
-      key: service.key,
-    });
-  };
-
-  const cancelEditing = () => {
-    setEditingId(null);
-  };
-
-  const saveEdit = async (id: string) => {
+  const handleSave = async () => {
     setSaving(true);
-    const includesArr = editForm.includes
+    const includesArr = form.includes
       .split("\n")
       .map((s) => s.trim())
       .filter(Boolean);
-    const guideArr = editForm.guide
+    const guideArr = form.guide
       .split("\n")
       .map((s) => s.trim())
       .filter(Boolean);
@@ -166,28 +129,272 @@ export default function ServicesManagementPage() {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        id,
-        name: editForm.name,
-        price: editForm.price,
-        duration: editForm.duration,
-        category: editForm.category,
-        description: editForm.description,
-        tagline: editForm.tagline,
-        coverage: editForm.coverage,
+        id: service.id,
+        name: form.name,
+        price: form.price,
+        duration: form.duration,
+        category: form.category,
+        description: form.description,
+        tagline: form.tagline,
+        coverage: form.coverage,
         includes: JSON.stringify(includesArr),
         guide: JSON.stringify(guideArr),
-        imageUrl: editForm.imageUrl,
-        sortOrder: editForm.sortOrder,
-        key: editForm.key,
+        imageUrl: form.imageUrl,
+        sortOrder: form.sortOrder,
+        key: form.key,
       }),
     });
     const data = await res.json();
     if (data.service) {
-      setServices((prev) => prev.map((s) => (s.id === id ? data.service : s)));
+      onSave(data.service);
     }
-    setEditingId(null);
     setSaving(false);
   };
+
+  return (
+    <div className="space-y-4">
+      {/* Row 1: Core fields */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div>
+          <label className={labelClass}>Name</label>
+          <input
+            type="text"
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label className={labelClass}>Price ($)</label>
+          <input
+            type="number"
+            value={form.price}
+            onChange={(e) => setForm({ ...form, price: e.target.value })}
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label className={labelClass}>Duration</label>
+          <input
+            type="text"
+            value={form.duration}
+            onChange={(e) => setForm({ ...form, duration: e.target.value })}
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label className={labelClass}>Category</label>
+          <select
+            value={form.category}
+            onChange={(e) => setForm({ ...form, category: e.target.value })}
+            className={inputClass}
+          >
+            <option value="bridal">Bridal</option>
+            <option value="feet">Feet</option>
+            <option value="party">Party</option>
+          </select>
+        </div>
+        <div>
+          <label className={labelClass}>Sort Order</label>
+          <input
+            type="number"
+            value={form.sortOrder}
+            onChange={(e) => setForm({ ...form, sortOrder: e.target.value })}
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label className={labelClass}>Key</label>
+          <input
+            type="text"
+            value={form.key}
+            onChange={(e) => setForm({ ...form, key: e.target.value })}
+            className={inputClass}
+          />
+        </div>
+      </div>
+
+      {/* Tagline */}
+      <div>
+        <label className={labelClass}>Tagline</label>
+        <input
+          type="text"
+          value={form.tagline}
+          onChange={(e) => setForm({ ...form, tagline: e.target.value })}
+          placeholder={
+            form.category === "feet"
+              ? "Minimal • Delicate"
+              : "Minimal • Serene • Elegant"
+          }
+          className={inputClass}
+        />
+      </div>
+
+      {/* Coverage — feet only */}
+      {form.category === "feet" && (
+        <div>
+          <label className={labelClass}>Coverage</label>
+          <input
+            type="text"
+            value={form.coverage}
+            onChange={(e) => setForm({ ...form, coverage: e.target.value })}
+            placeholder="Ankle-length"
+            className={inputClass}
+          />
+        </div>
+      )}
+
+      {/* Image upload */}
+      <div>
+        <label className={labelClass}>Image</label>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) uploadToImageKit(file);
+          }}
+        />
+        <div className="flex items-center gap-3">
+          {form.imageUrl ? (
+            <div className="relative w-20 h-20 rounded-lg overflow-hidden border border-white/10 shrink-0">
+              <Image
+                src={form.imageUrl}
+                alt="Preview"
+                fill
+                className="object-cover"
+                unoptimized
+              />
+            </div>
+          ) : null}
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={uploading}
+            className="flex items-center gap-2 px-4 py-2 bg-[#0A0A0A] border border-white/10 rounded-lg text-sm text-[#A0A0A0] hover:text-white hover:border-white/20 transition-colors disabled:opacity-50"
+          >
+            {uploading ? (
+              <Loader2 size={14} className="animate-spin" />
+            ) : (
+              <Upload size={14} />
+            )}
+            {uploading
+              ? "Uploading..."
+              : form.imageUrl
+                ? "Change Image"
+                : "Upload Image"}
+          </button>
+          {form.imageUrl && (
+            <button
+              type="button"
+              onClick={() => setForm({ ...form, imageUrl: "" })}
+              className="text-xs text-red-400 hover:text-red-300"
+            >
+              Remove
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Description */}
+      <div>
+        <label className={labelClass}>Description</label>
+        <textarea
+          value={form.description}
+          onChange={(e) => setForm({ ...form, description: e.target.value })}
+          rows={3}
+          placeholder="Service description..."
+          className={inputClass + " resize-none"}
+        />
+      </div>
+
+      {/* Includes & Guide — bridal: both; party: includes only; feet: neither */}
+      {form.category !== "feet" && (
+        <div
+          className={`grid grid-cols-1 ${form.category === "bridal" ? "sm:grid-cols-2" : ""} gap-4`}
+        >
+          <div>
+            <label className={labelClass}>
+              What&apos;s Included (one per line)
+            </label>
+            <textarea
+              value={form.includes}
+              onChange={(e) => setForm({ ...form, includes: e.target.value })}
+              rows={4}
+              placeholder={
+                form.category === "party"
+                  ? "Mobile henna setup for 5–50 guests\nCustomizable designs for each guest\n100% organic hand-mixed henna"
+                  : "Wrist-length design\n100% organic henna\nBridal prep guide"
+              }
+              className={inputClass + " resize-none"}
+            />
+          </div>
+          {form.category === "bridal" && (
+            <div>
+              <label className={labelClass}>
+                Guide / Recommended For (one per line)
+              </label>
+              <textarea
+                value={form.guide}
+                onChange={(e) => setForm({ ...form, guide: e.target.value })}
+                rows={4}
+                placeholder={
+                  "Full-sleeve outfits\nModest gowns\nAbayas & Traditional attire"
+                }
+                className={inputClass + " resize-none"}
+              />
+            </div>
+          )}
+        </div>
+      )}
+
+      <div className="flex gap-2">
+        <button
+          onClick={handleSave}
+          disabled={saving}
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/20 rounded-lg text-sm hover:bg-[#D4AF37]/20 transition-colors disabled:opacity-50"
+        >
+          <Check size={14} />
+          Save
+        </button>
+        <button
+          onClick={onCancel}
+          className="flex items-center gap-1.5 px-3 py-1.5 text-[#A0A0A0] hover:text-white hover:bg-white/5 rounded-lg text-sm transition-colors"
+        >
+          <X size={14} />
+          Cancel
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default function ServicesManagementPage() {
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [editingId, setEditingId] = useState<string | null>(null);
+
+  useEffect(() => {
+    let ignore = false;
+    async function fetchServices() {
+      const res = await fetch("/api/admin/services", { cache: "no-store" });
+      if (ignore) return;
+      if (!res.ok) {
+        setLoading(false);
+        return;
+      }
+      const data = await res.json();
+      if (ignore) return;
+      setServices(data.services);
+      setLoading(false);
+    }
+    fetchServices();
+    return () => {
+      ignore = true;
+    };
+  }, []);
 
   const toggleActive = async (id: string, active: boolean) => {
     const res = await fetch("/api/admin/services", {
@@ -234,258 +441,17 @@ export default function ServicesManagementPage() {
               }`}
             >
               {isEditing ? (
-                <div className="space-y-4">
-                  {/* Row 1: Core fields */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div>
-                      <label className={labelClass}>Name</label>
-                      <input
-                        type="text"
-                        value={editForm.name}
-                        onChange={(e) =>
-                          setEditForm({ ...editForm, name: e.target.value })
-                        }
-                        className={inputClass}
-                      />
-                    </div>
-                    <div>
-                      <label className={labelClass}>Price ($)</label>
-                      <input
-                        type="number"
-                        value={editForm.price}
-                        onChange={(e) =>
-                          setEditForm({ ...editForm, price: e.target.value })
-                        }
-                        className={inputClass}
-                      />
-                    </div>
-                    <div>
-                      <label className={labelClass}>Duration</label>
-                      <input
-                        type="text"
-                        value={editForm.duration}
-                        onChange={(e) =>
-                          setEditForm({ ...editForm, duration: e.target.value })
-                        }
-                        className={inputClass}
-                      />
-                    </div>
-                    <div>
-                      <label className={labelClass}>Category</label>
-                      <select
-                        value={editForm.category}
-                        onChange={(e) =>
-                          setEditForm({ ...editForm, category: e.target.value })
-                        }
-                        className={inputClass}
-                      >
-                        <option value="bridal">Bridal</option>
-                        <option value="feet">Feet</option>
-                        <option value="party">Party</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className={labelClass}>Sort Order</label>
-                      <input
-                        type="number"
-                        value={editForm.sortOrder}
-                        onChange={(e) =>
-                          setEditForm({
-                            ...editForm,
-                            sortOrder: e.target.value,
-                          })
-                        }
-                        className={inputClass}
-                      />
-                    </div>
-                    <div>
-                      <label className={labelClass}>Key</label>
-                      <input
-                        type="text"
-                        value={editForm.key}
-                        onChange={(e) =>
-                          setEditForm({ ...editForm, key: e.target.value })
-                        }
-                        className={inputClass}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Tagline */}
-                  <div>
-                    <label className={labelClass}>Tagline</label>
-                    <input
-                      type="text"
-                      value={editForm.tagline}
-                      onChange={(e) =>
-                        setEditForm({ ...editForm, tagline: e.target.value })
-                      }
-                      placeholder={
-                        editForm.category === "feet"
-                          ? "Minimal • Delicate"
-                          : "Minimal • Serene • Elegant"
-                      }
-                      className={inputClass}
-                    />
-                  </div>
-
-                  {/* Coverage — feet only */}
-                  {editForm.category === "feet" && (
-                    <div>
-                      <label className={labelClass}>Coverage</label>
-                      <input
-                        type="text"
-                        value={editForm.coverage}
-                        onChange={(e) =>
-                          setEditForm({ ...editForm, coverage: e.target.value })
-                        }
-                        placeholder="Ankle-length"
-                        className={inputClass}
-                      />
-                    </div>
-                  )}
-
-                  {/* Image upload */}
-                  <div>
-                    <label className={labelClass}>Image</label>
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) uploadToImageKit(file);
-                      }}
-                    />
-                    <div className="flex items-center gap-3">
-                      {editForm.imageUrl ? (
-                        <div className="relative w-20 h-20 rounded-lg overflow-hidden border border-white/10 shrink-0">
-                          <Image
-                            src={editForm.imageUrl}
-                            alt="Preview"
-                            fill
-                            className="object-cover"
-                            unoptimized
-                          />
-                        </div>
-                      ) : null}
-                      <button
-                        type="button"
-                        onClick={() => fileInputRef.current?.click()}
-                        disabled={uploading}
-                        className="flex items-center gap-2 px-4 py-2 bg-[#0A0A0A] border border-white/10 rounded-lg text-sm text-[#A0A0A0] hover:text-white hover:border-white/20 transition-colors disabled:opacity-50"
-                      >
-                        {uploading ? (
-                          <Loader2 size={14} className="animate-spin" />
-                        ) : (
-                          <Upload size={14} />
-                        )}
-                        {uploading
-                          ? "Uploading..."
-                          : editForm.imageUrl
-                            ? "Change Image"
-                            : "Upload Image"}
-                      </button>
-                      {editForm.imageUrl && (
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setEditForm({ ...editForm, imageUrl: "" })
-                          }
-                          className="text-xs text-red-400 hover:text-red-300"
-                        >
-                          Remove
-                        </button>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Description */}
-                  <div>
-                    <label className={labelClass}>Description</label>
-                    <textarea
-                      value={editForm.description}
-                      onChange={(e) =>
-                        setEditForm({
-                          ...editForm,
-                          description: e.target.value,
-                        })
-                      }
-                      rows={3}
-                      placeholder="Service description..."
-                      className={inputClass + " resize-none"}
-                    />
-                  </div>
-
-                  {/* Includes & Guide — bridal: both; party: includes only; feet: neither */}
-                  {editForm.category !== "feet" && (
-                    <div
-                      className={`grid grid-cols-1 ${editForm.category === "bridal" ? "sm:grid-cols-2" : ""} gap-4`}
-                    >
-                      <div>
-                        <label className={labelClass}>
-                          What&apos;s Included (one per line)
-                        </label>
-                        <textarea
-                          value={editForm.includes}
-                          onChange={(e) =>
-                            setEditForm({
-                              ...editForm,
-                              includes: e.target.value,
-                            })
-                          }
-                          rows={4}
-                          placeholder={
-                            editForm.category === "party"
-                              ? "Mobile henna setup for 5–50 guests\nCustomizable designs for each guest\n100% organic hand-mixed henna"
-                              : "Wrist-length design\n100% organic henna\nBridal prep guide"
-                          }
-                          className={inputClass + " resize-none"}
-                        />
-                      </div>
-                      {editForm.category === "bridal" && (
-                        <div>
-                          <label className={labelClass}>
-                            Guide / Recommended For (one per line)
-                          </label>
-                          <textarea
-                            value={editForm.guide}
-                            onChange={(e) =>
-                              setEditForm({
-                                ...editForm,
-                                guide: e.target.value,
-                              })
-                            }
-                            rows={4}
-                            placeholder={
-                              "Full-sleeve outfits\nModest gowns\nAbayas & Traditional attire"
-                            }
-                            className={inputClass + " resize-none"}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => saveEdit(service.id)}
-                      disabled={saving}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/20 rounded-lg text-sm hover:bg-[#D4AF37]/20 transition-colors disabled:opacity-50"
-                    >
-                      <Check size={14} />
-                      Save
-                    </button>
-                    <button
-                      onClick={cancelEditing}
-                      className="flex items-center gap-1.5 px-3 py-1.5 text-[#A0A0A0] hover:text-white hover:bg-white/5 rounded-lg text-sm transition-colors"
-                    >
-                      <X size={14} />
-                      Cancel
-                    </button>
-                  </div>
-                </div>
+                <EditServiceForm
+                  key={service.id}
+                  service={service}
+                  onSave={(updated) => {
+                    setServices((prev) =>
+                      prev.map((s) => (s.id === updated.id ? updated : s)),
+                    );
+                    setEditingId(null);
+                  }}
+                  onCancel={() => setEditingId(null)}
+                />
               ) : (
                 <div>
                   {/* Top row: icon/image + name + actions */}
@@ -550,7 +516,7 @@ export default function ServicesManagementPage() {
                         {service.active ? "Active" : "Inactive"}
                       </button>
                       <button
-                        onClick={() => startEditing(service)}
+                        onClick={() => setEditingId(service.id)}
                         className="p-2 rounded-lg text-[#A0A0A0] hover:text-[#D4AF37] hover:bg-[#D4AF37]/5 transition-colors"
                         title="Edit"
                       >
