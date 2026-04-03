@@ -23,7 +23,7 @@ export default async function ServicePage({
   if (!session) redirect("/admin/login");
 
   const bookings = await prisma.booking.findMany({
-    where: { service: serviceKey },
+    where: { service: { contains: serviceKey } },
     orderBy: { createdAt: "desc" },
   });
 

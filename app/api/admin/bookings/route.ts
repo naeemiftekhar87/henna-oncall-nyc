@@ -16,8 +16,8 @@ export async function GET(request: NextRequest) {
   const service = searchParams.get("service");
   const status = searchParams.get("status");
 
-  const where: Record<string, string> = {};
-  if (service) where.service = service;
+  const where: Record<string, unknown> = {};
+  if (service) where.service = { contains: service };
   if (status) where.status = status;
 
   const bookings = await prisma.booking.findMany({

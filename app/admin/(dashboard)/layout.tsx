@@ -24,15 +24,19 @@ export default async function AdminLayout({
     redirect("/admin/login");
   }
 
-  const grouped = await prisma.booking.groupBy({
-    by: ["service"],
-    where: { status: "pending", service: { in: SERVICES } },
-    _count: { service: true },
+  const pendingBookings = await prisma.booking.findMany({
+    where: { status: "pending" },
+    select: { service: true },
   });
 
   const pendingCounts: Record<string, number> = {};
   for (const s of SERVICES) pendingCounts[s] = 0;
-  for (const g of grouped) pendingCounts[g.service] = g._count.service;
+  for (const b of pendingBookings) {
+    const services = b.service.split(",").map((s) => s.trim());
+    for (const s of services) {
+      if (s in pendingCounts) pendingCounts[s]++;
+    }
+  }
 
   return (
     <AdminLayoutClient pendingCounts={pendingCounts}>
