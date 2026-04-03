@@ -1,8 +1,5 @@
 import { prisma } from "@/app/lib/db";
-import {
-  sendAdminNotification,
-  sendCustomerConfirmation,
-} from "@/app/lib/email";
+import { sendAdminNotification } from "@/app/lib/email";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -62,12 +59,10 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Send emails (must await — Vercel terminates after response)
+    // Send admin notification (must await — Vercel terminates after response)
+    // Customer confirmation is sent only when admin confirms the booking
     try {
-      await Promise.all([
-        sendAdminNotification(booking),
-        sendCustomerConfirmation(booking),
-      ]);
+      await sendAdminNotification(booking);
     } catch (err) {
       console.error("Email notification failed:", err);
     }
