@@ -53,10 +53,13 @@ export default async function RootLayout({
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Henna On Call NYC</title>
+        <title>Luxury Bridal Henna NYC | Henna On Call NYC</title>
         <meta
           name="description"
-          content="Professional henna services in NYC. Book appointments easily."
+          content="Luxury bridal henna artist in NYC offering bespoke, hand-crafted designs for weddings, Mehndi nights, and elegant celebrations.
+Henna On Call NYC specializes in 100% organic henna with rich, long-lasting stains and a premium bridal experience.
+Mobile henna services across New York, New Jersey, Connecticut, and Pennsylvania.
+Limited slots available, reserve your bridal henna appointment today."
         />
       </head>
       <body

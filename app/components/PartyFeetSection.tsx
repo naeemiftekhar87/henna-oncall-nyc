@@ -80,7 +80,7 @@ export default function PartyFeetSection({
                       src={collection.image}
                       alt={collection.name}
                       fill
-                      className="size-full group-hover:scale-105 transition-transform duration-700"
+                      className="size-full"
                       unoptimized
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-[#111111] to-transparent opacity-40"></div>
@@ -121,7 +121,7 @@ export default function PartyFeetSection({
                     src={getImage("regal-steps")}
                     alt="Regal Steps Feet Henna"
                     fill
-                    className="object-contain group-hover:scale-105 transition-transform duration-700"
+                    className="object-contain"
                     unoptimized
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-[#111111] to-transparent opacity-40"></div>
