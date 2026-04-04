@@ -54,9 +54,11 @@ export async function PATCH(request: NextRequest) {
     });
 
     if (status === "confirmed") {
-      sendCustomerConfirmation(booking).catch((err) =>
-        console.error("Customer confirmation email failed:", err),
-      );
+      try {
+        await sendCustomerConfirmation(booking);
+      } catch (err) {
+        console.error("Customer confirmation email failed:", err);
+      }
     }
 
     // Revalidate admin pages that show booking counts/stats

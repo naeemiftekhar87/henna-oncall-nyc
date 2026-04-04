@@ -47,7 +47,7 @@ export default function PartyFeetSection({
       tagline: "Detailed • Romantic",
       coverage: '2" above ankle',
       duration: "Approx 1.5 hours",
-      image: getImage("petal-feet"),
+      image: getImage("blooming-feet"),
     },
   ];
 
@@ -75,15 +75,15 @@ export default function PartyFeetSection({
                   key={collection.name}
                   className="bg-[#111111] border border-white/5 rounded-2xl overflow-hidden hover:border-white/20 transition-all duration-300 flex flex-col group"
                 >
-                  <div className="h-40 w-full relative bg-[#1A1A1A]">
+                  <div className="h-64 w-full relative bg-[#1A1A1A]">
                     <Image
                       src={collection.image}
                       alt={collection.name}
                       fill
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="size-full group-hover:scale-105 transition-transform duration-700"
                       unoptimized
                     />
-                    <div className="absolute inset-0 bg-linear-to-t from-[#111111] to-transparent opacity-80"></div>
+                    <div className="absolute inset-0 bg-linear-to-t from-[#111111] to-transparent opacity-40"></div>
                   </div>
                   <div className="p-6 relative z-10 -mt-6 flex flex-col grow">
                     <div className="flex justify-between items-start mb-2">
@@ -116,15 +116,15 @@ export default function PartyFeetSection({
 
               {/* Regal Steps */}
               <div className="bg-[#111111] border border-[#D4AF37]/30 rounded-2xl overflow-hidden hover:border-[#D4AF37]/60 transition-all duration-300 flex flex-col group sm:col-span-2">
-                <div className="h-48 w-full relative bg-[#1A1A1A]">
+                <div className="h-72 w-full relative bg-[#1A1A1A]">
                   <Image
                     src={getImage("regal-steps")}
                     alt="Regal Steps Feet Henna"
                     fill
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="object-contain group-hover:scale-105 transition-transform duration-700"
                     unoptimized
                   />
-                  <div className="absolute inset-0 bg-linear-to-t from-[#111111] to-transparent opacity-80"></div>
+                  <div className="absolute inset-0 bg-linear-to-t from-[#111111] to-transparent opacity-40"></div>
                   <div className="absolute top-4 left-4 bg-[#D4AF37] text-black text-xs px-3 py-1 rounded-full font-medium tracking-wide">
                     Premium
                   </div>
@@ -183,13 +183,13 @@ export default function PartyFeetSection({
                     return (
                       <div
                         key={i}
-                        className="relative h-32 sm:h-40 overflow-hidden"
+                        className="relative h-48 sm:h-56 overflow-hidden"
                       >
                         <Image
                           src={url || fallback}
                           alt={`Party henna ${i + 1}`}
                           fill
-                          className="object-cover"
+                          className="size-full"
                           unoptimized={!!url}
                         />
                         <div className="absolute inset-0 bg-black/30" />
