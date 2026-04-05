@@ -1,9 +1,13 @@
+"use client";
+
 import partyImg1 from "@/app/assets/gallary/3.jpg";
 import partyImg2 from "@/app/assets/gallary/5.jpg";
 import partyImg3 from "@/app/assets/gallary/6.jpg";
 import partyImg4 from "@/app/assets/gallary/7.jpg";
-import { Crown } from "lucide-react";
-import Image from "next/image";
+import { Crown, Maximize } from "lucide-react";
+import Image, { StaticImageData } from "next/image";
+import { useState } from "react";
+import ImageLightbox from "./ImageLightbox";
 
 type ServiceImages = {
   "petal-feet"?: string;
@@ -51,6 +55,12 @@ export default function PartyFeetSection({
     },
   ];
 
+  const [lightboxImage, setLightboxImage] = useState<{
+    src: string | StaticImageData;
+    alt: string;
+    isExternal?: boolean;
+  } | null>(null);
+
   return (
     <section
       id="party-feet"
@@ -75,7 +85,16 @@ export default function PartyFeetSection({
                   key={collection.name}
                   className="bg-[#111111] border border-white/5 rounded-2xl overflow-hidden hover:border-white/20 transition-all duration-300 flex flex-col group"
                 >
-                  <div className="h-64 w-full relative bg-[#1A1A1A]">
+                  <div
+                    className="h-64 w-full relative bg-[#1A1A1A] cursor-pointer group/img"
+                    onClick={() =>
+                      setLightboxImage({
+                        src: collection.image,
+                        alt: collection.name,
+                        isExternal: true,
+                      })
+                    }
+                  >
                     <Image
                       src={collection.image}
                       alt={collection.name}
@@ -84,6 +103,9 @@ export default function PartyFeetSection({
                       unoptimized
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-[#111111] to-transparent opacity-40"></div>
+                    <div className="absolute inset-0 bg-black/30 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <Maximize className="text-[#D4AF37] w-8 h-8" />
+                    </div>
                   </div>
                   <div className="p-6 relative z-10 -mt-6 flex flex-col grow">
                     <div className="flex justify-between items-start mb-2">
@@ -116,7 +138,16 @@ export default function PartyFeetSection({
 
               {/* Regal Steps */}
               <div className="bg-[#111111] border border-[#D4AF37]/30 rounded-2xl overflow-hidden hover:border-[#D4AF37]/60 transition-all duration-300 flex flex-col group sm:col-span-2">
-                <div className="h-72 w-full relative bg-[#1A1A1A]">
+                <div
+                  className="h-72 w-full relative bg-[#1A1A1A] cursor-pointer group/img"
+                  onClick={() =>
+                    setLightboxImage({
+                      src: getImage("regal-steps"),
+                      alt: "Regal Steps Feet Henna",
+                      isExternal: true,
+                    })
+                  }
+                >
                   <Image
                     src={getImage("regal-steps")}
                     alt="Regal Steps Feet Henna"
@@ -127,6 +158,9 @@ export default function PartyFeetSection({
                   <div className="absolute inset-0 bg-linear-to-t from-[#111111] to-transparent opacity-40"></div>
                   <div className="absolute top-4 left-4 bg-[#D4AF37] text-black text-xs px-3 py-1 rounded-full font-medium tracking-wide">
                     Premium
+                  </div>
+                  <div className="absolute inset-0 bg-black/30 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <Maximize className="text-[#D4AF37] w-8 h-8" />
                   </div>
                 </div>
                 <div className="p-6 relative z-10 -mt-6 flex flex-col grow">
@@ -183,7 +217,14 @@ export default function PartyFeetSection({
                     return (
                       <div
                         key={i}
-                        className="relative h-48 sm:h-56 overflow-hidden"
+                        className="relative h-48 sm:h-56 overflow-hidden cursor-pointer group/party"
+                        onClick={() =>
+                          setLightboxImage({
+                            src: url || fallback,
+                            alt: `Party henna ${i + 1}`,
+                            isExternal: !!url,
+                          })
+                        }
                       >
                         <Image
                           src={url || fallback}
@@ -192,7 +233,10 @@ export default function PartyFeetSection({
                           className="size-full"
                           unoptimized={!!url}
                         />
-                        <div className="absolute inset-0 bg-black/30" />
+                        <div className="absolute inset-0 bg-black/30 group-hover/party:bg-black/50 transition-colors duration-300" />
+                        <div className="absolute inset-0 opacity-0 group-hover/party:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                          <Maximize className="text-[#D4AF37] w-7 h-7" />
+                        </div>
                       </div>
                     );
                   },
@@ -253,6 +297,15 @@ export default function PartyFeetSection({
           </div>
         </div>
       </div>
+
+      {lightboxImage && (
+        <ImageLightbox
+          src={lightboxImage.src}
+          alt={lightboxImage.alt}
+          isExternal={lightboxImage.isExternal}
+          onClose={() => setLightboxImage(null)}
+        />
+      )}
     </section>
   );
 }

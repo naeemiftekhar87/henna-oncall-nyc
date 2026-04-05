@@ -1,9 +1,13 @@
+"use client";
+
 import bridalBloom from "@/app/assets/service/Bridal BLOOM.jpeg";
 import bridalBlush from "@/app/assets/service/Bridal BLUSH.jpg";
 import bridalGrace from "@/app/assets/service/Bridal GRACE.jpeg";
 import bridalLush from "@/app/assets/service/Bridal LUSH.png";
-import { CheckCircle, Clock, Shirt } from "lucide-react";
+import { CheckCircle, Clock, Maximize, Shirt } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
+import { useState } from "react";
+import ImageLightbox from "./ImageLightbox";
 
 type ServiceImages = {
   blush?: string;
@@ -112,6 +116,8 @@ export default function BridalCollectionsSection({
     },
   ];
 
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
   return (
     <section
       id="bridal"
@@ -140,7 +146,14 @@ export default function BridalCollectionsSection({
                 collection.isPrimary ? "border-[#D4AF37]/30" : "border-white/5"
               }`}
             >
-              <div className="w-full lg:w-2/5 h-80 lg:h-auto shrink-0 bg-[#111] relative overflow-hidden">
+              <div
+                className="w-full lg:w-2/5 h-80 lg:h-auto shrink-0 bg-[#111] relative overflow-hidden cursor-pointer group/img"
+                onClick={() =>
+                  setLightboxIndex(
+                    collections.findIndex((c) => c.name === collection.name),
+                  )
+                }
+              >
                 <Image
                   src={collection.image}
                   alt={collection.name}
@@ -153,6 +166,9 @@ export default function BridalCollectionsSection({
                     {collection.badge}
                   </div>
                 )}
+                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <Maximize className="text-[#D4AF37] w-8 h-8" />
+                </div>
               </div>
               <div className="w-full lg:w-3/5 p-8 lg:p-12 flex flex-col justify-center relative z-10 text-sm font-light text-[#C9C9C9] leading-relaxed">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-6 mb-6">
@@ -230,6 +246,25 @@ export default function BridalCollectionsSection({
           </p>
         </div>
       </div>
+
+      {lightboxIndex !== null && (
+        <ImageLightbox
+          src={collections[lightboxIndex].image}
+          alt={collections[lightboxIndex].name}
+          isExternal={collections[lightboxIndex].isExternal}
+          onClose={() => setLightboxIndex(null)}
+          onPrev={
+            lightboxIndex > 0
+              ? () => setLightboxIndex(lightboxIndex - 1)
+              : undefined
+          }
+          onNext={
+            lightboxIndex < collections.length - 1
+              ? () => setLightboxIndex(lightboxIndex + 1)
+              : undefined
+          }
+        />
+      )}
     </section>
   );
 }

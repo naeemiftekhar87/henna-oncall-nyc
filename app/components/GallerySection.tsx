@@ -1,3 +1,5 @@
+"use client";
+
 import img1 from "@/app/assets/gallary/1.jpg";
 import img10 from "@/app/assets/gallary/10.jpeg";
 import img11 from "@/app/assets/gallary/11.jpeg";
@@ -14,6 +16,8 @@ import instagramLogo from "@/app/assets/Instagram-logo.png";
 import { Maximize } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import ImageLightbox from "./ImageLightbox";
 
 const FALLBACK_IMAGES: StaticImageData[] = [
   img1,
@@ -35,6 +39,8 @@ export default function GallerySection({
 }: {
   galleryUrls?: string[];
 }) {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
   const galleryImages = FALLBACK_IMAGES.map((fallback, i) => {
     const url = galleryUrls?.[i];
     return url
@@ -76,7 +82,8 @@ export default function GallerySection({
           {galleryImages.map((image, idx) => (
             <div
               key={idx}
-              className="aspect-square relative group overflow-hidden bg-[#111111] rounded-2xl"
+              className="aspect-square relative group overflow-hidden bg-[#111111] rounded-2xl cursor-pointer"
+              onClick={() => setLightboxIndex(idx)}
             >
               <Image
                 src={image.src}
@@ -91,6 +98,25 @@ export default function GallerySection({
             </div>
           ))}
         </div>
+
+        {lightboxIndex !== null && (
+          <ImageLightbox
+            src={galleryImages[lightboxIndex].src}
+            alt={`Henna Design ${lightboxIndex + 1}`}
+            isExternal={galleryImages[lightboxIndex].isExternal}
+            onClose={() => setLightboxIndex(null)}
+            onPrev={
+              lightboxIndex > 0
+                ? () => setLightboxIndex(lightboxIndex - 1)
+                : undefined
+            }
+            onNext={
+              lightboxIndex < galleryImages.length - 1
+                ? () => setLightboxIndex(lightboxIndex + 1)
+                : undefined
+            }
+          />
+        )}
       </div>
     </section>
   );
