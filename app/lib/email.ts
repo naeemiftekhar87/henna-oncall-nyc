@@ -30,6 +30,7 @@ type BookingData = {
   price: number;
   partySize?: number | null;
   numberOfHours?: number | null;
+  quantities?: string | null;
   street: string;
   apt?: string | null;
   city: string;
@@ -47,16 +48,29 @@ function formatDuration(totalMinutes: number): string {
   return parts.join(" ") || `${totalMinutes} mins`;
 }
 
+function formatServiceWithQty(booking: BookingData): string {
+  const services = booking.service.split(",").map((s: string) => s.trim());
+  const qty: Record<string, number> = booking.quantities
+    ? JSON.parse(booking.quantities)
+    : {};
+  return services
+    .map((s) => {
+      const label = SERVICE_LABELS[s] || s;
+      if (qty[s]) return `${label} (${qty[s]} qty)`;
+      if (s !== "party" && booking.partySize && services.length === 1)
+        return `${label} (${booking.partySize} qty)`;
+      return label;
+    })
+    .join(", ");
+}
+
 export async function sendAdminNotification(booking: BookingData) {
   if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
     console.log("SMTP not configured, skipping email notification");
     return;
   }
 
-  const serviceName = booking.service
-    .split(",")
-    .map((s: string) => SERVICE_LABELS[s.trim()] || s.trim())
-    .join(", ");
+  const serviceName = formatServiceWithQty(booking);
 
   await transporter.sendMail({
     from: `"Henna On Call NYC" <${process.env.SMTP_USER}>`,
@@ -89,10 +103,7 @@ export async function sendCustomerConfirmation(booking: BookingData) {
     return;
   }
 
-  const serviceName = booking.service
-    .split(",")
-    .map((s: string) => SERVICE_LABELS[s.trim()] || s.trim())
-    .join(", ");
+  const serviceName = formatServiceWithQty(booking);
 
   const location = `${booking.street}${booking.apt ? `, ${booking.apt}` : ""}, ${booking.city}, ${booking.state} ${booking.zip}`;
 

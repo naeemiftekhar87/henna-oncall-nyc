@@ -6,10 +6,21 @@ import PartyFeetSection from "./components/PartyFeetSection";
 import Reviews from "./components/Reviews";
 import RoadmapSection from "./components/RoadmapSection";
 import TopBar from "./components/TopBar";
+import { prisma } from "./lib/db";
 import { getSiteConfig } from "./lib/site-config";
 
+export const revalidate = 0;
+
 export default async function Home() {
-  const config = await getSiteConfig();
+  const [config, services] = await Promise.all([
+    getSiteConfig(),
+    prisma.service.findMany({
+      where: { active: true },
+      orderBy: { sortOrder: "asc" },
+    }),
+  ]);
+
+  const serviceMap = Object.fromEntries(services.map((s) => [s.key, s]));
 
   return (
     <>
@@ -23,6 +34,7 @@ export default async function Home() {
           lush: config.service_lush_image,
           grace: config.service_grace_image,
         }}
+        serviceData={serviceMap}
       />
       <PartyFeetSection
         serviceImages={{
@@ -34,6 +46,7 @@ export default async function Home() {
           { length: 4 },
           (_, i) => config[`party_${i + 1}`] || "",
         )}
+        serviceData={serviceMap}
       />
       <GallerySection
         galleryUrls={Array.from(

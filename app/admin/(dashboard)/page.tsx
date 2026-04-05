@@ -43,7 +43,7 @@ export default async function AdminDashboard() {
       prisma.booking.count({ where: { status: "cancelled" } }),
       prisma.booking.aggregate({
         _sum: { price: true },
-        where: { status: { not: "cancelled" } },
+        where: { status: "completed" },
       }),
       prisma.booking.findMany({
         orderBy: { createdAt: "desc" },
@@ -173,7 +173,27 @@ export default async function AdminDashboard() {
                       <div className="text-[#666] text-xs">{booking.email}</div>
                     </td>
                     <td className="px-5 py-4 text-sm text-[#A0A0A0]">
-                      {SERVICE_LABELS[booking.service] || booking.service}
+                      {(() => {
+                        const services = booking.service
+                          .split(",")
+                          .map((s) => s.trim());
+                        const qty: Record<string, number> = booking.quantities
+                          ? JSON.parse(booking.quantities)
+                          : {};
+                        return services
+                          .map((s) => {
+                            const label = SERVICE_LABELS[s] || s;
+                            if (qty[s]) return `${label} (${qty[s]} qty)`;
+                            if (
+                              s !== "party" &&
+                              booking.partySize &&
+                              services.length === 1
+                            )
+                              return `${label} (${booking.partySize} qty)`;
+                            return label;
+                          })
+                          .join(", ");
+                      })()}
                     </td>
                     <td className="px-5 py-4 text-sm text-[#A0A0A0]">
                       {booking.date}

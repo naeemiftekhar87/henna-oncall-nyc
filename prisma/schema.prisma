@@ -31,6 +31,7 @@ model Booking {
   price         Float
   partySize     Int?
   numberOfHours Int?
+  quantities    String? // JSON: {"bloom":2,"blush":1}
   status        String   @default("pending") // "pending", "confirmed", "completed", "cancelled"
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt

@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
       price,
       partySize,
       numberOfHours,
+      quantities,
     } = body;
 
     if (
@@ -55,6 +56,7 @@ export async function POST(request: NextRequest) {
         price: parseFloat(price) || 0,
         partySize: partySize ? parseInt(partySize) : null,
         numberOfHours: numberOfHours ? parseInt(numberOfHours) : null,
+        quantities: quantities || null,
         status: "pending",
       },
     });

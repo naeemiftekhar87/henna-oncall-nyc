@@ -17,7 +17,7 @@ export async function GET() {
       prisma.booking.count({ where: { status: "cancelled" } }),
       prisma.booking.aggregate({
         _sum: { price: true },
-        where: { status: { not: "cancelled" } },
+        where: { status: "completed" },
       }),
     ]);
 

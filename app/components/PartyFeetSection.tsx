@@ -17,6 +17,18 @@ type ServiceImages = {
 
 type PartyImages = string[];
 
+type ServiceRecord = {
+  key: string;
+  name: string;
+  price: number;
+  duration: string;
+  description?: string | null;
+  tagline?: string | null;
+  coverage?: string | null;
+  includes?: string | null;
+  imageUrl?: string | null;
+};
+
 const FALLBACK_IMAGES = {
   "petal-feet":
     "https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?auto=format&fit=crop&w=600&q=80",
@@ -29,28 +41,32 @@ const FALLBACK_IMAGES = {
 export default function PartyFeetSection({
   serviceImages,
   partyImages,
+  serviceData,
 }: {
   serviceImages?: ServiceImages;
   partyImages?: PartyImages;
+  serviceData?: Record<string, ServiceRecord>;
 }) {
   const getImage = (key: keyof typeof FALLBACK_IMAGES) =>
     serviceImages?.[key] || FALLBACK_IMAGES[key];
 
+  const svc = (key: string) => serviceData?.[key];
+
   const feetCollections = [
     {
-      name: "Petal Feet",
-      price: "$120",
-      tagline: "Minimal • Delicate",
-      coverage: "Ankle-length",
-      duration: "Approx 1 hour",
+      name: svc("petal-feet")?.name || "Petal Feet",
+      price: svc("petal-feet") ? `$${svc("petal-feet")!.price}` : "$120",
+      tagline: svc("petal-feet")?.tagline || "Minimal • Delicate",
+      coverage: svc("petal-feet")?.coverage || "Ankle-length",
+      duration: svc("petal-feet")?.duration || "Approx 1 hour",
       image: getImage("petal-feet"),
     },
     {
-      name: "Blooming Feet",
-      price: "$180",
-      tagline: "Detailed • Romantic",
-      coverage: '2" above ankle',
-      duration: "Approx 1.5 hours",
+      name: svc("blooming-feet")?.name || "Blooming Feet",
+      price: svc("blooming-feet") ? `$${svc("blooming-feet")!.price}` : "$180",
+      tagline: svc("blooming-feet")?.tagline || "Detailed • Romantic",
+      coverage: svc("blooming-feet")?.coverage || '2" above ankle',
+      duration: svc("blooming-feet")?.duration || "Approx 1.5 hours",
       image: getImage("blooming-feet"),
     },
   ];
@@ -166,25 +182,29 @@ export default function PartyFeetSection({
                 <div className="p-6 relative z-10 -mt-6 flex flex-col grow">
                   <div className="flex justify-between items-start mb-2">
                     <h4 className="font-playfair text-xl text-[#FFFFFF] tracking-tight">
-                      Regal Steps
+                      {svc("regal-steps")?.name || "Regal Steps"}
                     </h4>
                     <span className="text-[#D4AF37] text-sm font-medium">
-                      From $250
+                      From{" "}
+                      {svc("regal-steps")
+                        ? `$${svc("regal-steps")!.price}`
+                        : "$250"}
                     </span>
                   </div>
                   <p className="text-sm text-[#A0A0A0] italic mb-4 font-light">
-                    Full • Majestic • Detailed
+                    {svc("regal-steps")?.tagline ||
+                      "Full • Majestic • Detailed"}
                   </p>
                   <p className="text-sm text-[#A0A0A0] font-light leading-relaxed mb-4">
-                    Our most luxurious feet package. Full coverage from feet to
-                    mid-calf with intricate patterns that complement your bridal
-                    henna beautifully.
+                    {svc("regal-steps")?.description ||
+                      "Our most luxurious feet package. Full coverage from feet to mid-calf with intricate patterns that complement your bridal henna beautifully."}
                   </p>
                   <p className="text-sm text-[#A0A0A0] font-light leading-relaxed grow">
-                    <span className="text-[#FFFFFF]">Coverage:</span> Feet to
-                    mid-calf
+                    <span className="text-[#FFFFFF]">Coverage:</span>{" "}
+                    {svc("regal-steps")?.coverage || "Feet to mid-calf"}
                     <br />
-                    <span className="text-[#FFFFFF]">Duration:</span> 2–3 hours
+                    <span className="text-[#FFFFFF]">Duration:</span>{" "}
+                    {svc("regal-steps")?.duration || "2–3 hours"}
                   </p>
                   <a
                     href="#contact"
@@ -249,7 +269,8 @@ export default function PartyFeetSection({
                     Group Events & Celebrations
                   </h3>
                   <span className="text-[#D4AF37] text-sm font-medium whitespace-nowrap ml-4">
-                    From $110/hr
+                    From{" "}
+                    {svc("party") ? `$${svc("party")!.price}/hr` : "$110/hr"}
                   </span>
                 </div>
                 <div className="space-y-6 text-base text-[#A0A0A0] font-light leading-relaxed mb-8">

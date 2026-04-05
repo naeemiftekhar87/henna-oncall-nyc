@@ -4,7 +4,7 @@ import bridalBloom from "@/app/assets/service/Bridal BLOOM.jpeg";
 import bridalBlush from "@/app/assets/service/Bridal BLUSH.jpg";
 import bridalGrace from "@/app/assets/service/Bridal GRACE.jpeg";
 import bridalLush from "@/app/assets/service/Bridal LUSH.png";
-import { CheckCircle, Clock, Maximize, Shirt } from "lucide-react";
+import { CheckCircle, Maximize, Shirt } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
 import { useState } from "react";
 import ImageLightbox from "./ImageLightbox";
@@ -16,103 +16,160 @@ type ServiceImages = {
   grace?: string;
 };
 
+type ServiceRecord = {
+  key: string;
+  name: string;
+  price: number;
+  duration: string;
+  description?: string | null;
+  tagline?: string | null;
+  includes?: string | null;
+  guide?: string | null;
+  imageUrl?: string | null;
+  bottomLine?: string | null;
+};
+
 export default function BridalCollectionsSection({
   serviceImages,
+  serviceData,
 }: {
   serviceImages?: ServiceImages;
+  serviceData?: Record<string, ServiceRecord>;
 }) {
   const getImage = (key: keyof ServiceImages, fallback: StaticImageData) => {
     const url = serviceImages?.[key];
     return url || fallback;
   };
 
+  const svc = (key: string) => serviceData?.[key];
+  const parseJson = (val: string | null | undefined): string[] => {
+    if (!val) return [];
+    try {
+      return JSON.parse(val);
+    } catch {
+      return [];
+    }
+  };
+
   const collections = [
     {
-      name: "Blush",
-      price: "$195",
-      tagline: "Minimal • Serene • Elegant",
+      key: "blush",
+      name: svc("blush")?.name || "Blush",
+      price: svc("blush") ? `$${svc("blush")!.price}` : "$195",
+      tagline: svc("blush")?.tagline || "Minimal • Serene • Elegant",
       description:
+        svc("blush")?.description ||
         "Blush symbolizes wisdom and serenity. This minimal wrist-length design captures peaceful energy. Perfect for brides who embrace subtle elegance and graceful simplicity.",
-      recommendedFor: [
-        "Full-sleeve outfits",
-        "Modest gowns",
-        "Abayas & Traditional attire",
-      ],
-      includes: [
-        "Wrist-length design",
-        "100% organic hand-mixed henna",
-        "Personalized bridal prep guide",
-        "Aftercare reminder card",
-      ],
-      duration: "2–3 hours",
+      recommendedFor:
+        parseJson(svc("blush")?.guide).length > 0
+          ? parseJson(svc("blush")!.guide)
+          : [
+              "Full-sleeve outfits",
+              "Modest gowns",
+              "Abayas & Traditional attire",
+            ],
+      includes:
+        parseJson(svc("blush")?.includes).length > 0
+          ? parseJson(svc("blush")!.includes)
+          : [
+              "Wrist-length design",
+              "100% organic hand-mixed henna",
+              "Personalized bridal prep guide",
+              "Aftercare reminder card",
+            ],
+      duration: svc("blush")?.duration || "2–3 hours",
       image: getImage("blush", bridalBlush),
       isExternal: !!serviceImages?.blush,
       isPrimary: false,
+      bottomLine:
+        "These sleeves frame the wrist beautifully, allowing the henna to remain visible while maintaining a modest aesthetic. Ideal For Intimate weddings, nikah ceremonies, or brides seeking quiet luxury and graceful simplicity.",
     },
     {
-      name: "Bloom",
-      price: "$295",
-      tagline: "Modest • Delicate • Refined",
+      key: "bloom",
+      name: svc("bloom")?.name || "Bloom",
+      price: svc("bloom") ? `$${svc("bloom")!.price}` : "$295",
+      tagline: svc("bloom")?.tagline || "Modest • Delicate • Refined",
       description:
+        svc("bloom")?.description ||
         "Bloom embodies calm and refined beauty. This delicate design flows just above the wrist or up to ¼ arm length. Perfect balance between subtle charm and graceful elegance.",
-      recommendedFor: ["¾ sleeve outfits", "Mid-length sleeves"],
-      includes: [
-        "¼-arm length design",
-        "100% organic hand-mixed henna",
-        "Personalized bridal prep guide",
-        "Aftercare reminder card",
-      ],
-      duration: "3–4 hours",
+      recommendedFor:
+        parseJson(svc("bloom")?.guide).length > 0
+          ? parseJson(svc("bloom")!.guide)
+          : ["¾ sleeve outfits", "Mid-length sleeves"],
+      includes:
+        parseJson(svc("bloom")?.includes).length > 0
+          ? parseJson(svc("bloom")!.includes)
+          : [
+              "¼-arm length design",
+              "100% organic hand-mixed henna",
+              "Personalized bridal prep guide",
+              "Aftercare reminder card",
+            ],
+      duration: svc("bloom")?.duration || "3–4 hours",
       image: getImage("bloom", bridalBloom),
       isExternal: !!serviceImages?.bloom,
       isPrimary: false,
+      bottomLine:
+        "The design extends just enough to remain visible beyond the sleeve.",
     },
     {
-      name: "Lush",
-      price: "$395",
-      tagline: "Elegant • Intricate • Timeless",
+      key: "lush",
+      name: svc("lush")?.name || "Lush",
+      price: svc("lush") ? `$${svc("lush")!.price}` : "$395",
+      tagline: svc("lush")?.tagline || "Elegant • Intricate • Timeless",
       description:
+        svc("lush")?.description ||
         "Lush radiates elegance symbolizing heritage and unity. This mid-arm design delivers rich intricate detail for brides seeking a timeless and sophisticated statement.",
-      recommendedFor: [
-        "Sleeveless gowns",
-        "Short sleeves",
-        "Strapless designs",
-      ],
-      includes: [
-        "Mid-arm length design",
-        "100% organic hand-mixed henna",
-        "Personalized bridal prep guide",
-        "Aftercare reminder card",
-        "Custom element allowed",
-      ],
-      duration: "4–5 hours",
+      recommendedFor:
+        parseJson(svc("lush")?.guide).length > 0
+          ? parseJson(svc("lush")!.guide)
+          : ["Sleeveless gowns", "Short sleeves", "Strapless designs"],
+      includes:
+        parseJson(svc("lush")?.includes).length > 0
+          ? parseJson(svc("lush")!.includes)
+          : [
+              "Mid-arm length design",
+              "100% organic hand-mixed henna",
+              "Personalized bridal prep guide",
+              "Aftercare reminder card",
+              "Custom element allowed",
+            ],
+      duration: svc("lush")?.duration || "4–5 hours",
       image: getImage("lush", bridalLush),
       isExternal: !!serviceImages?.lush,
       isPrimary: true,
+      bottomLine:
+        "This length allows the intricate patterns to be beautifully displayed while creating a rich bridal look.",
       badge: "Popular",
     },
     {
-      name: "Grace",
-      price: "$495",
-      tagline: "Majestic • Detailed • Sophisticated",
+      key: "grace",
+      name: svc("grace")?.name || "Grace",
+      price: svc("grace") ? `$${svc("grace")!.price}` : "$495",
+      tagline: svc("grace")?.tagline || "Majestic • Detailed • Sophisticated",
       description:
+        svc("grace")?.description ||
         "Grace embodies timeless sophistication. This full-arm design showcases the most intricate and detailed patterns. Perfect for brides who desire a majestic, statement-making bridal look.",
-      recommendedFor: [
-        "Sleeveless gowns",
-        "Statement pieces",
-        "Custom designs",
-      ],
-      includes: [
-        "Full-arm length design",
-        "100% organic hand-mixed henna",
-        "Personalized bridal prep guide",
-        "Aftercare reminder card",
-        "2 custom elements included",
-      ],
-      duration: "5–7 hours",
+      recommendedFor:
+        parseJson(svc("grace")?.guide).length > 0
+          ? parseJson(svc("grace")!.guide)
+          : ["Sleeveless gowns", "Statement pieces", "Custom designs"],
+      includes:
+        parseJson(svc("grace")?.includes).length > 0
+          ? parseJson(svc("grace")!.includes)
+          : [
+              "Full-arm length design",
+              "100% organic hand-mixed henna",
+              "Personalized bridal prep guide",
+              "Aftercare reminder card",
+              "2 custom elements included",
+            ],
+      duration: svc("grace")?.duration || "5–7 hours",
       image: getImage("grace", bridalGrace),
       isExternal: !!serviceImages?.grace,
       isPrimary: false,
+      bottomLine:
+        "This extended design allows the full artwork to be beautifully visible.",
     },
   ];
 
@@ -205,10 +262,6 @@ export default function BridalCollectionsSection({
                           {item}
                         </li>
                       ))}
-                      <li className="flex items-start gap-3">
-                        <Clock className="text-[#D4AF37] mt-0.5 shrink-0 w-4 h-4" />
-                        Session Duration: {collection.duration}
-                      </li>
                     </ul>
                   </div>
                   <div>
@@ -224,6 +277,9 @@ export default function BridalCollectionsSection({
                       ))}
                     </ul>
                   </div>
+                </div>
+                <div>
+                  <p className="text-white">{collection.bottomLine}</p>
                 </div>
               </div>
             </div>

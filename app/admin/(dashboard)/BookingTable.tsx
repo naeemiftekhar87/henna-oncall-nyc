@@ -19,6 +19,7 @@ type Booking = {
   price: number;
   partySize: number | null;
   numberOfHours: number | null;
+  quantities: string | null;
   status: string;
   createdAt: string;
 };
@@ -134,15 +135,31 @@ export default function BookingTable({
                     <p className="text-[#666] text-xs">{booking.email}</p>
                   </div>
                   <div className="text-[#A0A0A0] text-sm">
-                    {booking.service
-                      .split(",")
-                      .map((s) => SERVICE_LABELS[s.trim()] || s.trim())
-                      .join(", ")}
-                    {booking.partySize && (
-                      <span className="ml-1 text-[#D4AF37]">
-                        ({booking.partySize} qty)
-                      </span>
-                    )}
+                    {(() => {
+                      const services = booking.service
+                        .split(",")
+                        .map((s) => s.trim());
+                      const qty: Record<string, number> = booking.quantities
+                        ? JSON.parse(booking.quantities)
+                        : {};
+                      return services.map((s, i) => (
+                        <span key={s}>
+                          {i > 0 && ", "}
+                          {SERVICE_LABELS[s] || s}
+                          {qty[s] ? (
+                            <span className="text-[#D4AF37] ml-0.5">
+                              ({qty[s]} qty)
+                            </span>
+                          ) : s !== "party" &&
+                            booking.partySize &&
+                            services.length === 1 ? (
+                            <span className="text-[#D4AF37] ml-0.5">
+                              ({booking.partySize} qty)
+                            </span>
+                          ) : null}
+                        </span>
+                      ));
+                    })()}
                   </div>
                   {booking.numberOfHours && (
                     <div className="text-[#A0A0A0] text-sm">
@@ -205,7 +222,26 @@ export default function BookingTable({
                         {new Date(booking.createdAt).toLocaleDateString()}
                       </p>
                     </div>
-                    {booking.partySize && (
+                    {booking.quantities ? (
+                      <div>
+                        <p className="text-[#666] text-xs uppercase tracking-wider mb-1">
+                          Quantities
+                        </p>
+                        <p className="text-white text-sm">
+                          {Object.entries(
+                            JSON.parse(booking.quantities) as Record<
+                              string,
+                              number
+                            >,
+                          )
+                            .map(
+                              ([svc, qty]) =>
+                                `${SERVICE_LABELS[svc] || svc}: ${qty}`,
+                            )
+                            .join(", ")}
+                        </p>
+                      </div>
+                    ) : booking.partySize ? (
                       <div>
                         <p className="text-[#666] text-xs uppercase tracking-wider mb-1">
                           Quantity
@@ -214,7 +250,7 @@ export default function BookingTable({
                           {booking.partySize}
                         </p>
                       </div>
-                    )}
+                    ) : null}
                     {booking.numberOfHours && (
                       <div>
                         <p className="text-[#666] text-xs uppercase tracking-wider mb-1">

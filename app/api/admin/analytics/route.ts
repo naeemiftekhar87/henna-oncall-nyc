@@ -22,7 +22,7 @@ export async function GET() {
   }
 
   const bookings = await prisma.booking.findMany({
-    where: { status: { not: "cancelled" } },
+    where: { status: "completed" },
     orderBy: { createdAt: "asc" },
   });
 

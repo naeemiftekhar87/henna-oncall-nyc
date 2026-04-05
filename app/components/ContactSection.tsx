@@ -96,6 +96,12 @@ export default function ContactSection() {
         : null;
     const numberOfHours = totalMinutes > 0 ? totalMinutes : null;
 
+    // Build per-service quantities JSON
+    const quantities: Record<string, number> = {};
+    for (const svc of nonPartyServices) {
+      quantities[svc] = parseInt(data.quantities?.[svc]) || 1;
+    }
+
     try {
       const res = await fetch("/api/bookings", {
         method: "POST",
@@ -106,6 +112,10 @@ export default function ContactSection() {
           price,
           partySize,
           numberOfHours,
+          quantities:
+            Object.keys(quantities).length > 0
+              ? JSON.stringify(quantities)
+              : null,
         }),
       });
 
