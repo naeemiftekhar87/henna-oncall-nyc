@@ -230,17 +230,29 @@ function EditServiceForm({
         />
       </div>
 
-      {/* Coverage — feet only */}
-      {form.category === "feet" && (
+      {/* Coverage — feet & party */}
+      {(form.category === "feet" || form.category === "party") && (
         <div>
-          <label className={labelClass}>Coverage</label>
-          <input
-            type="text"
-            value={form.coverage}
-            onChange={(e) => setForm({ ...form, coverage: e.target.value })}
-            placeholder="Ankle-length"
-            className={inputClass}
-          />
+          <label className={labelClass}>
+            {form.category === "party" ? "Guest Flow Info" : "Coverage"}
+          </label>
+          {form.category === "party" ? (
+            <textarea
+              value={form.coverage}
+              onChange={(e) => setForm({ ...form, coverage: e.target.value })}
+              rows={4}
+              placeholder="The number of guests served per hour depends on the design complexity selected.\nSimple designs: approximately 8–10 guests per hour\nMore detailed designs: approximately 5–6 guests per hour"
+              className={inputClass + " resize-none"}
+            />
+          ) : (
+            <input
+              type="text"
+              value={form.coverage}
+              onChange={(e) => setForm({ ...form, coverage: e.target.value })}
+              placeholder="Ankle-length"
+              className={inputClass}
+            />
+          )}
         </div>
       )}
 
@@ -310,10 +322,10 @@ function EditServiceForm({
         />
       </div>
 
-      {/* Includes & Guide — bridal: both; party: includes only; feet: neither */}
+      {/* Includes & Guide — bridal: both; party: both; feet: neither */}
       {form.category !== "feet" && (
         <div
-          className={`grid grid-cols-1 ${form.category === "bridal" ? "sm:grid-cols-2" : ""} gap-4`}
+          className={`grid grid-cols-1 ${form.category !== "feet" ? "sm:grid-cols-2" : ""} gap-4`}
         >
           <div>
             <label className={labelClass}>
@@ -325,23 +337,27 @@ function EditServiceForm({
               rows={4}
               placeholder={
                 form.category === "party"
-                  ? "Mobile henna setup for 5–50 guests\nCustomizable designs for each guest\n100% organic hand-mixed henna"
+                  ? "Professional mobile henna artist\n100% organic hand-mixed henna paste\nCurated design menu for guests"
                   : "Wrist-length design\n100% organic henna\nBridal prep guide"
               }
               className={inputClass + " resize-none"}
             />
           </div>
-          {form.category === "bridal" && (
+          {(form.category === "bridal" || form.category === "party") && (
             <div>
               <label className={labelClass}>
-                Guide / Recommended For (one per line)
+                {form.category === "party"
+                  ? "Perfect For (one per line)"
+                  : "Guide / Recommended For (one per line)"}
               </label>
               <textarea
                 value={form.guide}
                 onChange={(e) => setForm({ ...form, guide: e.target.value })}
                 rows={4}
                 placeholder={
-                  "Full-sleeve outfits\nModest gowns\nAbayas & Traditional attire"
+                  form.category === "party"
+                    ? "Mehndi nights\nBridal showers\nBirthday celebrations\nCultural gatherings\nPrivate parties\nFestivals & corporate events"
+                    : "Full-sleeve outfits\nModest gowns\nAbayas & Traditional attire"
                 }
                 className={inputClass + " resize-none"}
               />
