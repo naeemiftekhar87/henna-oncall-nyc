@@ -203,7 +203,7 @@ export default function PartyFeetSection({
                   </div>
                   <div className="p-6 flex flex-col grow">
                     <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-playfair text-xl text-[#FFFFFF] tracking-tight">
+                      <h4 className="font-playfair text-xl text-[#D4AF37] tracking-tight">
                         {collection.name}
                       </h4>
                       <span className="text-[#D4AF37] text-sm font-medium whitespace-nowrap ml-3">
@@ -275,11 +275,6 @@ export default function PartyFeetSection({
               {partyService?.description ||
                 "Add a beautiful cultural touch to your celebration with our mobile party henna service. Whether you\u2019re hosting a mehndi night, birthday, bridal shower, or private gathering, guests can enjoy elegant henna designs applied with 100% organic hand-mixed henna."}
             </p>
-            <p className="text-base text-[#A0A0A0] font-light mb-10 leading-relaxed">
-              We travel to events across New York, New Jersey, Connecticut, and
-              Pennsylvania, bringing a relaxing and memorable henna experience
-              directly to your celebration.
-            </p>
 
             <div className="border border-[#D4AF37]/30 rounded-2xl sm:rounded-3xl bg-linear-to-b from-[#111111] to-[#0A0A0A] relative overflow-hidden grow flex flex-col shadow-[0_0_30px_rgba(212,175,55,0.05)] hover:border-[#D4AF37]/60 transition-colors duration-500">
               <div className="grid grid-cols-2 gap-0.5">
@@ -317,7 +312,7 @@ export default function PartyFeetSection({
               <Crown className="absolute -bottom-10 -right-10 w-64 h-64 text-[#D4AF37] opacity-5" />
               <div className="relative z-10 p-6 sm:p-10">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-playfair text-3xl tracking-tight font-normal text-[#FFFFFF]">
+                  <h3 className="font-playfair text-3xl tracking-tight font-normal text-[#D4AF37]">
                     {partyService?.name || "Party Henna Package"}
                   </h3>
                   <span className="text-[#D4AF37] text-sm font-medium whitespace-nowrap ml-4">
@@ -434,6 +429,12 @@ export default function PartyFeetSection({
                     </p>
                   </div>
                 </div>
+
+                <p className="text-base text-[#A0A0A0] font-light mb-10 leading-relaxed">
+                  We travel to events across New York, New Jersey, Connecticut,
+                  and Pennsylvania, bringing a relaxing and memorable henna
+                  experience directly to your celebration.
+                </p>
 
                 <a
                   href="#contact"

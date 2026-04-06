@@ -182,16 +182,21 @@ export default function BridalCollectionsSection({
     >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-10 sm:mb-16 md:mb-20">
-          <span className="text-[#D4AF37] text-sm uppercase tracking-[0.2em] mb-4 block font-light">
+          <span className="text-white text-sm uppercase tracking-[0.2em] mb-4 block font-light">
             Curated Offerings
           </span>
-          <h2 className="font-playfair text-4xl sm:text-5xl tracking-tight font-normal text-[#FFFFFF] mb-6">
+          <h2 className="font-playfair text-4xl sm:text-5xl tracking-tight font-normal text-[#D4AF37] mb-6">
             Bridal Collections
           </h2>
           <p className="text-base text-[#A0A0A0] font-light max-w-2xl mx-auto leading-relaxed">
-            Every bride receives a carefully curated experience designed to
-            ensure beautiful results while allowing you to relax and fully enjoy
-            this meaningful moment.
+            Every bride carries a unique story, and your henna should reflect
+            the beauty of that moment. At Henna On Call NYC, We offer four
+            signature bridal collections thoughtfully designed to suit different
+            wedding styles, sleeve lengths, and levels of detail. Each design is
+            created using fresh, hand-mixed organic henna, ensuring rich stains
+            and an elevated bridal experience. From subtle elegance to intricate
+            heirloom artistry, each collection is crafted with care to
+            complement your wedding vision.
           </p>
         </div>
 

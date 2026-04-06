@@ -56,7 +56,7 @@ export default function GallerySection({
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row justify-between items-end mb-16 gap-8">
           <div>
-            <h2 className="font-playfair text-4xl sm:text-5xl tracking-tight font-normal text-[#FFFFFF] mb-4">
+            <h2 className="text-[#D4AF37] font-playfair text-4xl sm:text-5xl tracking-tight font-normal mb-4">
               Bridal Gallery
             </h2>
             <p className="text-base text-[#A0A0A0] font-light leading-relaxed">
