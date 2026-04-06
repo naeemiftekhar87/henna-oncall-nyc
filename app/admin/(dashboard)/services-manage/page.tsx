@@ -234,7 +234,7 @@ function EditServiceForm({
       {(form.category === "feet" || form.category === "party") && (
         <div>
           <label className={labelClass}>
-            {form.category === "party" ? "Guest Flow Info" : "Coverage"}
+            {form.category === "party" ? "Guest flow" : "Coverage"}
           </label>
           {form.category === "party" ? (
             <textarea
