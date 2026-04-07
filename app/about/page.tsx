@@ -5,13 +5,16 @@ const AboutPage = () => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Welcome Card */}
         <div className="bg-[#111111] border border-white/5 p-10 sm:p-14 rounded-3xl hover:border-white/10 hover:bg-[#141414] transition-all duration-500 shadow-2xl shadow-black/50 group">
-          <div className="w-14 h-14 rounded-2xl bg-[#D4AF37]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
-            <Sparkles className="text-[#D4AF37] w-7 h-7" />
+          <div className="lg:flex items-center gap-3">
+            <div className="w-14 h-14 rounded-2xl bg-[#D4AF37]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+              <Sparkles className="text-[#D4AF37] w-7 h-7" />
+            </div>
+            <h2 className="font-serif text-3xl text-[#D4AF37] font-normal tracking-tight mb-6">
+              Greetings from Henna on Call NYC.
+            </h2>
           </div>
-          <h2 className="font-playfair text-3xl sm:text-4xl tracking-tight font-normal mb-8 text-[#FFFFFF]">
-            Greetings to Henna on Call NYC.
-          </h2>
-          <div className="space-y-6 text-base text-[#A0A0A0] font-light leading-relaxed">
+
+          <div className="space-y-6 text-base text-white font-light leading-relaxed">
             <p>
               For us, bridal henna is more than a design. It is a meaningful
               tradition, a moment of beauty, and a special part of a
@@ -42,11 +45,17 @@ const AboutPage = () => {
         </div>
 
         {/* My Story Card */}
-        <div className="space-y-12 text-sm md:text-base text-[#C9C9C9] leading-relaxed font-light">
+        <div className="space-y-12 text-sm md:text-base text-white leading-relaxed font-light">
           <div className="bg-[#111111]/80 backdrop-blur-md border border-white/5 p-8 md:p-12 rounded-3xl shadow-2xl shadow-black/40">
-            <h3 className="font-serif text-3xl text-[#D4AF37] font-normal tracking-tight mb-6">
-              Founder&apos;s Message
-            </h3>
+            <div className="lg:flex items-center gap-3">
+              <div className="w-14 h-14 rounded-2xl bg-[#D4AF37]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+                <Sparkles className="text-[#D4AF37] w-7 h-7" />
+              </div>
+              <h3 className="font-serif text-3xl text-[#D4AF37] font-normal tracking-tight mb-6">
+                Founder&apos;s Message
+              </h3>
+            </div>
+
             <p className="mb-6">Henna has always been a part of who I am.</p>
             <p className="mb-6">
               In my family, this beautiful art has been passed down through
