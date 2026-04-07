@@ -49,31 +49,39 @@ const Reviews = () => {
           suppressHydrationWarning
         ></div>
 
-        <Link
-          href="https://g.page/r/CZGmufb8mJLiEBM/review"
-          target="_blank"
-          className="inline-flex items-center mt-5 gap-2 border-b border-[#D4AF37] text-[#D4AF37] text-sm uppercase tracking-widest pb-1 hover:text-[#E6C76B] hover:border-[#E6C76B] transition-colors font-medium"
-        >
-          Read More Google Reviews{" "}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            data-lucide="external-link"
-            aria-hidden="true"
-            className="lucide lucide-external-link w-4 h-4"
+        <div className=" space-x-3">
+          <Link
+            href="https://g.page/r/CZGmufb8mJLiEBM/review"
+            target="_blank"
+            className="inline-flex items-center mt-5 gap-2 border-b border-[#D4AF37] text-[#D4AF37] text-sm uppercase tracking-widest pb-1 hover:text-[#E6C76B] hover:border-[#E6C76B] transition-colors font-medium"
           >
-            <path d="M15 3h6v6"></path>
-            <path d="M10 14 21 3"></path>
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-          </svg>
-        </Link>
+            Read More Google Reviews{" "}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              data-lucide="external-link"
+              aria-hidden="true"
+              className="lucide lucide-external-link w-4 h-4"
+            >
+              <path d="M15 3h6v6"></path>
+              <path d="M10 14 21 3"></path>
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            </svg>
+          </Link>
+
+          <Link href="https://g.page/r/CZGmufb8mJLiEBM/review" target="_blank">
+            <button className="cursor-pointer bg-[#D4AF37] text-black font-medium px-4 py-2 rounded-full hover:bg-[#E6C76B] transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)] text-md">
+              Add Review
+            </button>
+          </Link>
+        </div>
       </div>
     </section>
   );

@@ -45,10 +45,10 @@ export default function RoadmapSection() {
     >
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12 sm:mb-16 md:mb-24">
-          <span className="text-[#D4AF37] text-sm uppercase tracking-[0.2em] mb-4 block font-light">
+          <span className="text-white text-sm uppercase tracking-[0.2em] mb-4 block font-light">
             The Experience
           </span>
-          <h2 className="font-playfair text-4xl sm:text-5xl tracking-tight font-normal text-[#FFFFFF] mb-6">
+          <h2 className="font-playfair text-4xl sm:text-5xl tracking-tight font-normal text-[#D4AF37] mb-6">
             A Thoughtfully Curated Journey
           </h2>
           <p className="text-base text-[#A0A0A0] font-light leading-relaxed max-w-2xl mx-auto">

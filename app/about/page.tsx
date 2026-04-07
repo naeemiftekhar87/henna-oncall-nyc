@@ -13,18 +13,18 @@ const AboutPage = () => {
           </h2>
           <div className="space-y-6 text-base text-[#A0A0A0] font-light leading-relaxed">
             <p>
-              For me, bridal henna is more than a design. It is a meaningful
+              For us, bridal henna is more than a design. It is a meaningful
               tradition, a moment of beauty, and a special part of a
               bride&apos;s wedding journey.
             </p>
             <p>
-              My name is Jannatul, and I founded Henna On Call NYC to offer
-              luxury bridal henna for modern brides who want their experience to
-              feel personal, elegant, and unforgettable.
+              Our founder&apos;s name is Jannatul, and she founded Henna On Call
+              NYC to offer luxury bridal henna for modern brides who want their
+              experience to feel personal, elegant, and unforgettable.
             </p>
             <p>
-              I proudly travel throughout New York, New Jersey, Connecticut, and
-              Pennsylvania, bringing a personalized luxury henna experience
+              We proudly travel throughout New York, New Jersey, Connecticut,
+              and Pennsylvania, bringing a personalized luxury henna experience
               directly to my brides. Using hand-mixed, all-natural henna, every
               design is carefully created to ensure rich, beautiful stains and a
               relaxing, memorable experience.
@@ -45,27 +45,33 @@ const AboutPage = () => {
         <div className="space-y-12 text-sm md:text-base text-[#C9C9C9] leading-relaxed font-light">
           <div className="bg-[#111111]/80 backdrop-blur-md border border-white/5 p-8 md:p-12 rounded-3xl shadow-2xl shadow-black/40">
             <h3 className="font-serif text-3xl text-[#D4AF37] font-normal tracking-tight mb-6">
-              My Story
+              Founder&apos;s Message
             </h3>
-            <p className="mb-6">Henna has always been part of my story.</p>
+            <p className="mb-6">Henna has always been a part of who I am.</p>
             <p className="mb-6">
-              The art of henna was lovingly passed down through generations in
-              my family. My grandmother was known for her traditional henna
-              artistry, and my mother later became a respected bridal henna
-              artist admired for the elegance and intricate detail of her
-              designs.
+              In my family, this beautiful art has been passed down through
+              generations. My grandmother was known for her traditional henna
+              artistry, and my mother carried that legacy forward, becoming a
+              respected bridal henna artist admired for her elegance and
+              intricate designs.
             </p>
             <p className="mb-6">
-              Growing up, I watched my mother create beautiful henna for brides
-              and celebrations. I was fascinated by the way each design told a
-              story — carefully drawn patterns that symbolize joy, love, and new
-              beginnings.
+              As a child, I would sit beside my mother and watch her work her
+              magic, transforming hands into stories of joy, love, and new
+              beginnings. Every design she created held meaning, and I found
+              myself deeply inspired by the connection between art and emotion.
+            </p>
+            <p className="mb-6">
+              Over time, my mother began teaching me the techniques, patterns,
+              and traditions behind henna. What started as a simple childhood
+              curiosity slowly grew into a passion that shaped my path.
+              <br /> Today, that same passion lives on through my work, honoring
+              tradition while creating designs that celebrate each individual
+              story.
             </p>
             <p>
-              Over time, my mother began teaching me the techniques, patterns,
-              and traditions behind the art. What started as a childhood
-              learning experience gradually grew into a passion that shaped my
-              life.
+              With love and gratitude,
+              <br /> <span className="text-[#D4AF37]">Jannatul</span>
             </p>
           </div>
 

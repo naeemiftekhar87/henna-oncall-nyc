@@ -13,17 +13,15 @@ const MyStoryPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
               <div className="space-y-6 text-sm md:text-base text-[#C9C9C9] leading-relaxed font-light">
                 <p>
-                  For me, bridal henna is more than a design. It is a meaningful
-                  tradition, a moment of beauty, and a special part of a bride’s
-                  wedding journey.
+                  For us, bridal henna is more than a design. It is a meaningful
+                  tradition, a moment of beauty, and a special part of a
+                  bride&apos;s wedding journey.
                 </p>
                 <p>
-                  My name is Jannatul, and I founded Henna On Call NYC to offer
-                  luxury bridal henna for modern brides who want their
-                  experience to feel personal, elegant, and unforgettable.
-                  Rooted in generations of henna tradition, my work blends
-                  cultural heritage with modern bridal elegance, creating
-                  designs that feel timeless, meaningful, and uniquely yours.
+                  Our founder&apos;s name is Jannatul, and she founded Henna On
+                  Call NYC to offer luxury bridal henna for modern brides who
+                  want their experience to feel personal, elegant, and
+                  unforgettable.
                 </p>
               </div>
 
@@ -33,21 +31,20 @@ const MyStoryPage = () => {
                   A Bridal Henna Experience Designed Just for You
                 </h3>
                 <p>
-                  At Henna On Call NYC, bridal henna is not just about creating
-                  beautiful designs. It is about creating an experience that
-                  feels calm, meaningful, and unforgettable during one of the
-                  most special moments of your life.
+                  We proudly travel throughout New York, New Jersey,
+                  Connecticut, and Pennsylvania, bringing a personalized luxury
+                  henna experience directly to my brides. Using hand-mixed,
+                  all-natural henna, every design is carefully created to ensure
+                  rich, beautiful stains and a relaxing, memorable experience.
                 </p>
                 <p>
-                  From the moment you book your bridal henna, every detail is
-                  thoughtfully prepared — from the fresh organic henna I
-                  hand-mix, to the bridal preparation guidance I provide, to the
-                  peaceful and pampering atmosphere I create during your
-                  session.
+                  For many brides, their henna session becomes one of the most
+                  cherished moments before the wedding day. A peaceful pause
+                  filled with excitement, laughter, and celebration.
                 </p>
                 <div className="pt-2">
                   <p className="text-[#D4AF37] text-lg font-normal italic">
-                    My goal is to ensure that your henna experience becomes one
+                    Our goal is to ensure that your henna experience becomes one
                     of the most beautiful memories of your wedding journey.
                   </p>
                 </div>
@@ -73,27 +70,33 @@ const MyStoryPage = () => {
           <div className="space-y-12 text-sm md:text-base text-[#C9C9C9] leading-relaxed font-light">
             <div className="bg-[#111111]/80 backdrop-blur-md border border-white/5 p-8 md:p-12 rounded-3xl shadow-2xl shadow-black/40">
               <h3 className="font-serif text-3xl text-[#D4AF37] font-normal tracking-tight mb-6">
-                My Story
+                Founder&apos;s Message
               </h3>
-              <p className="mb-6">Henna has always been part of my story.</p>
+              <p className="mb-6">Henna has always been a part of who I am.</p>
               <p className="mb-6">
-                The art of henna was lovingly passed down through generations in
-                my family. My grandmother was known for her traditional henna
-                artistry, and my mother later became a respected bridal henna
-                artist admired for the elegance and intricate detail of her
-                designs.
+                In my family, this beautiful art has been passed down through
+                generations. My grandmother was known for her traditional henna
+                artistry, and my mother carried that legacy forward, becoming a
+                respected bridal henna artist admired for her elegance and
+                intricate designs.
               </p>
               <p className="mb-6">
-                Growing up, I watched my mother create beautiful henna for
-                brides and celebrations. I was fascinated by the way each design
-                told a story — carefully drawn patterns that symbolize joy,
-                love, and new beginnings.
+                As a child, I would sit beside my mother and watch her work her
+                magic, transforming hands into stories of joy, love, and new
+                beginnings. Every design she created held meaning, and I found
+                myself deeply inspired by the connection between art and
+                emotion.
+              </p>
+              <p className="mb-6">
+                Over time, my mother began teaching me the techniques, patterns,
+                and traditions behind henna. What started as a simple childhood
+                curiosity slowly grew into a passion that shaped my path. Today,
+                that same passion lives on through my work, honoring tradition
+                while creating designs that celebrate each individual story.
               </p>
               <p>
-                Over time, my mother began teaching me the techniques, patterns,
-                and traditions behind the art. What started as a childhood
-                learning experience gradually grew into a passion that shaped my
-                life.
+                With love and gratitude,
+                <br /> Jannatul
               </p>
             </div>
 

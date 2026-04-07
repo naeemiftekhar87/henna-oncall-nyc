@@ -26,7 +26,7 @@ export default function TopBar() {
           <Image src={facebookLogo} alt="Facebook Logo" className="size-5" />
         </Link>
         <Link
-          href="https://share.google/XQsmX86pCv0Vl93Hm"
+          href="https://g.page/r/CZGmufb8mJLiEBM/review"
           target="_blank"
           rel="noopener noreferrer"
           className="hover:text-[#D4AF37] transition-colors"

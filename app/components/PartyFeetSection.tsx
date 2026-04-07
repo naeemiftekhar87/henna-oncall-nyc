@@ -153,7 +153,7 @@ export default function PartyFeetSection({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
           {/* Feet Collections */}
           <div>
-            <h2 className="font-playfair text-4xl tracking-tight font-normal text-[#FFFFFF] mb-6">
+            <h2 className="font-playfair text-4xl tracking-tight font-normal text-[#D4AF37] mb-6">
               Bridal Feet Henna
             </h2>
             <p className="text-base text-[#A0A0A0] font-light mb-4 leading-relaxed">
@@ -268,7 +268,7 @@ export default function PartyFeetSection({
 
           {/* Party Henna */}
           <div className="flex flex-col h-full">
-            <h2 className="font-playfair text-4xl tracking-tight font-normal text-[#FFFFFF] mb-6">
+            <h2 className="font-playfair text-4xl tracking-tight font-normal text-[#D4AF37] mb-6">
               Party Henna Experience
             </h2>
             <p className="text-base text-[#A0A0A0] font-light mb-4 leading-relaxed">
@@ -315,9 +315,6 @@ export default function PartyFeetSection({
                   <h3 className="font-playfair text-3xl tracking-tight font-normal text-[#D4AF37]">
                     {partyService?.name || "Party Henna Package"}
                   </h3>
-                  <span className="text-[#D4AF37] text-sm font-medium whitespace-nowrap ml-4">
-                    {partyService ? `$${partyService.price}/hr` : "$120/hr"}
-                  </span>
                 </div>
                 <p className="text-sm text-[#A0A0A0] italic mb-6 font-light">
                   {partyService?.tagline || "Elegant • Interactive • Memorable"}
