@@ -99,20 +99,22 @@ export default async function AdminDashboard() {
   ];
 
   return (
-    <div>
+    <div className="min-w-0">
       <div className="mb-8">
-        <h1 className="font-playfair text-3xl text-white mb-2">Dashboard</h1>
+        <h1 className="font-playfair text-2xl sm:text-3xl text-white mb-2">
+          Dashboard
+        </h1>
         <p className="text-[#A0A0A0] text-sm">
           Overview of all bookings and services
         </p>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 mb-8">
         {stats.map((stat) => (
           <div
             key={stat.label}
-            className="bg-[#111111] border border-white/5 rounded-xl p-5 flex items-center gap-4"
+            className="bg-[#111111] border border-white/5 rounded-xl p-3 sm:p-5 flex items-center gap-3 sm:gap-4"
           >
             <div className={`${stat.bg} p-3 rounded-lg`}>
               <stat.icon size={20} className={stat.color} />
@@ -145,19 +147,19 @@ export default async function AdminDashboard() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-white/5">
-                  <th className="text-left text-xs text-[#A0A0A0] uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs text-[#A0A0A0] uppercase tracking-wider px-3 sm:px-5 py-3">
                     Client
                   </th>
-                  <th className="text-left text-xs text-[#A0A0A0] uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs text-[#A0A0A0] uppercase tracking-wider px-3 sm:px-5 py-3">
                     Service
                   </th>
-                  <th className="text-left text-xs text-[#A0A0A0] uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs text-[#A0A0A0] uppercase tracking-wider px-3 sm:px-5 py-3">
                     Date
                   </th>
-                  <th className="text-left text-xs text-[#A0A0A0] uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs text-[#A0A0A0] uppercase tracking-wider px-3 sm:px-5 py-3">
                     Price
                   </th>
-                  <th className="text-left text-xs text-[#A0A0A0] uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs text-[#A0A0A0] uppercase tracking-wider px-3 sm:px-5 py-3">
                     Status
                   </th>
                 </tr>
@@ -168,11 +170,13 @@ export default async function AdminDashboard() {
                     key={booking.id}
                     className="border-b border-white/5 hover:bg-white/2 transition-colors"
                   >
-                    <td className="px-5 py-4">
+                    <td className="px-3 sm:px-5 py-3 sm:py-4">
                       <div className="text-white text-sm">{booking.name}</div>
-                      <div className="text-[#666] text-xs">{booking.email}</div>
+                      <div className="text-[#666] text-xs truncate max-w-30 sm:max-w-none">
+                        {booking.email}
+                      </div>
                     </td>
-                    <td className="px-5 py-4 text-sm text-[#A0A0A0]">
+                    <td className="px-3 sm:px-5 py-3 sm:py-4 text-sm text-[#A0A0A0]">
                       {(() => {
                         const services = booking.service
                           .split(",")
@@ -195,13 +199,13 @@ export default async function AdminDashboard() {
                           .join(", ");
                       })()}
                     </td>
-                    <td className="px-5 py-4 text-sm text-[#A0A0A0]">
+                    <td className="px-3 sm:px-5 py-3 sm:py-4 text-sm text-[#A0A0A0] whitespace-nowrap">
                       {booking.date}
                     </td>
-                    <td className="px-5 py-4 text-sm text-white font-medium">
+                    <td className="px-3 sm:px-5 py-3 sm:py-4 text-sm text-white font-medium whitespace-nowrap">
                       ${booking.price}
                     </td>
-                    <td className="px-5 py-4">
+                    <td className="px-3 sm:px-5 py-3 sm:py-4">
                       <span
                         className={`text-xs px-2.5 py-1 rounded-full border capitalize ${STATUS_STYLES[booking.status]}`}
                       >

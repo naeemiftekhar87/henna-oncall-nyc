@@ -244,8 +244,8 @@ export default function AdminLayoutClient({
         )}
 
         {/* Main content */}
-        <main className="flex-1 min-h-screen lg:min-h-screen">
-          <div className="p-6 lg:p-8">{children}</div>
+        <main className="flex-1 min-w-0 min-h-screen lg:min-h-screen">
+          <div className="p-4 sm:p-6 lg:p-8">{children}</div>
         </main>
       </div>
     </div>
