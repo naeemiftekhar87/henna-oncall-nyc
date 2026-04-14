@@ -163,7 +163,7 @@ export default function PartyFeetSection({
               creating a graceful and balanced look for your wedding
               celebration.
             </p>
-            <p className="text-base text-[#A0A0A0] font-light mb-10 leading-relaxed">
+            <p className="text-base text-[#A0A0A0] font-light mb-9 leading-relaxed">
               All designs are created using 100% organic hand-mixed henna to
               ensure a rich, long-lasting stain.
             </p>
@@ -271,7 +271,7 @@ export default function PartyFeetSection({
             <h2 className="font-playfair text-4xl tracking-tight font-normal text-[#D4AF37] mb-6">
               Party Henna Experience
             </h2>
-            <p className="text-base text-[#A0A0A0] font-light mb-4 leading-relaxed">
+            <p className="text-base text-[#A0A0A0] font-light mb-10 leading-relaxed">
               {partyService?.description ||
                 "Add a beautiful cultural touch to your celebration with our mobile party henna service. Whether you\u2019re hosting a mehndi night, birthday, bridal shower, or private gathering, guests can enjoy elegant henna designs applied with 100% organic hand-mixed henna."}
             </p>
