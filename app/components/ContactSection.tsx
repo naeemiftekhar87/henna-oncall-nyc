@@ -32,6 +32,8 @@ const SERVICES = [
   { value: "party", label: "Party Henna - $110/hr", price: 110 },
 ];
 
+const QUANTITY_OPTIONS = Array.from({ length: 20 }, (_, i) => String(i + 1));
+
 export default function ContactSection() {
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "loading" | "success" | "error"
@@ -172,20 +174,19 @@ export default function ContactSection() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
             {/* Name and Email */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              <div className="relative group">
-                <input
-                  type="text"
-                  {...register("name", { required: "Name is required" })}
-                  className={inputClass}
-                  placeholder="Name"
-                />
-                <label className={labelClass}>Full Name</label>
-                {errors.name && (
-                  <span className="text-red-400 text-xs mt-1 block">
-                    {errors.name.message}
-                  </span>
-                )}
-              </div>
+              <input
+                type="text"
+                {...register("name", { required: "Name is required" })}
+                className={inputClass}
+                placeholder="Name"
+              />
+              <label className={labelClass}>Full Name</label>
+              {errors.name && (
+                <span className="text-red-400 text-xs mt-1 block">
+                  {errors.name.message}
+                </span>
+              )}
+
               <div className="relative group">
                 <input
                   type="email"
@@ -440,19 +441,27 @@ export default function ContactSection() {
                           <label className="text-xs text-[#A0A0A0] block mb-1">
                             {s.label.split(" -")[0]} — Quantity
                           </label>
-                          <input
-                            type="number"
-                            min="1"
+                          <select
                             {...register(`quantities.${s.value}`, {
                               required: "Quantity is required",
-                              min: {
-                                value: 1,
-                                message: "At least 1 required",
-                              },
+                              validate: (value) =>
+                                (parseInt(value) >= 1 &&
+                                  parseInt(value) <= 20) ||
+                                "Select a quantity between 1 and 20",
                             })}
                             className="w-full bg-transparent border-b border-white/10 text-sm text-white py-2 focus:outline-none focus:border-[#D4AF37] transition-colors"
-                            placeholder="1"
-                          />
+                            defaultValue="1"
+                          >
+                            {QUANTITY_OPTIONS.map((qty) => (
+                              <option
+                                className="text-black"
+                                key={qty}
+                                value={qty}
+                              >
+                                {qty}
+                              </option>
+                            ))}
+                          </select>
                         </div>
                       )}
                   </div>

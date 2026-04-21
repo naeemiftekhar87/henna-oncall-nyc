@@ -31,6 +31,7 @@ type BookingData = {
   partySize?: number | null;
   numberOfHours?: number | null;
   quantities?: string | null;
+  distanceFee?: number | null;
   street: string;
   apt?: string | null;
   city: string;
@@ -140,8 +141,21 @@ export async function sendCustomerConfirmation(booking: BookingData) {
             </tr>
             <tr>
               <td style="padding: 10px 0; color: #A0A0A0; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; border-top: 1px solid rgba(255,255,255,0.05);">Estimated Total</td>
-              <td style="padding: 10px 0; color: #D4AF37; font-size: 17px; font-weight: 600; border-top: 1px solid rgba(255,255,255,0.05);">$${booking.price} <span style="color: #666; font-size: 12px; font-weight: 400;">(travel fee will be added based on location)</span></td>
+              <td style="padding: 10px 0; color: #D4AF37; font-size: 17px; font-weight: 600; border-top: 1px solid rgba(255,255,255,0.05);">$${booking.price}</td>
             </tr>
+            ${
+              booking.distanceFee && booking.distanceFee > 0
+                ? `
+            <tr>
+              <td style="padding: 10px 0; color: #A0A0A0; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; border-top: 1px solid rgba(255,255,255,0.05);">Distance Fee</td>
+              <td style="padding: 10px 0; color: #D4AF37; font-size: 15px; font-weight: 500; border-top: 1px solid rgba(255,255,255,0.05);">$${booking.distanceFee}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 0; color: #A0A0A0; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; border-top: 1px solid rgba(255,255,255,0.05);">Grand Total</td>
+              <td style="padding: 10px 0; color: #D4AF37; font-size: 19px; font-weight: 700; border-top: 1px solid rgba(255,255,255,0.05);">$${booking.price + booking.distanceFee}</td>
+            </tr>`
+                : ""
+            }
           </table>
         </div>
 

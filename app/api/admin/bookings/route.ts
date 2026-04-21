@@ -35,7 +35,7 @@ export async function PATCH(request: NextRequest) {
   }
 
   try {
-    const { id, status } = await request.json();
+    const { id, status, distanceFee } = await request.json();
     if (!id || !status) {
       return NextResponse.json(
         { error: "ID and status required" },
@@ -48,9 +48,21 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ error: "Invalid status" }, { status: 400 });
     }
 
+    const updateData: Record<string, unknown> = { status };
+    if (
+      status === "confirmed" &&
+      distanceFee !== undefined &&
+      distanceFee !== null
+    ) {
+      const fee = parseFloat(distanceFee);
+      if (!isNaN(fee) && fee >= 0) {
+        updateData.distanceFee = fee;
+      }
+    }
+
     const booking = await prisma.booking.update({
       where: { id },
-      data: { status },
+      data: updateData,
     });
 
     if (status === "confirmed") {

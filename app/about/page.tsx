@@ -16,18 +16,18 @@ const AboutPage = () => {
 
           <div className="space-y-6 text-base text-white font-light leading-relaxed">
             <p>
-              For us, bridal henna is more than a design. It is a meaningful
+              For me, bridal henna is more than a design. It is a meaningful
               tradition, a moment of beauty, and a special part of a
               bride&apos;s wedding journey.
             </p>
             <p>
-              Our founder&apos;s name is Jannatul, and she founded Henna On Call
-              NYC to offer luxury bridal henna for modern brides who want their
-              experience to feel personal, elegant, and unforgettable.
+              My name is Jannatul, and I founded Henna On Call NYC to offer
+              luxury bridal henna for modern brides who want their experience to
+              feel personal, elegant, and unforgettable.
             </p>
             <p>
-              We proudly travel throughout New York, New Jersey, Connecticut,
-              and Pennsylvania, bringing a personalized luxury henna experience
+              I proudly travel throughout New York, New Jersey, Connecticut, and
+              Pennsylvania, bringing a personalized luxury henna experience
               directly to my brides. Using hand-mixed, all-natural henna, every
               design is carefully created to ensure rich, beautiful stains and a
               relaxing, memorable experience.

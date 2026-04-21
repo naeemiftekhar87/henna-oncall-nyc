@@ -20,6 +20,7 @@ type Booking = {
   partySize: number | null;
   numberOfHours: number | null;
   quantities: string | null;
+  distanceFee: number | null;
   status: string;
   createdAt: string;
 };
@@ -60,6 +61,9 @@ export default function BookingTable({
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [updating, setUpdating] = useState<string | null>(null);
   const [filter, setFilter] = useState<string>("all");
+  const [distanceFeeInputs, setDistanceFeeInputs] = useState<
+    Record<string, string>
+  >({});
 
   const filteredBookings =
     filter === "all" ? bookings : bookings.filter((b) => b.status === filter);
@@ -67,15 +71,38 @@ export default function BookingTable({
   const updateStatus = async (id: string, status: string) => {
     setUpdating(id);
     try {
+      const distanceFee =
+        status === "confirmed" ? distanceFeeInputs[id] : undefined;
       const res = await fetch("/api/admin/bookings", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, status }),
+        body: JSON.stringify({
+          id,
+          status,
+          distanceFee:
+            distanceFee !== undefined
+              ? parseFloat(distanceFee) || 0
+              : undefined,
+        }),
       });
 
       if (res.ok) {
+        const updatedDistanceFee =
+          status === "confirmed" && distanceFee !== undefined
+            ? parseFloat(distanceFee) || 0
+            : undefined;
         setBookings((prev) =>
-          prev.map((b) => (b.id === id ? { ...b, status } : b)),
+          prev.map((b) =>
+            b.id === id
+              ? {
+                  ...b,
+                  status,
+                  ...(updatedDistanceFee !== undefined
+                    ? { distanceFee: updatedDistanceFee }
+                    : {}),
+                }
+              : b,
+          ),
         );
       }
     } catch (err) {
@@ -273,27 +300,59 @@ export default function BookingTable({
                     )}
                   </div>
 
+                  {/* Distance fee */}
+                  {booking.distanceFee !== null &&
+                    booking.distanceFee !== undefined &&
+                    booking.distanceFee > 0 && (
+                      <div className="mt-4 flex items-center gap-2">
+                        <span className="text-[#666] text-xs uppercase tracking-wider">
+                          Distance Fee:
+                        </span>
+                        <span className="text-[#D4AF37] text-sm font-medium">
+                          ${booking.distanceFee}
+                        </span>
+                      </div>
+                    )}
+
                   {/* Status actions */}
-                  <div className="mt-5 pt-5 border-t border-white/5 flex gap-2 flex-wrap">
+                  <div className="mt-5 pt-5 border-t border-white/5 flex gap-2 flex-wrap items-end">
                     <span className="text-[#A0A0A0] text-xs self-center mr-2">
                       Update status:
                     </span>
                     {["pending", "confirmed", "completed", "cancelled"].map(
                       (s) => (
-                        <button
-                          key={s}
-                          onClick={() => updateStatus(booking.id, s)}
-                          disabled={
-                            booking.status === s || updating === booking.id
-                          }
-                          className={`px-3 py-1.5 rounded-lg text-xs capitalize border transition-all disabled:opacity-30 disabled:cursor-not-allowed ${
-                            booking.status === s
-                              ? STATUS_STYLES[s]
-                              : "text-[#A0A0A0] border-white/10 hover:border-white/20"
-                          }`}
-                        >
-                          {updating === booking.id ? "..." : s}
-                        </button>
+                        <div key={s} className="flex flex-col gap-1">
+                          {s === "confirmed" &&
+                            booking.status !== "confirmed" && (
+                              <input
+                                type="number"
+                                min="0"
+                                step="1"
+                                placeholder="Distance fee ($)"
+                                value={distanceFeeInputs[booking.id] ?? ""}
+                                onChange={(e) =>
+                                  setDistanceFeeInputs((prev) => ({
+                                    ...prev,
+                                    [booking.id]: e.target.value,
+                                  }))
+                                }
+                                className="w-36 px-2 py-1 rounded-lg text-xs bg-[#1A1A1A] border border-[#D4AF37]/30 text-white placeholder-[#555] focus:outline-none focus:border-[#D4AF37]/60"
+                              />
+                            )}
+                          <button
+                            onClick={() => updateStatus(booking.id, s)}
+                            disabled={
+                              booking.status === s || updating === booking.id
+                            }
+                            className={`px-3 py-1.5 rounded-lg text-xs capitalize border transition-all disabled:opacity-30 disabled:cursor-not-allowed ${
+                              booking.status === s
+                                ? STATUS_STYLES[s]
+                                : "text-[#A0A0A0] border-white/10 hover:border-white/20"
+                            }`}
+                          >
+                            {updating === booking.id ? "..." : s}
+                          </button>
+                        </div>
                       ),
                     )}
                   </div>
