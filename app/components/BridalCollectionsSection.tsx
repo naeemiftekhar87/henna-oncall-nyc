@@ -209,7 +209,7 @@ export default function BridalCollectionsSection({
               }`}
             >
               <div
-                className="w-full lg:w-2/5 h-80 lg:h-auto shrink-0 bg-[#111] relative overflow-hidden cursor-pointer group/img"
+                className="w-full lg:w-2/5 aspect-[4/3] sm:aspect-[16/9] lg:aspect-auto lg:h-auto shrink-0 bg-[#111] relative overflow-hidden cursor-pointer group/img"
                 onClick={() =>
                   setLightboxIndex(
                     collections.findIndex((c) => c.name === collection.name),

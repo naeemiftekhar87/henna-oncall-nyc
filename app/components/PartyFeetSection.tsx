@@ -297,7 +297,7 @@ export default function PartyFeetSection({
                           src={url || fallback}
                           alt={`Party henna ${i + 1}`}
                           fill
-                          className="size-full"
+                          className="object-fill"
                           unoptimized={!!url}
                         />
                         <div className="absolute inset-0 bg-black/30 group-hover/party:bg-black/50 transition-colors duration-300" />
