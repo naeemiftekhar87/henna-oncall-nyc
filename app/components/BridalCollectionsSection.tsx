@@ -209,7 +209,7 @@ export default function BridalCollectionsSection({
               }`}
             >
               <div
-                className="w-full lg:w-2/5 aspect-[4/3] sm:aspect-[16/9] lg:aspect-auto lg:h-auto shrink-0 bg-[#111] relative overflow-hidden cursor-pointer group/img"
+                className="w-full lg:w-2/5 aspect-4/3 sm:aspect-video lg:aspect-auto lg:h-auto shrink-0 bg-[#111] relative overflow-hidden cursor-pointer group/img"
                 onClick={() =>
                   setLightboxIndex(
                     collections.findIndex((c) => c.name === collection.name),
@@ -220,7 +220,7 @@ export default function BridalCollectionsSection({
                   src={collection.image}
                   alt={collection.name}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-1000 opacity-90"
+                  className="object-contain lg:object-cover opacity-90"
                   unoptimized={collection.isExternal}
                 />
                 {collection.badge && (

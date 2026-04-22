@@ -89,7 +89,7 @@ export default function GallerySection({
                 src={image.src}
                 alt="Henna Design"
                 fill
-                className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
+                className="object-fill lg:object-cover group-hover:scale-105 transition-all duration-700"
                 unoptimized={image.isExternal}
               />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">

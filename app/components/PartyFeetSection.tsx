@@ -188,7 +188,7 @@ export default function PartyFeetSection({
                       src={collection.image}
                       alt={collection.name}
                       fill
-                      className="object-cover"
+                      className="object-contain lg:object-cover"
                       unoptimized
                     />
                     <div className="absolute inset-0 bg-linear-to-t sm:bg-linear-to-r from-[#111111] to-transparent opacity-40"></div>

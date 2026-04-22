@@ -20,7 +20,7 @@ type Booking = {
   partySize: number | null;
   numberOfHours: number | null;
   quantities: string | null;
-  distanceFee: number | null;
+  travelFee: number | null;
   status: string;
   createdAt: string;
 };
@@ -61,7 +61,7 @@ export default function BookingTable({
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [updating, setUpdating] = useState<string | null>(null);
   const [filter, setFilter] = useState<string>("all");
-  const [distanceFeeInputs, setDistanceFeeInputs] = useState<
+  const [travelFeeInputs, setTravelFeeInputs] = useState<
     Record<string, string>
   >({});
 
@@ -71,25 +71,23 @@ export default function BookingTable({
   const updateStatus = async (id: string, status: string) => {
     setUpdating(id);
     try {
-      const distanceFee =
-        status === "confirmed" ? distanceFeeInputs[id] : undefined;
+      const travelFee =
+        status === "confirmed" ? travelFeeInputs[id] : undefined;
       const res = await fetch("/api/admin/bookings", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           id,
           status,
-          distanceFee:
-            distanceFee !== undefined
-              ? parseFloat(distanceFee) || 0
-              : undefined,
+          travelFee:
+            travelFee !== undefined ? parseFloat(travelFee) || 0 : undefined,
         }),
       });
 
       if (res.ok) {
-        const updatedDistanceFee =
-          status === "confirmed" && distanceFee !== undefined
-            ? parseFloat(distanceFee) || 0
+        const updatedTravelFee =
+          status === "confirmed" && travelFee !== undefined
+            ? parseFloat(travelFee) || 0
             : undefined;
         setBookings((prev) =>
           prev.map((b) =>
@@ -97,8 +95,8 @@ export default function BookingTable({
               ? {
                   ...b,
                   status,
-                  ...(updatedDistanceFee !== undefined
-                    ? { distanceFee: updatedDistanceFee }
+                  ...(updatedTravelFee !== undefined
+                    ? { travelFee: updatedTravelFee }
                     : {}),
                 }
               : b,
@@ -300,16 +298,16 @@ export default function BookingTable({
                     )}
                   </div>
 
-                  {/* Distance fee */}
-                  {booking.distanceFee !== null &&
-                    booking.distanceFee !== undefined &&
-                    booking.distanceFee > 0 && (
+                  {/* Travel fee */}
+                  {booking.travelFee !== null &&
+                    booking.travelFee !== undefined &&
+                    booking.travelFee > 0 && (
                       <div className="mt-4 flex items-center gap-2">
                         <span className="text-[#666] text-xs uppercase tracking-wider">
-                          Distance Fee:
+                          Travel Fee:
                         </span>
                         <span className="text-[#D4AF37] text-sm font-medium">
-                          ${booking.distanceFee}
+                          ${booking.travelFee}
                         </span>
                       </div>
                     )}
@@ -328,10 +326,10 @@ export default function BookingTable({
                                 type="number"
                                 min="0"
                                 step="1"
-                                placeholder="Distance fee ($)"
-                                value={distanceFeeInputs[booking.id] ?? ""}
+                                placeholder="Travel fee ($)"
+                                value={travelFeeInputs[booking.id] ?? ""}
                                 onChange={(e) =>
-                                  setDistanceFeeInputs((prev) => ({
+                                  setTravelFeeInputs((prev) => ({
                                     ...prev,
                                     [booking.id]: e.target.value,
                                   }))

@@ -28,28 +28,28 @@ const reviews = [
   },
   {
     name: "Umama Salsabil Rinam",
-    subtitle: "Bride-to-be",
+    subtitle: "Happy Bride",
     initial: "U",
     text: "Such an amazing experience and Obsessed with my bridal henna! The detail was exactly what I wanted, but the best part was how chill the session felt. We talked the whole time, and it really helped me destress before the big day. If you're a bride-to-be, you need her.",
     href: "https://maps.app.goo.gl/hNSXXFzq7QbFu9s77",
   },
   {
     name: "Amena Mamoon",
-    subtitle: "Happy Client",
+    subtitle: "Happiest Client",
     initial: "A",
     text: "LOVE LOVE LOVED my henna!! Truly a blessing to have found Jannatul, she made me feel like a princess!! I was sooo happy with the stain, I cannot recommend Jannatul enough!",
     href: "https://maps.app.goo.gl/8gN8yze9naFoQ3o6A",
   },
   {
     name: "Patricia Bradford",
-    subtitle: "Visitor, New York",
+    subtitle: "Happy Bride",
     initial: "P",
     text: "I booked this appointment while on a visit to New York. She is incredibly talented and efficient. She worked to make sure I had the design I wanted. This is some of the most beautiful henna I've ever had and the staining from the jagua ink is phenomenal.",
     href: "https://maps.app.goo.gl/3nJJvcsak4h6obKo7",
   },
   {
     name: "Garima Khanal",
-    subtitle: "Verified Client",
+    subtitle: "Classic Client",
     initial: "G",
     text: "Samiya is an amazing henna artist! She is so precise and is very hard working! Her designs are unique and gorgeous!",
     href: "https://maps.app.goo.gl/xEM1fAXCcZYj72Ne9",
@@ -84,14 +84,19 @@ const Reviews = async () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12 mb-12 text-left">
           {reviews.map((review) => (
-            <Link href={review.href} target="_blank" key={review.name} className="flex h-full">
+            <Link
+              href={review.href}
+              target="_blank"
+              key={review.name}
+              className="flex h-full"
+            >
               <div className="flex flex-col h-full bg-[#111111] border border-white/5 rounded-3xl p-10 hover:border-white/10 transition-colors shadow-lg shadow-black/20">
                 <div className="flex gap-1 text-[#D4AF37] mb-6">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <StarIcon key={i} />
                   ))}
                 </div>
-                <p className="text-sm text-[#A0A0A0] font-light leading-relaxed italic flex-grow">
+                <p className="text-sm text-[#A0A0A0] font-light leading-relaxed italic grow">
                   &ldquo;{review.text}&rdquo;
                 </p>
                 <div className="flex items-center gap-4 mt-8">
