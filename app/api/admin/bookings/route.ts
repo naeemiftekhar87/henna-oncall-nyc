@@ -35,7 +35,7 @@ export async function PATCH(request: NextRequest) {
   }
 
   try {
-    const { id, status, distanceFee } = await request.json();
+    const { id, status, travelFee } = await request.json();
     if (!id || !status) {
       return NextResponse.json(
         { error: "ID and status required" },
@@ -51,12 +51,12 @@ export async function PATCH(request: NextRequest) {
     const updateData: Record<string, unknown> = { status };
     if (
       status === "confirmed" &&
-      distanceFee !== undefined &&
-      distanceFee !== null
+      travelFee !== undefined &&
+      travelFee !== null
     ) {
-      const fee = parseFloat(distanceFee);
+      const fee = parseFloat(travelFee);
       if (!isNaN(fee) && fee >= 0) {
-        updateData.distanceFee = fee;
+        updateData.travelFee = fee;
       }
     }
 

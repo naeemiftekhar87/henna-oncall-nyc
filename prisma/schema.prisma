@@ -33,7 +33,7 @@ model Booking {
   numberOfHours Int?
   quantities    String? // JSON: {"bloom":2,"blush":1}
   status        String   @default("pending") // "pending", "confirmed", "completed", "cancelled"
-  distanceFee   Float? // optional distance/travel fee added by admin at confirmation
+  travelFee     Float? // optional distance/travel fee added by admin at confirmation
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
