@@ -174,18 +174,20 @@ export default function ContactSection() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
             {/* Name and Email */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              <input
-                type="text"
-                {...register("name", { required: "Name is required" })}
-                className={inputClass}
-                placeholder="Name"
-              />
-              <label className={labelClass}>Full Name</label>
-              {errors.name && (
-                <span className="text-red-400 text-xs mt-1 block">
-                  {errors.name.message}
-                </span>
-              )}
+              <div className="relative group">
+                <input
+                  type="text"
+                  {...register("name", { required: "Name is required" })}
+                  className={inputClass}
+                  placeholder="Name"
+                />
+                <label className={labelClass}>Full Name</label>
+                {errors.name && (
+                  <span className="text-red-400 text-xs mt-1 block">
+                    {errors.name.message}
+                  </span>
+                )}
+              </div>
 
               <div className="relative group">
                 <input

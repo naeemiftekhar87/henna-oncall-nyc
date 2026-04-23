@@ -23,26 +23,26 @@ const reviews = [
     name: "Remya Reghu",
     subtitle: "New York Bride",
     initial: "R",
-    text: "I had my bridal henna done by HennaOnCall NYC, and I couldn't be happier with the experience! She was incredibly calm, sweet, and professional from start to finish. I wanted a design that blended traditional and modern elements with some floral touches, and she delivered something even more beautiful than I imagined.",
+    text: "I had my bridal henna done by HennaOnCall NYC, and I couldn&apos;t be happier with the experience! She was incredibly calm, sweet, and professional from start to finish. I wanted a design that blended traditional and modern elements with some floral touches, and she delivered something even more beautiful than I imagined. What truly impressed me was her focus and dedication. She worked for hours with such precision and artistry, clearly passionate about her craft.The final result was exceptional. The stain came out dark, rich, and long-lasting. I received so many compliments on the design, and it photographed beautifully. I&apos;d highly recommend HennaOnCall NYC to any bride or anyone looking for stunning, high-quality henna applied by someone who truly knows and loves what she does.",
     href: "https://maps.app.goo.gl/9KrqRnx5Q2XSYdkb8",
   },
   {
     name: "Umama Salsabil Rinam",
-    subtitle: "Happy Bride",
+    subtitle: "New Jersey Bride",
     initial: "U",
     text: "Such an amazing experience and Obsessed with my bridal henna! The detail was exactly what I wanted, but the best part was how chill the session felt. We talked the whole time, and it really helped me destress before the big day. If you're a bride-to-be, you need her.",
     href: "https://maps.app.goo.gl/hNSXXFzq7QbFu9s77",
   },
   {
     name: "Amena Mamoon",
-    subtitle: "Happiest Client",
+    subtitle: "Happiest Bride",
     initial: "A",
     text: "LOVE LOVE LOVED my henna!! Truly a blessing to have found Jannatul, she made me feel like a princess!! I was sooo happy with the stain, I cannot recommend Jannatul enough!",
     href: "https://maps.app.goo.gl/8gN8yze9naFoQ3o6A",
   },
   {
     name: "Patricia Bradford",
-    subtitle: "Happy Bride",
+    subtitle: "New York Visitor",
     initial: "P",
     text: "I booked this appointment while on a visit to New York. She is incredibly talented and efficient. She worked to make sure I had the design I wanted. This is some of the most beautiful henna I've ever had and the staining from the jagua ink is phenomenal.",
     href: "https://maps.app.goo.gl/3nJJvcsak4h6obKo7",
@@ -82,39 +82,78 @@ const Reviews = async () => {
           What Brides Say
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12 mb-12 text-left">
-          {reviews.map((review) => (
-            <Link
-              href={review.href}
-              target="_blank"
-              key={review.name}
-              className="flex h-full"
-            >
-              <div className="flex flex-col h-full bg-[#111111] border border-white/5 rounded-3xl p-10 hover:border-white/10 transition-colors shadow-lg shadow-black/20">
-                <div className="flex gap-1 text-[#D4AF37] mb-6">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <StarIcon key={i} />
-                  ))}
-                </div>
-                <p className="text-sm text-[#A0A0A0] font-light leading-relaxed italic grow">
-                  &ldquo;{review.text}&rdquo;
-                </p>
-                <div className="flex items-center gap-4 mt-8">
-                  <div className="w-12 h-12 rounded-full bg-[#0A0A0A] flex items-center justify-center text-[#D4AF37] font-['Playfair_Display'] border border-white/10 text-xl shrink-0">
-                    {review.initial}
+        <div className="mt-12 mb-12 text-left space-y-6">
+          {/* Row 1: 2 cards, first one wider */}
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+            {reviews.slice(0, 2).map((review, idx) => (
+              <Link
+                href={review.href}
+                target="_blank"
+                key={review.name}
+                className={`flex h-full ${idx === 0 ? "md:col-span-3" : "md:col-span-2"}`}
+              >
+                <div className="flex flex-col h-full w-full bg-[#111111] border border-white/5 rounded-3xl p-10 hover:border-white/10 transition-colors shadow-lg shadow-black/20">
+                  <div className="flex gap-1 text-[#D4AF37] mb-6">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <StarIcon key={i} />
+                    ))}
                   </div>
-                  <div>
-                    <p className="text-base text-[#FFFFFF] font-normal">
-                      {review.name}
-                    </p>
-                    <p className="text-xs text-[#A0A0A0] font-light">
-                      {review.subtitle}
-                    </p>
+                  <p className="text-sm text-[#A0A0A0] font-light leading-relaxed italic grow">
+                    &ldquo;{review.text}&rdquo;
+                  </p>
+                  <div className="flex items-center gap-4 mt-8">
+                    <div className="w-12 h-12 rounded-full bg-[#0A0A0A] flex items-center justify-center text-[#D4AF37] font-['Playfair_Display'] border border-white/10 text-xl shrink-0">
+                      {review.initial}
+                    </div>
+                    <div>
+                      <p className="text-base text-[#FFFFFF] font-normal">
+                        {review.name}
+                      </p>
+                      <p className="text-xs text-[#A0A0A0] font-light">
+                        {review.subtitle}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
+          </div>
+
+          {/* Row 2: 3 equal cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {reviews.slice(2).map((review) => (
+              <Link
+                href={review.href}
+                target="_blank"
+                key={review.name}
+                className="flex h-full"
+              >
+                <div className="flex flex-col h-full w-full bg-[#111111] border border-white/5 rounded-3xl p-10 hover:border-white/10 transition-colors shadow-lg shadow-black/20">
+                  <div className="flex gap-1 text-[#D4AF37] mb-6">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <StarIcon key={i} />
+                    ))}
+                  </div>
+                  <p className="text-sm text-[#A0A0A0] font-light leading-relaxed italic grow">
+                    &ldquo;{review.text}&rdquo;
+                  </p>
+                  <div className="flex items-center gap-4 mt-8">
+                    <div className="w-12 h-12 rounded-full bg-[#0A0A0A] flex items-center justify-center text-[#D4AF37] font-['Playfair_Display'] border border-white/10 text-xl shrink-0">
+                      {review.initial}
+                    </div>
+                    <div>
+                      <p className="text-base text-[#FFFFFF] font-normal">
+                        {review.name}
+                      </p>
+                      <p className="text-xs text-[#A0A0A0] font-light">
+                        {review.subtitle}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
 
         <div className="space-x-3">
