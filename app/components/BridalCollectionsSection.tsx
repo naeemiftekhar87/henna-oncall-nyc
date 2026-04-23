@@ -190,7 +190,7 @@ export default function BridalCollectionsSection({
           </h2>
           <p className="text-base text-[#A0A0A0] font-light max-w-2xl mx-auto leading-relaxed">
             Every bride carries a unique story, and your henna should reflect
-            the beauty of that moment. At Henna On Call NYC, We offer four
+            the beauty of that moment. At Henna On Call NYC, I offer four
             signature bridal collections thoughtfully designed to suit different
             wedding styles, sleeve lengths, and levels of detail. Each design is
             created using fresh, hand-mixed organic henna, ensuring rich stains
