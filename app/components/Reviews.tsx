@@ -23,7 +23,7 @@ const reviews = [
     name: "Remya Reghu",
     subtitle: "New York Bride",
     initial: "R",
-    text: "I had my bridal henna done by HennaOnCall NYC, and I couldn&apos;t be happier with the experience! She was incredibly calm, sweet, and professional from start to finish. I wanted a design that blended traditional and modern elements with some floral touches, and she delivered something even more beautiful than I imagined. What truly impressed me was her focus and dedication. She worked for hours with such precision and artistry, clearly passionate about her craft.The final result was exceptional. The stain came out dark, rich, and long-lasting. I received so many compliments on the design, and it photographed beautifully. I&apos;d highly recommend HennaOnCall NYC to any bride or anyone looking for stunning, high-quality henna applied by someone who truly knows and loves what she does.",
+    text: "I had my bridal henna done by HennaOnCall NYC, and I couldn't be happier with the experience! She was incredibly calm, sweet, and professional from start to finish. I wanted a design that blended traditional and modern elements with some floral touches, and she delivered something even more beautiful than I imagined. What truly impressed me was her focus and dedication. She worked for hours with such precision and artistry, clearly passionate about her craft.The final result was exceptional. The stain came out dark, rich, and long-lasting. I received so many compliments on the design, and it photographed beautifully. I'd highly recommend HennaOnCall NYC to any bride or anyone looking for stunning, high-quality henna applied by someone who truly knows and loves what she does.",
     href: "https://maps.app.goo.gl/9KrqRnx5Q2XSYdkb8",
   },
   {
