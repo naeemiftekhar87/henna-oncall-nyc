@@ -55,7 +55,7 @@ export default async function Home() {
         )}
       />
       <Reviews />
-      <ContactSection />
+      <ContactSection services={services} />
     </>
   );
 }

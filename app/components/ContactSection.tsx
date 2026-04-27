@@ -4,6 +4,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
+type ServiceData = {
+  key: string;
+  name: string;
+  price: number;
+  category: string;
+};
+
 type BookingFormData = {
   name: string;
   email: string;
@@ -21,20 +28,21 @@ type BookingFormData = {
   message: string;
 };
 
-const SERVICES = [
-  { value: "blush", label: "Blush (Bridal) - $195", price: 195 },
-  { value: "bloom", label: "Bloom (Bridal) - $295", price: 295 },
-  { value: "lush", label: "Lush (Bridal) - $395", price: 395 },
-  { value: "grace", label: "Grace (Bridal) - $495", price: 495 },
-  { value: "petal-feet", label: "Petal Feet - $120", price: 120 },
-  { value: "blooming-feet", label: "Blooming Feet - $180", price: 180 },
-  { value: "regal-steps", label: "Regal Steps - $250", price: 250 },
-  { value: "party", label: "Party Henna - $110/hr", price: 110 },
-];
-
 const QUANTITY_OPTIONS = Array.from({ length: 20 }, (_, i) => String(i + 1));
 
-export default function ContactSection() {
+export default function ContactSection({
+  services = [],
+}: {
+  services: ServiceData[];
+}) {
+  const SERVICES = services.map((s) => ({
+    value: s.key,
+    label:
+      s.key === "party"
+        ? `${s.name} - $${s.price}/hr`
+        : `${s.name} - $${s.price}`,
+    price: s.price,
+  }));
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -60,11 +68,13 @@ export default function ContactSection() {
   const durationHoursVal = watch("durationHours") || "0";
   const durationMinutesVal = watch("durationMinutes") || "0";
   const hasParty = selectedServices.includes("party");
+  const partyServicePrice =
+    SERVICES.find((s) => s.value === "party")?.price ?? 110;
   const partyHennaPrice =
     (((parseInt(durationHoursVal) || 0) * 60 +
       (parseInt(durationMinutesVal) || 0)) /
       60) *
-    110;
+    partyServicePrice;
 
   const onSubmit = async (data: BookingFormData) => {
     setSubmitStatus("loading");
@@ -78,12 +88,12 @@ export default function ContactSection() {
         return sum + (found?.price ?? 0) * qty;
       }, 0);
 
-    // Party henna: $110/hr
+    // Party henna: price per hour from service data
     const totalMinutes =
       (parseInt(data.durationHours) || 0) * 60 +
       (parseInt(data.durationMinutes) || 0);
     const partyPrice = data.services.includes("party")
-      ? (totalMinutes / 60) * 110
+      ? (totalMinutes / 60) * partyServicePrice
       : 0;
 
     const price = nonPartyPrice + partyPrice;
